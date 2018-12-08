@@ -1,0 +1,333 @@
+﻿/*!
+@Name：layerExtend辅助弹层
+@Author：ZZQ
+@Change:Mahx 修改layer的实现方式为面向对象，不再用链表维护zlayer弹出关系。并且将相关扩展移动到zlayer.js下。
+*/
+//var windowClose = window.close;
+//;window.Zlayer = (function () {
+//    //"use strict";
+//    var layerObj = null; 
+//    var _dataMap = {}, _indexArray = [], _refresh = 0 & 1, _inputParamsArray = [], topWin = [window.top], eventTarget = [], //dom事件来源存储
+//         title = '',
+//        refresh = function () {
+//            _refresh = 1;
+//        },
+//    _checkNullObject = function (obj) {
+//        if (typeof obj === "object" && !(obj instanceof Array)) {
+//            var hasProp = 0;
+//            for (var prop in obj) {
+//                hasProp = 1;
+//                break;
+//            }
+//            if (!!hasProp) return 0; return 1;
+//        }
+//    },
+//    _pop = function (array) {
+//        var _ret = _indexArray.pop();
+//        if (typeof (_ret) == "undefined") throw "dataArray remove item fail！";
+//        return _ret;
+//    },
+//     _saveMetaData = function (layero, index) {
+//         if (_indexArray.indexOf(index) != -1) return;
+//         _indexArray.push(index);
+//         _dataMap[_indexArray[_indexArray.length - 1]] = { "backData": null, "currDiv": layero, "topWindow": layero.find("iframe")[0].contentWindow };
+//     },
+//      getTopWindow = function () {
+//          try {
+//              return _dataMap[_indexArray[_indexArray.length - 1]].topWindow;
+//          } catch (e) {
+//              return window;
+//          }
+//      },
+
+
+//     _postData = function (params) {
+//         _inputParamsArray.push(params);
+//     },
+//     returnData = function (data) {
+//         _dataMap[_indexArray[_indexArray.length - 1]].backData = data;
+//     },
+//     getInputParams = function () {
+//         return _inputParamsArray[_inputParamsArray.length - 1];
+//     },
+//     acountParentsPadding = function (selector) {
+//         var addPadding = 0;
+//         $(selector).parents().each(function () {
+//             var padding = $(this).parent().outerHeight(true) - $(this).parent().height();
+//             addPadding += padding;
+//         })
+//         return (addPadding);
+//     },
+//    //调整弹出层大小根据Frame实际高度 mahx
+//      adjustSize = function (frame, width, height) {
+//          var selectFrame=$(frame);
+//          var selectLayer=selectFrame.parent().parent();
+//          var FrameDocument = window.$F(frame).getFrameDocument();
+//          var changeWidth=width; //需要修改的宽度值
+//          var specialElements=$(FrameDocument).find('[rewidth]'); //个性化 红旭将值存入此rewidth
+//          if(specialElements.length >= 1){ //有个性化
+//                  for(var i=0;i<specialElements.length;i++){
+//                         var itemWidth=parseInt($(specialElements[i]).attr("rewidth"));
+//                         if(itemWidth> changeWidth){ //如果个性化的宽度大 ，则
+//                              changeWidth=itemWidth;
+//                         }
+//                  }
+//          }
+
+//          if(changeWidth > width){ //大于时，需要修改
+//                //window.top.tabpanelWidth  分辨率宽度
+//                if(window.top.tabpanelWidth && (window.top.tabpanelWidth < changeWidth)){
+//                        changeWidth=window.top.tabpanelWidth-4;
+//                }else{
+//                        changeWidth+=14;//存储地点-默认供应商(弹框)  个性化后ie11下显示异常
+//                }
+//                /*selectLayer.css({
+//                   "width": changeWidth,
+//                   "left":"50%",
+//                   "margin-left":- changeWidth/2
+//               });*/
+//               selectLayer.css("width", changeWidth);
+//               selectFrame.css("width", changeWidth);
+//               layerObj.offset();
+//          }
+//          //宽度修改完毕，显示内容
+//          /*$(frame).parent('.layui-layer-content').css("visibility", "visible");*/
+
+//          //只有标题为空或者默认值时
+//          var layuiLayerTitle=selectLayer.children(".layui-layer-title");
+//          var titleText = layuiLayerTitle.text();
+//          if (titleText == '' || titleText == '内容') {
+//              layuiLayerTitle.text(FrameDocument.title);
+//          }
+//          //如果发现用户定义了偏移量高度，则对高度做调整。
+//          var offsetHeight = _dataMap[_indexArray[_indexArray.length - 1]]["offsetHeight"];
+//          if (!!offsetHeight && offsetHeight > 0) {
+//              var frameHeight = selectFrame.height();
+
+//              selectLayer.css("height", frameHeight + 28 + offsetHeight);
+//              selectFrame.css("height", frameHeight + offsetHeight);
+//              layerObj.offset();
+//          }
+//      },
+//      adjustHeight = function (height) {//暴露一个可以调整高度的方法，开发那边可能会调用。mahx
+//          _dataMap[_indexArray[_indexArray.length - 1]]["offsetHeight"] = height;
+          
+//      },
+//     open = function (options) {
+//         if (self.location.href.indexOf(".aspx") < 0 && options.content.indexOf("../../") < 0) {//使用top级Zlayer时需要添加相对路径*
+//             options.content = "../../ufsoft/" + options.content;
+//         }
+//         if (_indexArray.length == 0) { try { eventTarget.push(window.event.srcElement || window.event.target); } catch (e) { } } //在第一次触发弹框的时候，记下dom事件来源（就是触发事件的dom对象）
+//         options = options || {};
+//         if (!!_checkNullObject(options)) {
+//             throw "open Function input is empty object！";
+//         }
+//         _postData(!!options.argument && options.argument || null);
+//         if (!options.title) delete options.title;
+//         delete options.success;
+//         delete options.end;
+//         delete options.cancel;
+//         //mahx 在弹出之前对js队列做深度拷贝，这样在关闭zlayer之后再对js恢复回来，
+//         //这样免得js队列里，如果有某一条js弹出了对话框，其他js没有阻塞住问题。要完全模拟以前版本。
+//         var _window = getTopWindow();
+//         _window.AfterZlayerJsQueue = {
+//         };
+//         if (_window._ClientJSExecQueueManager) {
+//             $.extend(true, _window.AfterZlayerJsQueue, _window._ClientJSExecQueueManager);
+//             _window._ClientJSExecQueueManager.ClearAll();
+//         }
+//         var _layerOptions = {
+//             type: 2,
+//             title: "内容", //input
+//             content: "", //input
+//             area: ['900px', '500px'], //input
+//             maxmin: 0,
+//             zIndex: layer.zIndex,
+//             isRefresh: 0, //input
+//             shadeClose: 0,
+//             success: function (layero, index) {//index不是连续的
+//                 _saveMetaData(layero, index);
+//             },
+//             onload: function (frame, width, height) {
+//                 adjustSize(frame, width, height);
+//             },
+//             end: function () {
+//                 if (_indexArray.length <= 0) {
+//                     options.endHandle(-1);
+//                     return;
+//                 }
+//                 var _ret = _pop(_indexArray);
+//                 if (!!_refresh) options.isRefresh = 1;
+//                 _inputParamsArray.pop();
+//                 options.endHandle(_dataMap[_ret].backData); //如果没有设置需要的层级返回值则返回空串
+//                 delete _dataMap[_ret];
+//                 if (!!options.isRefresh) {
+//                     if (_indexArray.length > 0) {
+//                         _window.location.reload();
+//                         _pop(_indexArray);
+//                     } else window.location.reload();
+//                 }
+//                 _refresh = 0 & 1;
+//                 //var _window = getTopWindow();//这里先注释，用方法体外的_window
+//                 //mahx 要把存起来的js脚本和_ClientJSExecQueueManager脚本拼接起来，不能直接_ClientJSExecQueueManager=AfterZlayerJsQueue，
+//                 //因为弹出框有可能给父窗口的_ClientJSExecQueueManager添加脚本，直接赋值会导致脚本丢失
+//                 if (_window._ClientJSExecQueueManager && _window.AfterZlayerJsQueue) {
+//                     _window._ClientJSExecQueueManager.Handlers = _window.AfterZlayerJsQueue.Handlers.concat(_window._ClientJSExecQueueManager.Handlers);
+//                     _window._ClientJSExecQueueManager.FirstHandlers = _window.AfterZlayerJsQueue.FirstHandlers.concat(_window._ClientJSExecQueueManager.FirstHandlers);
+//                     _window._ClientJSExecQueueManager.Count += _window.AfterZlayerJsQueue.Count;
+//                     delete _window.AfterZlayerJsQueue;//必须在start之前删除，因为start里会用来当做判断，判断当前是否有弹出框.
+//                     _window._ClientJSExecQueueManager.Start();
+//                 }
+//                 delete _window.AfterZlayerJsQueue;//这里也写一下，因为jmf的弹出框之后，没有_ClientJSExecQueueManager，所以进不了上面的if也就删不掉。
+//             },
+//             cancel: function () { }
+//         };
+
+//         var increaseWidth=6;
+//         var layerTitleHeight=28;//增加了30layer-title的高度
+//         var statusHeight=14;//增加了底部状态的高度
+//         var increaseHeight=layerTitleHeight +statusHeight;
+         
+//         //console.log(options.area[1])
+//         //之前的titlelink都是992和504，但是现在界面都变高了，如果还是原来的在IE11下在做弹框自适应的过程中会有闪动的过程，所以在这里统一给992*504的弹出层调高了一点，争取闪动的过程不要太明显
+//         /*if (options.area && parseInt(options.area[0]) == 992 && parseInt(options.area[1]) == 504) {
+//             options.area[0]=992 + increaseWidth; //add 2017-06-05
+//             options.area[1] = 504 + increaseHeight; //add 
+//         } */
+//        if(options.area){ //其他弹出框宽度调整，增加标题栏head的高度
+//             var areaHeight=parseInt(options.area[1]) + increaseHeight;
+//             var  maxHeight=window.top.tabpanelHeight; //最大高度
+//             var tipsStatusHeight=16;
+//             if(maxHeight && areaHeight > maxHeight-tipsStatusHeight){
+//                        areaHeight =maxHeight-tipsStatusHeight; //最大高度; 依据分辨率
+//             }
+//             var oldWidth=parseInt(options.area[0]);
+//             if(oldWidth >=992){
+//                    oldWidth+=13; //宽度992加大
+//             }
+//             options.area[0] =oldWidth + increaseWidth +"px";
+//             options.area[1] =areaHeight +"px"; //layui-layer-iframe的高度
+//        }
+//        if (window.top.location.href.toLocaleLowerCase().indexOf('__dbg=true') > -1) {
+//            if (options.content.indexOf("?") > -1)
+//                options.content += '&__dbg=true'
+//            else
+//                options.content += '?__dbg=true'
+//        }
+
+//         $.extend(_layerOptions, options);
+//         if (_layerOptions.title === "内容")
+//             window.ufTitle = "";
+//         layerObj = layer.open(_layerOptions);
+//     },
+//     openCompatible = function (title, content, width, height, argument, isRefresh, callBack) {
+//         var _tmpOptions = {
+//             title: title, //input
+//             content: content, //input
+//             area: [width, height], //input
+//             isRefresh: isRefresh, //input
+//             argument: argument, //input
+//             endHandle: callBack
+//         };
+//         open(_tmpOptions);
+//     },
+//     findTopIframe = function () {
+//         if (window.top.location.href.indexOf(".aspx") > -1)
+//             return window.top.Zlayer;
+//         var curr = self,
+//             iframeObj = curr;
+//         while (curr != window.top) {
+//             iframeObj = curr;
+//             curr = curr.parent;
+//         }
+//         var er = /lnk=(\w+)-(\w+)-(\w+)-(\w+)-(\w+)/i; //不分大小写
+//         if (er.test(iframeObj.location.href))//如果以simple为第一层iframe则弹出层的维护级别在main/index*
+//             return window.top.Zlayer;
+//         return iframeObj.Zlayer;
+//     },
+//     close = function () {
+//         layer.close(_indexArray[_indexArray.length - 1]);
+//     },
+//     exit = function () {
+//         $(_dataMap[_indexArray[_indexArray.length - 1]].currDiv).find("span").find("a.layui-layer-close").click();
+//     };
+//    return {
+//        topWin: topWin,
+//        srcEventElement: eventTarget, //改变对话框弹关闭之后的方法调用方式，导致dom事件目标改变，通过zlayer.elementSrc[0]存储事件目标指向
+//        refreshParentWindow: refresh,
+//        target: findTopIframe,
+//        open: open,
+//        exit: exit,
+//        closeCurrentWindow: close,
+//        ShowModelDialog: openCompatible,
+//        setReturnValue: returnData,
+//        dialogArguments: getInputParams,
+//        adjustSize: adjustSize,
+//        acountParentsPadding: acountParentsPadding,
+//        adjustHeight: adjustHeight
+//    };
+//})();
+window.zlayer = new window.top.Zlayer(window);
+//mahx 这里要修改window的原型了，给window的prototype增加returnValue、close、dialogArguments的方法。其实这里可以直接修改window不用原型的方式。
+
+var _window = window;
+var windowPrototype = _window.__proto__;
+if (!windowPrototype) {
+    windowPrototype = Object.getPrototypeOf(_window);
+}
+//先把window下的close.returnValue和dialogArguments删除掉，(IE下删不掉)
+//因为这些是定义在window下，而不是window的原型里，我再原型里增加这几个方法，
+//如果window下也有，那么window下的优先级比较高，我定义的方法会不执行。所以这里强制删除。
+
+
+delete _window.close;
+delete _window.returnValue;
+delete _window.dialogArguments;
+
+//在IE下window.close=function()的方式不会替换原有的，因为此方法是系统级别的，所以不可以被替换。
+//所以使用这种方式写，在上下文是window的情况下会替换window.close方法。
+var close = function () {
+    this.zlayer.closeCurrentWindow();
+};
+//给原型增加returnValue
+Object.defineProperty(windowPrototype, "returnValue", {
+
+    set: function (value) {
+        var zl
+        if (this.zlayer) {
+            zl = this.zlayer;
+        }
+        else if (this.window)
+            zl = this.window.zlayer;
+        else
+            zl = _window.zlayer;
+        zl.returnValue = value;
+    },
+
+    get: function (value) {
+        var zl
+        if (this.zlayer) {
+            zl = this.zlayer;
+        }
+        else if (this.window)
+            zl = this.window.zlayer;
+        else
+            zl = _window.zlayer;
+        return zl.returnValue;
+    }
+});
+//给原型增加dialogArguments
+Object.defineProperty(windowPrototype, "dialogArguments", {
+
+    get: function () {
+        var zl
+        if (this.zlayer) {
+            zl = this.zlayer;
+        }
+        else if (this.window)
+            zl = this.window.zlayer;
+        else
+            zl = _window.zlayer;
+        return zl.dialogArgs;
+    }
+});

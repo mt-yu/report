@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://192.168.1.82:90/U9/mvc/main/index -->
+<html style="" class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    
+    
+    <title>请购</title>
+    <link rel="shortcut   icon" href="http://192.168.1.82:90/U9/css/images/logo.ico"> 
+    <link rel="stylesheet" href="./请购_files/bootstrap.css">
+    <link rel="stylesheet" href="./请购_files/index.css">
+    <link rel="stylesheet" href="./请购_files/animate.css">
+    <link rel="stylesheet" href="./请购_files/fa.css">
+    <link rel="stylesheet" href="./请购_files/autoCompleteDuDuSkin.css">
+    <link rel="stylesheet" href="./请购_files/dudu.css">
+    <link rel="stylesheet" href="./请购_files/approval.css">
+    <link rel="stylesheet" href="./请购_files/Jcrop.css">
+    <link rel="stylesheet" href="./请购_files/TabPanel.css">
+    <link rel="stylesheet" href="./请购_files/iconfont.css">
+    <link href="./请购_files/layer.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./请购_files/element-ui.css">
+    <link rel="stylesheet" href="./请购_files/skin.css">
+        <script type="text/javascript" src="./请购_files/jquery.js.下载"></script>
+<script src="./请购_files/jqueryui"></script>
+<script src="./请购_files/jquerydragsort"></script>
+<script src="./请购_files/jqueryform"></script>
+<script src="./请购_files/public"></script><link rel="stylesheet" href="./请购_files/layer(1).css" id="layui_layer_Scriptsskinlayercss0" style="">
+        <script type="text/javascript" src="./请购_files/Resources_zh-CN_.js.下载"></script>
+<script src="./请购_files/index"></script>
+
+   <!-- Revive Adserver Asynchronous JS Tag - Generated with Revive Adserver v4.1.1 -->
+    <!--<script async src="//u9ad.u9hub.com/www/delivery/asyncjs.php"></script>-->
+ <script>
+     var checkMessages="False";
+ </script>
+<style>
+    html,body{overflow-x: hidden;height:100%}
+</style><style type="text/css">@keyframes resizeanim { from { opacity: 0; } to { opacity: 0; } } 
+      .resize-triggers { animation: 1ms resizeanim; visibility: hidden; opacity: 0; }
+      .resize-triggers, .resize-triggers > div, .contract-trigger:before { content: " "; display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; z-index: -1 }
+      .resize-triggers > div { background: #eee; overflow: auto; }
+      .contract-trigger:before { width: 200%; height: 200%; }</style><script type="text/javascript" src="./请购_files/asyncjs.php" async="true"></script></head>
+
+<body onkeydown="DocumentManager.liceseKeyDown()" class=""><i class="zoomBig iconfont y-icon-fullScreen" title="进入全屏模式"></i>
+    
+    <!-- 广告位 --> 
+    <div id="adserver" class="adserver-bottom-right ui-draggable ui-draggable-handle"><ins data-revive-zoneid="22" data-revive-id="c595e139effc3eddd4610588db2c7606" data-revive-withtext="1" data-revive-tags="U9" data-revive-seq="0" id="revive-0-0" data-revive-loaded="1" style="text-decoration: none;"><div id="beacon_3b25e144d8" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="./请购_files/lg.php" width="0" height="0" alt="" style="width: 0px; height: 0px;"></div></ins>
+      <!--<ins data-revive-zoneid="14" data-revive-id="c595e139effc3eddd4610588db2c7606" data-revive-withtext="1"></ins> -->
+        <span class="adserver-icon">
+            <i class="fa fa-times adserver-close"></i>
+            <label class="adserver-mark" style="display: none;">不感兴趣</label>
+        </span>
+    </div> 
+       <div class="csstransforms ui-draggable">     
+             <div class="csstransformsInnner">
+                <div id="cn-button" class="cn-button ui-draggable-handle"><i id="cn-button-fa" class="fa fa-menu-right"></i></div>
+                   <div class="cn-wrapper" id="cn-wrapper">
+                        <ul>
+                             <li id="errorFeedback">
+                                <a href="javascript:void(0)">
+                                   <span>
+                                   <i class="fa fa-cut-white" data-title="截屏 (Ctrl+Alt+P)" data-original-title="" title=""></i></span>
+                               </a>
+                             </li> 
+                             <li id="duDuBtn" class="duDuBtn" style="display: none;">
+                                <a href="http://192.168.1.82:90/U9/mvc/main/index#">
+                               <span>
+                               <i class="peoplesCall fa fa-telephone-white" data-title="多方通话" data-original-title="" title=""></i></span></a>
+                            </li>
+                             <li id="approvalBtn" class="approvalBtn greyen" isvisibe="no" recoreidandentitityfullname="1001811210377355,UFIDA.U9.PR.PurchaseRequest.PR">
+                                <a href="javascript:void(0)">
+                               <span>
+                               <i class="fa  fa-stamp-white" data-title="流程进度" data-original-title="" title=""></i></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.Approval.WorkflowView&amp;sid=3101&#39;,&#39;流程跟踪&#39;)">
+                               <span>
+                               <i id="workflowCountSpan" class="fa fa-paw" data-title="流程跟踪" data-original-title="" title=""></i></span></a>
+                            </li>
+                             <li>
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.Approval.BatchApprovalV1&amp;sid=3101&#39;,&#39;流程审批&#39;)">
+                               <span>
+                               <i id="batchApprovaCountSpan" class="fa fa-edit" data-title="流程审批" data-original-title="" title=""></i></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.CS.Calendar.CalendarUI&amp;sId=3071nid&#39;,&#39;日历&#39;)">
+                               <span>
+                               <i id="calendarCountSpan" class="fa fa-list-ul" data-title="个人日历" data-original-title="" title=""></i></span></a>
+                            </li>
+                             <li>
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.CS.Unify.UnifyTaskUI.UnifyTaskBListUI&amp;sid=3000&#39;,&#39;统一任务&#39;)">
+                               <span> 
+                               <i id="taskCountSpan" class="fa fa-log" data-title="未完成" data-original-title="" title=""></i></span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.CS.Unify.UnifyMessageUI.UnifyMessageBListUI&amp;sid=3000&#39;,&#39;统一消息&#39;)">
+                               <span>
+                               <i class="fa fa-comment-o" data-title="未读" id="messageCountSpan" data-original-title="" title=""></i></span></a>
+                            </li>
+                           
+                           
+                         </ul>
+                    </div>
+             </div>
+       </div>
+    <input type="hidden" name="UICulture" id="UICulture" value="zh-CN">
+    <input type="hidden" name="SSOReturnUrl" id="SSOReturnUrl" value="">
+    <input type="hidden" name="OrgId" id="OrgId" value="1001708020135665">
+    <input type="hidden" name="UnreadMessageDuration" id="UnreadMessageDuration" value="0">
+    
+    <div class="loadPage" id="loadPage" style="display: none">
+    </div>
+    <!-- <input type="button" value="清空本地存储数据" id="clear"/> -->
+    <input type="text" id="up_modulesData" value="true" class="none">
+    <div class="portal-header">
+        <!--导航 Start-->
+        <div class="navs-top">
+            <div class="navsCon">
+                <ul class="navs-ul" id="quickMenuUl">
+                    <li id="nav-vertical" class="nopadding"><i class="fa fa-bars  m-r-xs7 m-t-xs"></i></li>
+                    <li class="nobg nopadding"><span class="m-l-xs">|</span></li>
+                    <li class="bbzx" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="导航图"><a href="javascript:TabPanelManager.addUrlTab(&#39;../Process/Index?d&#39;,&#39;导航图&#39;)"><i class="fa fa-map-white m-t-xs m-r-xs2"></i></a></li>
+                    <li class="nobg nopadding"><span class="m-l-xs">|</span></li>
+                    <li title="单据类型" id="0" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.SCM.MF4010_10&amp;sId=3015nid&quot;,&quot;单据类型&quot;,0)">单据类型（销售）</a></li><li title="单据类型" id="1" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.SCM.MF2040_10&amp;sId=3016nid&quot;,&quot;单据类型&quot;,1)">单据类型（采购）</a></li><li title="物料清单" id="2" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.MFG.BOM.BOM&amp;withtree=0&amp;sId=3021nid&quot;,&quot;物料清单&quot;,2)">物料清单</a></li><li title="物料清单批量修改" id="3" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.MFG.BOM.BOMBatchChange&amp;ApplicationId=0&amp;sId=3021nid&amp;ID=-2&quot;,&quot;物料清单批量修改&quot;,3)">物料清单批量修改</a></li><li title="料品" id="4" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.Pub.Item.Item&amp;sId=3000nid&quot;,&quot;料品&quot;,4)">料品</a></li><li title="料品列表" id="5" type="quickMenuItem"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.Pub.Item.ItemList&amp;sId=3000nid&amp;bId=&amp;ShowType=NavigatePage&amp;ParentForm=053a1be3-2c56-428b-b221-b5291644f2cb&amp;__fsk=__SK23511*__SK23511&amp;__curOId=1001708020135665&amp;ID=1001708090012787&quot;,&quot;料品列表&quot;,5)">料品列表</a></li><li title="物料清单列表" id="6" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.MFG.BOM.BOMBList&amp;sId=3021nid&amp;bId=&amp;ShowType=NavigatePage&amp;ParentForm=37fd2e6f-80c2-44fe-97f4-f6c10876d1fe&amp;__fsk=__SK35637*__SK35637&amp;__curOId=1001708020135665&amp;ID=1001708140007305&quot;,&quot;物料清单列表&quot;,6)">物料清单列表</a></li><li title="物料清单树状维护" id="7" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.MFG.BOM.BOM&amp;withtree=1&amp;sId=3021nid&quot;,&quot;物料清单树状维护&quot;,7)">物料清单树状维护</a></li><li title="计划方案" id="8" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=MFG.MRP.PlanSchemeUI&amp;sId=3028nid&quot;,&quot;计划方案&quot;,8)">计划方案</a></li><li title="实体扩展字段" id="9" type="quickMenuItem"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.Base.FlexField.DescFlexField&amp;sId=3000nid&quot;,&quot;实体扩展字段&quot;,9)">实体扩展字段</a></li><li title="供应商" id="10" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.Pub.Supplier.Supplier&amp;sId=3000nid&quot;,&quot;供应商&quot;,10)">供应商</a></li><li title="供应商-料品交叉" id="11" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.Pub.Supplier.SupplierItem&amp;sId=3016nid&quot;,&quot;供应商-料品交叉&quot;,11)">供应商-料品交叉</a></li><li title="计划错误报表" id="12" type="quickMenuItem" class=""><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=MFG.MRP.PlanErrorRpt&amp;sId=3028nid&amp;ID=-2&quot;,&quot;计划错误报表&quot;,12)">计划错误报表</a></li><li id="moreQuickMenuLi" nav-more="1" class="nav-more" style="right: 142px;">
+                        <div class="nav-more-div" title="" data-toggle="tooltip" data-placement="left" data-original-title="更多">
+                            &gt;&gt;
+                        </div>
+                        <dl class="nav-more-dl"><dd title="计划者工作台" id="13"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=MFG.MRP.PlannerWorkBench.PlannerWorkBench&amp;sId=3028nid&quot;,&quot;计划者工作台&quot;,13)">计划者工作台</a></dd><dd title="计划订单" id="14"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=MFG.MRP.PlanOrder.PlanOrder&amp;sId=3028nid&amp;ID=1001709122353514&quot;,&quot;计划订单&quot;,14)">计划订单</a></dd><dd title="存储地点－料品交叉关系" id="15"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=CBO.Pub.WarehouseItem.WarehouseItem&amp;sId=3017nid&quot;,&quot;存储地点－料品交叉关系&quot;,15)">存储地点－料品交叉关系</a></dd><dd title="杂发" id="16"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=SCM.INV.INV2020_10&amp;sId=3017nid&quot;,&quot;杂发&quot;,16)">杂发</a></dd><dd title="标准收货" id="17"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=SCM.PM.PM6010_10&amp;RCV_Type=PM6010&amp;sId=3016nid&amp;ID=-2&quot;,&quot;标准收货&quot;,17)">标准收货</a></dd><dd title="可用量计算" id="18"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=SCM.INV.INVAT20_10&amp;sId=3017nid&quot;,&quot;可用量计算&quot;,18)">可用量计算</a></dd><dd title="应付单列表" id="19"><a href="javascript:QuickMenuManager.beforeQuickMenuClick(&quot;../../erp/display.aspx?lnk=FI.AP.Process.APBill.APMaintenanceList&amp;sId=3004nid&amp;bId=&amp;ShowType=NavigatePage&amp;ParentForm=4098e16b-17dc-4a1f-9a7e-a702a903fd89&amp;__fsk=__SK92210*__SK92210&amp;__curOId=1001708020135665&amp;ID=1001712072216483&quot;,&quot;应付单列表&quot;,19)">应付单列表</a></dd></dl>
+                    </li>
+                </ul>
+                <ul class="navs-ul navs-right">
+                    <li id="favoriteManager" data-target="#favoritesManagerDiv" data-toggle="modal" class="">快捷功能管理</li>
+                    <li class="nobg nopadding"><span>|</span></li>
+                    <li id="btnAddFavorite" data-target="#addToFavoritesDiv" class="nopadding"><i title="" data-toggle="tooltip" data-placement="bottom" class="fa fa-star  m-r-xs  " data-original-title="添加快捷菜单">
+                    </i></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- <ul class="fixed-module">
+            <li><i class="fa fa-chevron-right" title="展收"></i></li>
+            <li><a href="javascript:TabPanelManager.addUrlTab('../../erp/display.aspx?lnk=UFIDA.U9.CS.Unify.UnifyMessageUI.UnifyMessageBListUI','统一消息')">
+                <i class="fa fa-comment-o" title="未读"></i><em class="tab-text">未读 (<span id="messageCountSpan"></span>)</em></a></li>
+            <li><a href="javascript:TabPanelManager.addUrlTab('../../erp/display.aspx?lnk=UFIDA.U9.CS.Unify.UnifyTaskUI.UnifyTaskBListUI','统一任务')">
+                <i class="fa fa-list-ul" title="未完成"></i><em class="tab-text">未完成 (<span id="taskCountSpan"></span>)</em></a></li>
+            <li><a href="javascript:TabPanelManager.addUrlTab('../../erp/display.aspx?lnk=UFIDA.U9.CS.Calendar.CalendarUI&sId=3071nid','日历')">
+                <i class="fa fa-log" title="个人日历"></i><em class="tab-text">个人日历 (<span id="calendarCountSpan"></span>)</em></a></li>
+            <li><a href="javascript:TabPanelManager.addUrlTab('../../erp/display.aspx?lnk=UFIDA.U9.Approval.BatchApprovalV1','流程审批')">
+                <i class="fa fa-edit" title="流程审批"></i><em class="tab-text">流程审批 (<span id="batchApprovaCountSpan"></span>)</em></a></li>
+            <li><a href="javascript:TabPanelManager.addUrlTab('../../erp/display.aspx?lnk=UFIDA.U9.Approval.WorkflowView','流程跟踪')">
+                <i class="fa fa-paw" title="流程跟踪"></i><em class="tab-text">流程跟踪 (<span id="workflowCountSpan"></span>)</em></a></li>
+            <li id="approvalBtn"  class="approvalBtn"><a href="javascript:void(0)">
+                <i class="fa  fa-stamp-white" title="流程进度"></i><em class="tab-text">流程进度 </em></a></li>
+        </ul> -->
+        <div class="logo-bar">
+            <div class="logo-bar-con">
+                <div class="pull-right adminDiv">
+                    <ul class="adminUl">
+                        <li class="nohover logo1 hidden">
+                            <img src="./请购_files/small-logo.jpg"></li> 
+                        <li class="nohover logo2 hidden">
+                        <img src="./请购_files/plm.png" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="PLM">
+                            </li>
+                        <li class="community nohover"><img src="./请购_files/u9hub.png" height="18" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="U9社区"></li>
+                        <li class="nohover" id="knowledgeBtn" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="知识弹窗"><i class="iconfont y-icon-help"></i></li>
+                        <!--云合同-->
+                        <li class="yht nohover hidden">
+                                <img src="./请购_files/cloud-icon.png" onclick="DocumentManager.showYHTPasswordDiv();" height="18" title="云合同" data-target="#yhtPasswordCheckDiv" data-toggle="modal" data-placement="bottom">
+                            <input type="hidden" name="isNeedPwd" id="isNeedPwd" value="">
+                        </li>
+                        <li class="">
+                          <img id="logoBarAvatar" class="logo-bar-avatar">
+                        <span id="userNameLi" class="maxWidth" title="李加">李加</span> <i class="fa fa-caret-down fa-sm"></i>
+                            <dl class="listmMenu" adminulhover="1" style="display: none;">
+                                <dd type="enterprise">
+                                    <span>切换企业</span> <span>&gt;</span>
+                                    <div class="listSubMenu">
+                                        <dl id="enterpriseDl">
+                                        </dl>
+                                    </div>
+                                </dd>
+                                <dd type="languages">
+                                    <span>切换语言</span> <span>&gt;</span>
+                                    <div class="listSubMenu">
+                                        <dl id="languagesDl" isshow="true"><dd itemid="zh-CN" isselected="true"><i class="fa fa-check fa-sm"></i><span>中文（中国）</span></dd></dl>
+                                    </div>
+                                </dd>
+                                <dd type="themes" class="">
+                                    <span>切换主题</span> <span>&gt;</span>
+                                    <div class="listSubMenu" style="display: none;">
+                                        <dl id="themesDl" isshow="true"><dd itemid="blue"><span>蓝色精灵</span></dd><dd itemid="green" isselected="true"><i class="fa fa-check fa-sm"></i><span>绿色精灵</span></dd><dd itemid="red"><span>红色精灵</span></dd></dl>
+                                    </div>
+                                </dd>
+                                <dd onclick="DocumentManager.showPasswordDiv();" data-target="#passwordModifyDiv" data-toggle="modal">
+                                    <span><a href="javascript:void(0);">
+                                        修改密码</a></span></dd>
+                                <dd onclick="MyMsg.getDate();">
+                                    <span><a href="javascript:void(0);">我的信息</a></span>
+                                </dd>
+                                <dd id="libraryStatus">
+                                        <span>历史库查询</span>
+                                </dd>
+                                <dd id="designStyle" style="display:none">
+                                    
+                                </dd>
+                            </dl>
+                        </li>
+                        <li><span class="maxWidth" title="深圳市力同芯科技发展有限公司">深圳市力同芯科技发展有限公司</span> <i class="fa fa-caret-down fa-sm"></i>
+                            
+                            <dl id="orgsDl" type="orgs" class="listmMenu-zz list-organize" adminulhover="1" isshow="true" style="width: 242px;"><dd itemid="1001806280045676"><span title="力同集团">000&nbsp;&nbsp;&nbsp;力同集团</span></dd><dd itemid="1001708020000209"><span title="数据中心">100&nbsp;&nbsp;&nbsp;数据中心</span></dd><dd itemid="1001708020135435"><span title="力同科技股份有限公司">200&nbsp;&nbsp;&nbsp;力同科技股份有限公司</span></dd><dd itemid="1001708020135665"><i class="fa fa-check fa-sm"></i><span title="深圳市力同芯科技发展有限公司">300&nbsp;&nbsp;&nbsp;深圳市力同芯科技发展有限公司</span></dd><dd itemid="1001708020135890"><span title="力同科技股份有限公司上海分公司">400&nbsp;&nbsp;&nbsp;力同科技股份有限公司上海分公司</span></dd><dd itemid="1001708020136115"><span title="泉州力同科技有限公司">500&nbsp;&nbsp;&nbsp;泉州力同科技有限公司</span></dd><dd itemid="1001708020136342"><span title="泉州力同芯科技发展有限公司">600&nbsp;&nbsp;&nbsp;泉州力同芯科技发展有限公司</span></dd><dd itemid="1001712010012532"><span title="力同科技（香港）有限公司">700&nbsp;&nbsp;&nbsp;力同科技（香港）有限公司</span></dd><dd itemid="1001712010015192"><span title="力同芯（香港）有限公司">800&nbsp;&nbsp;&nbsp;力同芯（香港）有限公司</span></dd><dd itemid="1001806270217347"><span title="北京智谱微科技有限责任公司">910&nbsp;&nbsp;&nbsp;北京智谱微科技有限责任公司</span></dd></dl>
+                        </li>
+                        <li>
+                            
+                        <span id="new-add" tag="new-add" class="new-add"></span><span class="maxWidth" title="帮助">帮助</span> 
+                        <i class="fa fa-caret-down fa-sm"></i>
+                            <dl class="listmMenu list-help" adminulhover="1">
+                                <dd onclick="ServiceManager.openHelp();">
+                                    <span><a href="javascript:void(0);">帮助 </a> </span>
+                                </dd>
+                                <dd data-target="#infoU9" data-toggle="modal">
+                                    <span><a href="javascript:void(0)">关于我们  </a>
+                                    </span>
+                                </dd>
+                                <dd onclick="ServiceManager.openWhatsNew(&#39;李加&#39;);" id="whatsNew">
+                                    <span>
+                                        <span tag="new-add" class="new-add new-add-center"></span>
+                                        <a href="javascript:void(0)">新增功能和提示</a>
+                                    </span>
+
+                                </dd>
+                                <dd onclick="ServiceManager.openDiagnostic();">
+                                    <span>
+                                        <a href="javascript:void(0)">诊断模式</a>
+                                    </span>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li onclick="ServiceManager.logout();"><a href="javascript:void(0);" title="" data-toggle="tooltip" data-placement="bottom" data-original-title="注销">注销</a></li>
+                    </ul>
+                </div>
+                <span class="version">
+
+                    <img src="./请购_files/logo-u9.png" height="34">
+                    <img src="./请购_files/version.png">
+                </span>
+                <div class="header-search">
+                    <button class="header-search-btn" data-toggle="tooltip" data-placement="right" title="" data-original-title="搜索">
+                        <i class="fa fa-search fa-lg"></i>
+                    </button>
+                    <div class="classify" m_select="1">
+                        <i class="fa fa-angle-down"></i>
+                        <ul class="selectUl" id="searchCategorysDiv"><li code="ALL" text="全部">全部</li></ul>
+                        <div class="selectDiv" code="ALL">全部</div>
+                    </div>
+                    <input type="text" id="header-search-text" class="header-search-text" placeholder="全文搜索" onkeydown="DocumentManager.allSearch()" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;全文搜索&#39;">
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--导航 End-->
+    <!--导航 End-->
+    <div id="portalContent" class="portal-content none">
+        <div class="portal-con" id="portal-con">
+            
+            <div class="portal-con-right" id="portal-con-right">
+
+
+
+                    <div class="con-area">
+                        <div class="list-title">
+                            <!-- <div class="toggle" zd-toggle="1">
+                                <i class="fa fa-angle-down  fa-lg" style="display: none"></i><i class="fa fa-angle-up  fa-lg">
+                                </i>
+                            </div> -->
+                            <span class="list-title-text">新闻</span>
+                        </div>
+                        <div class="list-con">
+                            <ul class="list-con-ul" id="newsDiv"></ul>
+                            <div class="text-right more" id="moreNews">
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=CS.Collaboration.News.AllSortsNewsList&amp;sId=3071nid&#39;,&#39;新闻&#39;)">
+                                    <i class="fa fa-more-gray"></i>
+                                    更多</a></div>
+                        </div>
+                    </div>
+                    <div class="con-area">
+                        <div class="list-title">
+                            <!-- <div class="toggle" zd-toggle="1">
+                                <i class="fa fa-angle-down  fa-lg" style="display: none"></i><i class="fa fa-angle-up  fa-lg">
+                                </i>
+                            </div> -->
+                            <span class="list-title-text">公告</span>
+                        </div>
+                        <div class="list-con">
+                            <ul id="boardsDiv" class="list-con-ul"></ul>
+                            <div class="text-right more">
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.CS.Pub.InfoPortalHome&amp;ParentForm=9d492159-12ad-4a8f-8527-f76d2ad3eaff&amp;sId=3071nid&#39;,&#39;公告&#39;)">
+                                    <i class="fa fa-more-gray"></i>
+                                    更多</a></div>
+                        </div>
+                    </div>
+            </div>
+           <div class="portal-con-left" id="portal-con-left">
+                <div class="con-area">
+                    <div class="list-title">
+                        <!-- <div class="toggle" zd-toggle="1">
+                            <i class="fa fa-angle-down  fa-lg" style="display: none"></i><i class="fa fa-angle-up fa-lg ">
+                            </i>
+                        </div> -->
+                        <span class="list-title-text">消息</span>
+                        <ul class="nav-tabs2" ultype="messages" nav-tabs="1">
+                            <li litype="0" class="select">未读</li>
+                            <li litype="-1">全部</li>
+                        </ul>
+                    </div>
+                    <div class="list-con">
+                        <ul class="list-con-ul list-con-li-0" id="messagesDiv"></ul>
+                        <div class="con-foot">
+                            <div class="pull-right">
+
+                                 <a href="http://192.168.1.82:90/U9/cs/message.msi" class="text-pink">
+                                 <i class="fa fa-download-gray"></i>下载</a>
+                                 <a href="javascript:ServiceManager.csSendMessage();" class="flag" title="发消息">
+                                              <i class="fa fa-add-gray"></i>
+                                             添加
+                                 </a>
+                                <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.CS.Unify.UnifyMessageUI.UnifyMessageBListUI&amp;sid=3000&#39;,&#39;统一消息&#39;)">  <i class="fa fa-more-gray"></i>更多</a> 
+                             </div>
+                            <ul class="page-ul" id="messagesPageTool">
+                                <li class="page" pageid="firstPage">&lt;&lt;</li>
+                                <li class="page" pageid="prevPage">&lt;</li>
+                                <li class="page" pageid="nextPage">&gt;</li>
+                                <li class="page" pageid="lastPage">&gt;&gt;</li>
+                                <li class="total-items">共 <span id="messageTotalItems"> </span> 条</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="con-area">
+                    <div class="list-title">
+                        <!-- <div class="toggle" zd-toggle="1">
+                            <i class="fa fa-angle-down  fa-lg" style="display: none"></i><i class="fa fa-angle-up  fa-lg">
+                            </i>
+                        </div> -->
+                        <span class="list-title-text">任务</span>
+                        <ul class="nav-tabs2" ultype="tasks" nav-tabs="1">
+                            <li litype="0" class="select">未完成</li>
+                            <li litype="-1">全部</li>
+                        </ul>
+                    </div>
+                    <div class="list-con">
+                        <ul class="list-con-ul list-con-li-0" id="tasksDiv"></ul>
+                        <div class="con-foot">
+                        <div class="pull-right">
+                        <a href="javascript:ServiceManager.newTask()" class="text-pink">
+                        <i class="fa fa-add-gray"></i>
+                        添加</a>
+                        <a href="javascript:TabPanelManager.addUrlTab(&#39;../../erp/display.aspx?lnk=UFIDA.U9.CS.Unify.UnifyTaskUI.UnifyTaskBListUI&#39;,&#39;统一任务&#39;)"><i class="fa fa-more-gray"></i>
+                                更多</a>
+                            </div>
+                            <ul class="page-ul" id="taskPageTool">
+                                <li class="page" pageid="firstPage">&lt;&lt;</li>
+                                <li class="page" pageid="prevPage">&lt;</li>
+                                <li class="page" pageid="nextPage">&gt;</li>
+                                <li class="page" pageid="lastPage">&gt;&gt; </li>
+                                <li class="total-items">共 <span id="taskTotalItems"></span> 条</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        
+         
+        </div>
+    </div>
+
+
+    <div class="portal-content">
+        <div id="tab" class="portal-con" style="overflow: hidden; width: 100%; height: 100%;">
+        <div class="tabpanel" style="width: 1426px; height: 679px;"><div class="tabpanel_tab_contentBox"><div class="tabpanel_tab_content" style="width: 1331px;"><div class="tabpanel_left_scroll display_none"></div><div class="tabpanel_right_scroll display_none"></div><div class="tabpanel_move_content" style="width: 1261px;"><ul class="tabpanel_mover"><li id="toolbarPlugin1" class=""><div class="icon_title" style="background-image: url(&quot;../../images/home1.png&quot;);">首页</div></li><li id="30554BD0-08EF-44AA-ABA9-F58B070419A3" class=""><div class="title">Bom软件成本</div><div class="closer display_none" title="关闭"></div></li><li id="34D63E54-2CCD-4CAC-9356-953B4EC49423" class=""><div class="title">标准采购</div><div class="closer display_none" title="关闭"></div></li><li id="91C17E85-CE70-463C-AEA0-2950CE01953C" class="active"><div class="title">请购</div><div class="closer" title="关闭"></div></li></ul></div><div class="tabpanel_tab_spacer"></div></div></div><div class="tabpanel_content" style="height: 649px; width: 1426px;"><div class="html_content" style="z-index: 2;"><div class="iframgBg" id="toolbarPlugin1LoadingDiv" style="display: none;"></div> <div class="iframeBox" style="height: 647px; display: none;"><iframe onload="TabPanelManager.frameLoaded(&#39;toolbarPlugin1&#39;)" id="toolbarPlugin1Frame" height="100%" width="100%" src="./请购_files/index.html" frameborder="0"></iframe></div><div class="tipsStatus"></div></div><div class="html_content" style="z-index: 7;"><div class="iframgBg" id="30554BD0-08EF-44AA-ABA9-F58B070419A3LoadingDiv" style="display: none;"></div> <div class="iframeBox" style="height: 647px; display: none;"><iframe onload="TabPanelManager.frameLoaded(&#39;30554BD0-08EF-44AA-ABA9-F58B070419A3&#39;)" id="30554BD0-08EF-44AA-ABA9-F58B070419A3Frame" height="100%" width="100%" src="./请购_files/display.html" frameborder="0"></iframe></div><div class="tipsStatus"></div></div><div class="html_content" style="z-index: 24;"><div class="iframgBg" id="34D63E54-2CCD-4CAC-9356-953B4EC49423LoadingDiv" style="display: none;"></div> <div class="iframeBox" style="height: 647px; display: none;"><iframe onload="TabPanelManager.frameLoaded(&#39;34D63E54-2CCD-4CAC-9356-953B4EC49423&#39;)" id="34D63E54-2CCD-4CAC-9356-953B4EC49423Frame" height="100%" width="100%" src="./请购_files/display(1).html" frameborder="0"></iframe></div><div class="tipsStatus">完成查找数据记录加载！</div></div><div class="html_content html_content_active" style="z-index: 25;"><div class="iframgBg" id="91C17E85-CE70-463C-AEA0-2950CE01953CLoadingDiv" style="display: none;"></div> <div class="iframeBox" style="height: 647px; display: block;"><iframe onload="TabPanelManager.frameLoaded(&#39;91C17E85-CE70-463C-AEA0-2950CE01953C&#39;)" id="91C17E85-CE70-463C-AEA0-2950CE01953CFrame" height="100%" width="100%" src="./请购_files/display(2).html" frameborder="0"></iframe></div><div class="tipsStatus">完成查找数据记录加载！</div></div></div><div class="tabpanel_select_content"><span class="btn1"><div class="lists hidden"><a href="javascript:TabPanelManager.refreshPage();">刷新当前页</a><a href="javascript:TabPanelManager.advance();">前进</a><a href="javascript:TabPanelManager.goback();">后退</a><a href="javascript:TabPanelManager.getOnUrl();">新窗口中打开</a><a href="javascript:TabPanelManager.closeAllTab();">关闭其它</a><a href="javascript:TabPanelManager.killThis();">关闭当前</a><p class="otherlists"><a href="javascript:TabPanelManager.firseItem();" class="">主页</a><a href="javascript:TabPanelManager.selectOptions(1);" class="">Bom软件成本</a><a href="javascript:TabPanelManager.selectOptions(2);" class="">标准采购</a><a href="javascript:TabPanelManager.selectOptions(3);" class="onlys">请购</a></p></div></span><span class="btn2"><div class="lists1 hidden"><a href="javascript:TabPanelManager.editPersonal();">修改部件</a><a href="javascript:TabPanelManager.deletePersonal();">清除个性化模块</a><a href="javascript:TabPanelManager.shareToWorkspace();">共享此页面</a></div></span></div></div></div>
+    </div>
+    <!-- 提示信息 -->
+    <style>
+        .tipsStatus{position: absolute;bottom: -2px;left: 10px;right: 10px;font: 12px/18px "microsoft yahei";color: #000;height: 22px;line-height: 22px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    </style>
+    <!--所有分类 Start-->
+    <div class="modules" tabindex="1" style="display: none; width: 180px;">
+        <div class="modulesTop">
+            <div class="search-lable">
+                <i class="fa fa-search-2"></i>
+                <input type="text" class="search-input" onkeyup="DocumentManager.txtHide()" onkeydown="DocumentManager.enterSumbit()" placeholder="菜单搜索" onfocus="this.placeholder=&#39;&#39;" onblur="this.placeholder=&#39;菜单搜索&#39;">
+            </div>
+            <div class="result hidden"><p><span>供应链</span> &gt; <span>采购管理</span> &gt; <span>采购申请</span> &gt; <a href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=SCM.PM.PM3020_10&amp;PR_Type=PM3020&amp;sId=3016nid&amp;mId=1001101160311113&quot;,&quot;请购&quot;);">请购</a></p><p><span>供应链</span> &gt; <span>采购管理</span> &gt; <span>采购申请</span> &gt; <a href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=SCM.PM.PM3030_10&amp;sId=3016nid&amp;mId=1001101160311114&quot;,&quot;请购单分割/合并&quot;);">请购单分割/合并</a></p><p><span>供应链</span> &gt; <span>采购管理</span> &gt; <span>采购申请</span> &gt; <a href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=SCM.PM.PM3020_10&amp;PR_Type=PM3040&amp;sId=3016nid&amp;mId=1001101160311115&quot;,&quot;合同请购&quot;);">合同请购</a></p><p><span>供应链</span> &gt; <span>采购管理</span> &gt; <span>查询</span> &gt; <a href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=PMA010&amp;sId=3016nid&amp;mId=1001101160311158&quot;,&quot;请购单查询&quot;);">请购单查询</a></p><p><span>供应链</span> &gt; <span>委外管理</span> &gt; <span>采购申请</span> &gt; <a href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=SCM.PM.PM3020_10&amp;PR_Type=PM30200&amp;sId=3018nid&amp;mId=1001306045467021&quot;,&quot;请购&quot;);">请购</a></p></div>
+        </div>
+        <div class="modules-list"><div class="item" flag_m="0"><h3><i class="fa fa-plus"></i>基础设置</h3><dl class="item-ul" style="display: none;"><dd flag_m2="0"><div class="erji" title="基础设置（集团）">基础设置（集团）</div><div class="item-list " style="display: none;"></div></dd><dd flag_m2="1"><div class="erji" title="基础设置（组织）">基础设置（组织）</div><div class="item-list " style="display: none;"></div></dd></dl></div><div class="item" flag_m="1"><h3><i class="fa fa-plus"></i>财务</h3><dl class="item-ul" style="display: none;"><dd flag_m2="0"><div class="erji" title="应付管理">应付管理</div><div class="item-list " style="display: none;"></div></dd></dl></div><div class="item" flag_m="2"><h3><i class="fa fa-plus"></i>供应链</h3><dl class="item-ul" style="display: none;"><dd flag_m2="0"><div class="erji" title="销售管理">销售管理</div><div class="item-list " style="display: none;"></div></dd><dd flag_m2="1"><div class="erji" title="采购管理">采购管理</div><div class="item-list " style="display: none;"></div></dd><dd flag_m2="2"><div class="erji" title="库存管理">库存管理</div><div class="item-list " style="display: none;"></div></dd><dd flag_m2="3"><div class="erji" title="委外管理">委外管理</div><div class="item-list " style="display: none;"></div></dd></dl></div><div class="item" flag_m="3"><h3><i class="fa fa-minus"></i>生产制造</h3><dl class="item-ul" style="display: none;"><dd flag_m2="0"><div class="erji" title="工程数据">工程数据</div><div class="item-list " style="display: none;"></div></dd><dd flag_m2="1" lock="true" class=""><div class="erji" title="生产管理">生产管理</div><div class="item-list " style="width: 1160px; display: none;"><ul class="subitem-list"><li groupid="0" type="parent"><ul groupid="0"><li class="text-green sel" applicationid="1001101160309200" title="基础设置">基础设置</li><li type="child" applicationid="1001101160309201" datafullpy="CanShuSheZhi" datajp="CSSZ" class="sel" title="参数设置"><a applicationid="1001101160309201" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=CBO.Base.Profile.Profile&amp;ApplicationId=3025&amp;sId=3025nid&amp;mId=1001101160309201&quot;,&quot;参数设置&quot;);">参数设置</a></li><li type="child" applicationid="1001101160309202" datafullpy="DanJuLeiXing" datajp="DJLX" class="sel" title="单据类型"><a applicationid="1001101160309202" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=CBO.MFG.MODocType&amp;sId=3025nid&amp;mId=1001101160309202&quot;,&quot;单据类型&quot;);">单据类型</a></li><li type="child" applicationid="1001101160309203" datafullpy="GuaQiYuanYin" datajp="GQYY" class="sel" title="挂起原因"><a applicationid="1001101160309203" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=CBO.Base.HoldRelease.HoldReason&amp;AppID=3025&amp;sId=3025nid&amp;mId=1001101160309203&quot;,&quot;挂起原因&quot;);">挂起原因</a></li><li type="child" applicationid="1001101160309204" datafullpy="JieChuYuanYin" datajp="JCYY" class="sel" title="解除原因"><a applicationid="1001101160309204" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=CBO.Base.HoldRelease.ReleaseReason&amp;AppID=3025&amp;sId=3025nid&amp;mId=1001101160309204&quot;,&quot;解除原因&quot;);">解除原因</a></li><li type="child" applicationid="1001101160309205" datafullpy="TongJiQiJian" datajp="TJQJ" class="sel" title="统计期间"><a applicationid="1001101160309205" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=CBO.Pub.StatPeriodStatus.StatPeriodStatus&amp;ApplicationID=3020&amp;sId=3025nid&amp;mId=1001101160309205&quot;,&quot;统计期间&quot;);">统计期间</a></li></ul></li><li groupid="1" type="parent"><ul groupid="1"><li class="text-green sel" applicationid="1001101160309206" title="生产订单">生产订单</li><li type="child" applicationid="1001101160309207" datafullpy="QiChuShengChanDingDan" datajp="QCSCDD" class="sel" title="期初生产订单"><a applicationid="1001101160309207" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.DiscreteMO.StartMO&amp;IsStartMO=1&amp;sId=3025nid&amp;mId=1001101160309207&quot;,&quot;期初生产订单&quot;);">期初生产订单</a></li><li type="child" applicationid="1001101160309208" datafullpy="JiHuaShengChanDingDan" datajp="JHSCDD" class="sel" title="计划生产订单"><a applicationid="1001101160309208" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.PlanMO.PlanMO&amp;sId=3025nid&amp;mId=1001101160309208&quot;,&quot;计划生产订单&quot;);">计划生产订单</a></li><li type="child" applicationid="1001101160309210" datafullpy="ShengChanDingDan" datajp="SCDD" class="sel" title="生产订单"><a applicationid="1001101160309210" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.DiscreteMO.DiscreteMO&amp;IsStartMO=0&amp;sId=3025nid&amp;mId=1001101160309210&quot;,&quot;生产订单&quot;);">生产订单</a></li><li type="child" applicationid="1001405082532630" datafullpy="KuaiJieDingDan" datajp="KJDD" class="sel" title="快捷订单"><a applicationid="1001405082532630" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=SimpleMOUIURI&amp;sId=3025nid&amp;mId=1001405082532630&quot;,&quot;快捷订单&quot;);">快捷订单</a></li><li type="child" applicationid="1001508272465878" datafullpy="ZaiKuGaiZhi" datajp="ZKGZ" class="sel" title="在库改制"><a applicationid="1001508272465878" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=StockMendMO&amp;sId=3025nid&amp;mId=1001508272465878&quot;,&quot;在库改制&quot;);">在库改制</a></li><li type="child" applicationid="1001101160309211" datafullpy="ZuoYeJiHua" datajp="ZYJH" class="sel" title="作业计划"><a applicationid="1001101160309211" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOTaskPlan.MOTaskPlan&amp;sId=3025nid&amp;mId=1001101160309211&quot;,&quot;作业计划&quot;);">作业计划</a></li><li type="child" applicationid="1001101160309212" datafullpy="DaShengChanDingDan" datajp="DSCDD" class="sel" title="大生产订单"><a applicationid="1001101160309212" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.GreatMO&amp;sId=3025nid&amp;mId=1001101160309212&quot;,&quot;大生产订单&quot;);">大生产订单</a></li><li type="child" applicationid="1001101160309213" datafullpy="FanGongBaoFei" datajp="FGBF" class="sel" title="返工报废"><a applicationid="1001101160309213" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ReworkMO.ReworkMO&amp;sId=3025nid&amp;mId=1001101160309213&quot;,&quot;返工报废&quot;);">返工报废</a></li><li type="child" applicationid="1001101160309216" datafullpy="ShengChanDingDanFenGe" datajp="SCDDFG" class="sel" title="生产订单分割"><a applicationid="1001101160309216" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MODivide.MODivide&amp;sId=3025nid&amp;mId=1001101160309216&quot;,&quot;生产订单分割&quot;);">生产订单分割</a></li><li type="child" applicationid="1001101160309217" datafullpy="ShengChanDingDanHeBing" datajp="SCDDHB" class="sel" title="生产订单合并"><a applicationid="1001101160309217" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOMerge.MOMerge&amp;sId=3025nid&amp;mId=1001101160309217&quot;,&quot;生产订单合并&quot;);">生产订单合并</a></li><li type="child" applicationid="1001101160309218" datafullpy="ShengChanDingDanGaiZhi" datajp="SCDDGZ" class="sel" title="生产订单改制"><a applicationid="1001101160309218" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOChangeItem.MOChangeItem&amp;sId=3025nid&amp;mId=1001101160309218&quot;,&quot;生产订单改制&quot;);">生产订单改制</a></li><li type="child" applicationid="1001101160309219" datafullpy="ShengChanDingDanCheXian" datajp="SCDDCX" class="sel" title="生产订单撤线"><a applicationid="1001101160309219" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.CancelMo.CancelMo&amp;sId=3025nid&amp;mId=1001101160309219&quot;,&quot;生产订单撤线&quot;);">生产订单撤线</a></li><li type="child" applicationid="1001101160309220" datafullpy="ShengChanDingDanFuXian" datajp="SCDDFX" class="sel" title="生产订单复线"><a applicationid="1001101160309220" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.UnCancelMO.UnCancelMO&amp;sId=3025nid&amp;mId=1001101160309220&quot;,&quot;生产订单复线&quot;);">生产订单复线</a></li></ul></li></ul><ul class="subitem-list"><li groupid="1" type="parent"><ul groupid="1"><li type="child" applicationid="1001101160309221" datafullpy="ShengChanDingDanZhongPai" datajp="SCDDZP" class="sel" title="生产订单重排"><a applicationid="1001101160309221" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOReSet.MOReSet&amp;sId=3025nid&amp;mId=1001101160309221&quot;,&quot;生产订单重排&quot;);">生产订单重排</a></li><li type="child" applicationid="1001101160309222" datafullpy="ZaiZhiPinPiHaoXuLieHaoWeiHu" datajp="ZZPPHXLHWH" class="sel" title="在制品批号序列号维护"><a applicationid="1001101160309222" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOSemiLotSn&amp;sId=3025nid&amp;mId=1001101160309222&quot;,&quot;在制品批号序列号维护&quot;);">在制品批号序列号维护</a></li><li type="child" applicationid="1001101160309224" datafullpy="QiTaoFenXi" datajp="QTFX" class="sel" title="齐套分析"><a applicationid="1001101160309224" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.StartAnalysisUI&amp;sId=3025nid&amp;mId=1001101160309224&quot;,&quot;齐套分析&quot;);">齐套分析</a></li><li type="child" applicationid="1001101160309225" datafullpy="ShengChanKongZhiTai" datajp="SCKZT" class="sel" title="生产控制台"><a applicationid="1001101160309225" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.MFGConsole&amp;sId=3025nid&amp;mId=1001101160309225&quot;,&quot;生产控制台&quot;);">生产控制台</a></li><li type="child" applicationid="1001101160309226" datafullpy="ShengChanDingDanBianGengDan" datajp="SCDDBGD" class="sel" title="生产订单变更单"><a applicationid="1001101160309226" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.MOModifyUI&amp;sId=3025nid&amp;mId=1001101160309226&quot;,&quot;生产订单变更单&quot;);">生产订单变更单</a></li><li type="child" applicationid="1001306045464148" datafullpy="PiLiangBeiLiaoTiDaiMoNi" datajp="PLBLTDMN" class="sel" title="批量备料替代模拟"><a applicationid="1001306045464148" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UTEPickAdjust&amp;sId=3025nid&amp;mId=1001306045464148&quot;,&quot;批量备料替代模拟&quot;);">批量备料替代模拟</a></li><li type="child" applicationid="1001508288363959" datafullpy="ChaiXieDingDan" datajp="CXDD" class="sel" title="拆卸订单"><a applicationid="1001508288363959" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.DisassemblyMOUI&amp;sId=3025nid&amp;mId=1001508288363959&quot;,&quot;拆卸订单&quot;);">拆卸订单</a></li><li type="child" applicationid="1001508288363960" datafullpy="ShengChanDingDanPiLiangHeBing" datajp="SCDDPLHB" class="sel" title="生产订单批量合并"><a applicationid="1001508288363960" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.BatchMergeMOUI&amp;sId=3025nid&amp;mId=1001508288363960&quot;,&quot;生产订单批量合并&quot;);">生产订单批量合并</a></li></ul></li><li groupid="2" type="parent"><ul groupid="2"><li class="text-green sel" applicationid="1001101160309227" title="生产模拟">生产模拟</li><li type="child" applicationid="1001101160309228" datafullpy="ChaDanMoNi" datajp="CDMN" class="sel" title="插单模拟"><a applicationid="1001101160309228" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOPlusSwap.MOPlusSwap&amp;sId=3025nid&amp;mId=1001101160309228&quot;,&quot;插单模拟&quot;);">插单模拟</a></li><li type="child" applicationid="1001203053039198" datafullpy="ShengChanMoNi" datajp="SCMN" class="sel" title="生产模拟"><a applicationid="1001203053039198" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MSUI&amp;sId=3025nid&amp;mId=1001203053039198&quot;,&quot;生产模拟&quot;);">生产模拟</a></li></ul></li><li groupid="3" type="parent"><ul groupid="3"><li class="text-green sel" applicationid="1001101160309230" title="日计划">日计划</li><li type="child" applicationid="1001101160309231" datafullpy="ShengChanXianLiaoPinJiHua" datajp="SCXLPJH" class="sel" title="生产线料品计划"><a applicationid="1001101160309231" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ProductLinePLS&amp;sId=3025nid&amp;mId=1001101160309231&quot;,&quot;生产线料品计划&quot;);">生产线料品计划</a></li><li type="child" applicationid="1001101160309232" datafullpy="ShengChanXianLiaoPinRiJiHua" datajp="SCXLPRJH" class="sel" title="生产线料品日计划"><a applicationid="1001101160309232" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.TotalPLS&amp;sId=3025nid&amp;mId=1001101160309232&quot;,&quot;生产线料品日计划&quot;);">生产线料品日计划</a></li><li type="child" applicationid="1001101160309233" datafullpy="ShengChanXianRiJiHuaHunLiu" datajp="SCXRJHHL" class="sel" title="生产线日计划混流"><a applicationid="1001101160309233" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.PLSAssembleSeqUI&amp;sId=3025nid&amp;mId=1001101160309233&quot;,&quot;生产线日计划混流&quot;);">生产线日计划混流</a></li><li type="child" applicationid="1001101160309234" datafullpy="ZhuangPeiShangXianJiHua" datajp="ZPSXJH" class="sel" title="装配上线计划"><a applicationid="1001101160309234" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.AssembleSeqUIFormUI&amp;sId=3025nid&amp;mId=1001101160309234&quot;,&quot;装配上线计划&quot;);">装配上线计划</a></li></ul></li><li groupid="4" type="parent"><ul groupid="4"><li class="text-green sel" applicationid="1001101160309235" title="生产领料">生产领料</li><li type="child" applicationid="1001101160309236" datafullpy="ShengChanLingLiao" datajp="SCLL" class="sel" title="生产领料"><a applicationid="1001101160309236" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.IssueTXN.IssueTXN&amp;sId=3025nid&amp;mId=1001101160309236&quot;,&quot;生产领料&quot;);">生产领料</a></li><li type="child" applicationid="1001407319529328" datafullpy="KuaiSuLingLiao" datajp="KSLL" class="sel" title="快速领料"><a applicationid="1001407319529328" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MOPickListToIssuse&amp;sId=3025nid&amp;mId=1001407319529328&quot;,&quot;快速领料&quot;);">快速领料</a></li><li type="child" applicationid="1001101160309237" datafullpy="ShengChanTuiLiao" datajp="SCTL" class="sel" title="生产退料"><a applicationid="1001101160309237" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.RecedeTXN.RecedeTXN&amp;sId=3025nid&amp;mId=1001101160309237&quot;,&quot;生产退料&quot;);">生产退料</a></li></ul></li></ul><ul class="subitem-list"><li groupid="4" type="parent"><ul groupid="4"><li type="child" applicationid="1001101160309238" datafullpy="ChaoELingLiao" datajp="CELL" class="sel" title="超额领料"><a applicationid="1001101160309238" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ExcessIssue.ExcessIssueTXN&amp;sId=3025nid&amp;mId=1001101160309238&quot;,&quot;超额领料&quot;);">超额领料</a></li><li type="child" applicationid="1001101160309239" datafullpy="LingLiaoPi" datajp="LLP" class="sel" title="领料批"><a applicationid="1001101160309239" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.Issue.IssueBatch&amp;sId=3025nid&amp;mId=1001101160309239&quot;,&quot;领料批&quot;);">领料批</a></li><li type="child" applicationid="1001101160309240" datafullpy="BeiLiaoGongZuoTai" datajp="BLGZT" class="sel" title="备料工作台"><a applicationid="1001101160309240" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.PullList.PullList&amp;sId=3025nid&amp;mId=1001101160309240&quot;,&quot;备料工作台&quot;);">备料工作台</a></li><li type="child" applicationid="1001101160309241" datafullpy="PanDianChaYiDaoChong" datajp="PDCYDC" class="sel" title="盘点差异倒冲"><a applicationid="1001101160309241" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.CheckDifferent.DiffrenceEqualizeUI&amp;sId=3025nid&amp;mId=1001101160309241&quot;,&quot;盘点差异倒冲&quot;);">盘点差异倒冲</a></li><li type="child" applicationid="1001409101723895" datafullpy="DaoChongGongZuoTai" datajp="DCGZT" class="sel" title="倒冲工作台"><a applicationid="1001409101723895" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.BackFlushIssueListUI&amp;sId=3025nid&amp;mId=1001409101723895&quot;,&quot;倒冲工作台&quot;);">倒冲工作台</a></li><li type="child" applicationid="1001508288363977" datafullpy="LingLiaoShenQingDan" datajp="LLSQD" class="sel" title="领料申请单"><a applicationid="1001508288363977" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=U9.MFG.IssueNew.IssueApply.IssueApplyDocUI&amp;sId=3025nid&amp;mId=1001508288363977&quot;,&quot;领料申请单&quot;);">领料申请单</a></li><li type="child" applicationid="1001508288363978" datafullpy="CaiLiaoChuKuDan" datajp="CLCKD" class="sel" title="材料出库单"><a applicationid="1001508288363978" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=U9.MFG.IssueNew.IssueApply.MaterialOutDocUI&amp;sId=3025nid&amp;mId=1001508288363978&quot;,&quot;材料出库单&quot;);">材料出库单</a></li><li type="child" applicationid="1001508288363979" datafullpy="CaiLiaoRuKuDan" datajp="CLRKD" class="sel" title="材料入库单"><a applicationid="1001508288363979" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=U9.MFG.IssueNew.IssueApply.MaterialInDocUI&amp;sId=3025nid&amp;mId=1001508288363979&quot;,&quot;材料入库单&quot;);">材料入库单</a></li><li type="child" applicationid="1001508288363980" datafullpy="DingDanCaiLiaoQueRenDan" datajp="DDCLQRD" class="sel" title="订单材料确认单"><a applicationid="1001508288363980" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=U9.MFG.IssueNew.IssueApply.MaterialConfirmDocUI&amp;sId=3025nid&amp;mId=1001508288363980&quot;,&quot;订单材料确认单&quot;);">订单材料确认单</a></li></ul></li><li groupid="5" type="parent"><ul groupid="5"><li class="text-green sel" applicationid="1001101160309242" title="生产完工">生产完工</li><li type="child" applicationid="1001101160309243" datafullpy="WanGongBaoGao" datajp="WGBG" class="sel" title="完工报告"><a applicationid="1001101160309243" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.CompleteRpt.CompleteRpt&amp;sId=3025nid&amp;mId=1001101160309243&quot;,&quot;完工报告&quot;);">完工报告</a></li><li type="child" applicationid="1001306045464165" datafullpy="WanGongShenBao" datajp="WGSB" class="sel" title="完工申报"><a applicationid="1001306045464165" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.Complete.CompleteApplyRpt.CompleteApplyDoc&amp;ApplyType=0&amp;sId=3025nid&amp;mId=1001306045464165&quot;,&quot;完工申报&quot;);">完工申报</a></li><li type="child" applicationid="1001306045464166" datafullpy="WanGongHongChong" datajp="WGHC" class="sel" title="完工红冲"><a applicationid="1001306045464166" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.Complete.CompleteApplyRpt.CompleteApplyDoc-N&amp;ApplyType=1&amp;sId=3025nid&amp;mId=1001306045464166&quot;,&quot;完工红冲&quot;);">完工红冲</a></li><li type="child" applicationid="1001306045464167" datafullpy="ChengPinRuKu" datajp="CPRK" class="sel" title="成品入库"><a applicationid="1001306045464167" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.Complete.CompleteApplyRpt.RcvRpt&amp;Direction=0&amp;sId=3025nid&amp;mId=1001306045464167&quot;,&quot;成品入库&quot;);">成品入库</a></li><li type="child" applicationid="1001306045464168" datafullpy="ChengPinChuKu" datajp="CPCK" class="sel" title="成品出库"><a applicationid="1001306045464168" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.Complete.CompleteApplyRpt.RcvRpt-out&amp;Direction=1&amp;sId=3025nid&amp;mId=1001306045464168&quot;,&quot;成品出库&quot;);">成品出库</a></li><li type="child" applicationid="1001306045464169" datafullpy="ZaiZhiPinRuKu" datajp="ZZPRK" class="sel" title="在制品入库"><a applicationid="1001306045464169" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.Complete.CompleteApplyRpt.RcvRpt-chx&amp;Direction=0&amp;Offline=true&amp;sId=3025nid&amp;mId=1001306045464169&quot;,&quot;在制品入库&quot;);">在制品入库</a></li><li type="child" applicationid="1001306045464170" datafullpy="ZaiZhiPinChuKu" datajp="ZZPCK" class="sel" title="在制品出库"><a applicationid="1001306045464170" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.Complete.CompleteApplyRpt.RcvRpt-fx&amp;Direction=1&amp;Offline=true&amp;sId=3025nid&amp;mId=1001306045464170&quot;,&quot;在制品出库&quot;);">在制品出库</a></li></ul></li><li groupid="6" type="parent"><ul groupid="6"><li class="text-green sel" applicationid="1001101160309244" title="资源申报">资源申报</li><li type="child" applicationid="1001101160309245" datafullpy="ZiYuanBaoGao" datajp="ZYBG" class="sel" title="资源报告"><a applicationid="1001101160309245" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ResourceUsageRpt.ResourceUsageRpt&amp;sId=3025nid&amp;mId=1001101160309245&quot;,&quot;资源报告&quot;);">资源报告</a></li><li type="child" applicationid="1001101160309246" datafullpy="ShiJianBaoGao" datajp="SJBG" class="sel" title="时间报告"><a applicationid="1001101160309246" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ResourceTimeRpt.ResourceTimeRpt&amp;sId=3025nid&amp;mId=1001101160309246&quot;,&quot;时间报告&quot;);">时间报告</a></li></ul></li></ul><ul class="subitem-list"><li groupid="6" type="parent"><ul groupid="6"><li type="child" applicationid="1001203053039216" datafullpy="GongShiWeiHu" datajp="GSWH" class="sel" title="工时维护"><a applicationid="1001203053039216" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=WorkHourUrl&amp;sId=3025nid&amp;mId=1001203053039216&quot;,&quot;工时维护&quot;);">工时维护</a></li></ul></li><li groupid="7" type="parent"><ul groupid="7"><li class="text-green sel" applicationid="1001101160309247" title="盘点">盘点</li><li type="child" applicationid="1001101160309248" datafullpy="PanDianKuaiZhao" datajp="PDKZ" class="sel" title="盘点快照"><a applicationid="1001101160309248" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.CheckSnapshot&amp;sId=3025nid&amp;mId=1001101160309248&quot;,&quot;盘点快照&quot;);">盘点快照</a></li><li type="child" applicationid="1001101160309249" datafullpy="ZaiZhiPinPanDian" datajp="ZZPPD" class="sel" title="在制品盘点"><a applicationid="1001101160309249" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.WipCheckUI&amp;sId=3025nid&amp;mId=1001101160309249&quot;,&quot;在制品盘点&quot;);">在制品盘点</a></li><li type="child" applicationid="1001101160309250" datafullpy="BeiLiaoPanDian" datajp="BLPD" class="sel" title="备料盘点"><a applicationid="1001101160309250" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.PickCheckUI&amp;sId=3025nid&amp;mId=1001101160309250&quot;,&quot;备料盘点&quot;);">备料盘点</a></li></ul></li><li groupid="8" type="parent"><ul groupid="8"><li class="text-green sel" applicationid="1001101160309251" title="程序">程序</li><li type="child" applicationid="1001101160309252" datafullpy="TongJiGengXin" datajp="TJGX" class="sel" title="统计更新"><a applicationid="1001101160309252" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOStatistic.MOStatistic&amp;sId=3025nid&amp;mId=1001101160309252&quot;,&quot;统计更新&quot;);">统计更新</a></li><li type="child" applicationid="1001101160309253" datafullpy="PiLiangShengChengJiaoYiFenLu" datajp="PLSCJYFL" class="sel" title="批量生成交易分录"><a applicationid="1001101160309253" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.LotCreateAAI&amp;sId=3025nid&amp;mId=1001101160309253&quot;,&quot;批量生成交易分录&quot;);">批量生成交易分录</a></li><li type="child" applicationid="1001101160309254" datafullpy="ZhongXinShengChengJiaoYiFenLu" datajp="ZXSCJYFL" class="sel" title="重新生成交易分录"><a applicationid="1001101160309254" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=CBO.AAI.RegenerateAAI.RegenerateAAIModelBQry&amp;ApplicationID=3025&amp;sId=3025nid&amp;mId=1001101160309254&quot;,&quot;重新生成交易分录&quot;);">重新生成交易分录</a></li><li type="child" applicationid="1001306045464183" datafullpy="DingDanZiDongWanGong" datajp="DDZDWG" class="sel" title="订单自动完工"><a applicationid="1001306045464183" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=DocAutoComplete&amp;sId=3025nid&amp;mId=1001306045464183&quot;,&quot;订单自动完工&quot;);">订单自动完工</a></li></ul></li><li groupid="9" type="parent"><ul groupid="9"><li class="text-green sel" applicationid="1001101160309255" title="查询">查询</li><li type="child" applicationid="1001101160309256" datafullpy="ShengChanDingDanChaXun" datajp="SCDDCX" class="sel" title="生产订单查询"><a applicationid="1001101160309256" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.DiscreteMO.DiscreteMOBQry&amp;sId=3025nid&amp;mId=1001101160309256&quot;,&quot;生产订单查询&quot;);">生产订单查询</a></li><li type="child" applicationid="1001101160309257" datafullpy="ShengChanDingDanYuGuChengBenChaXun" datajp="SCDDYGCBCX" class="sel" title="生产订单预估成本查询"><a applicationid="1001101160309257" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOEstimateCostBQry&amp;sId=3025nid&amp;mId=1001101160309257&quot;,&quot;生产订单预估成本查询&quot;);">生产订单预估成本查询</a></li><li type="child" applicationid="1001101160309258" datafullpy="ShengChanDingDanChengBenChaXun" datajp="SCDDCBCX" class="sel" title="生产订单成本查询"><a applicationid="1001101160309258" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=COST.MO.MOCostQry&amp;sId=3025nid&amp;mId=1001101160309258&quot;,&quot;生产订单成本查询&quot;);">生产订单成本查询</a></li><li type="child" applicationid="1001101160309259" datafullpy="ShengChanDingDanGongXuChengBenChaXun" datajp="SCDDGXCBCX" class="sel" title="生产订单工序成本查询"><a applicationid="1001101160309259" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOOpCostBQry&amp;sId=3025nid&amp;mId=1001101160309259&quot;,&quot;生产订单工序成本查询&quot;);">生产订单工序成本查询</a></li><li type="child" applicationid="1001101160309260" datafullpy="WanGongBaoGaoChengBenChaXun" datajp="WGBGCBCX" class="sel" title="完工报告成本查询"><a applicationid="1001101160309260" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.CompleteTXNCostBQry&amp;sId=3025nid&amp;mId=1001101160309260&quot;,&quot;完工报告成本查询&quot;);">完工报告成本查询</a></li><li type="child" applicationid="1001101160309261" datafullpy="ZiYuanHaoYongChaXun" datajp="ZYHYCX" class="sel" title="资源耗用查询"><a applicationid="1001101160309261" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ResUsageLinesQry&amp;sId=3025nid&amp;mId=1001101160309261&quot;,&quot;资源耗用查询&quot;);">资源耗用查询</a></li><li type="child" applicationid="1001101160309262" datafullpy="GongXuWeiWaiChengBenChaXun" datajp="GXWWCBCX" class="sel" title="工序委外成本查询"><a applicationid="1001101160309262" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.SubcontractCost&amp;sId=3025nid&amp;mId=1001101160309262&quot;,&quot;工序委外成本查询&quot;);">工序委外成本查询</a></li><li type="child" applicationid="1001101160309263" datafullpy="ShengChanDingDanBeiLiaoChaYiBiJiaoChaXun" datajp="SCDDBLCYBJCX" class="sel" title="生产订单备料差异比较查询"><a applicationid="1001101160309263" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOPickCompareQryUI&amp;sId=3025nid&amp;mId=1001101160309263&quot;,&quot;生产订单备料差异比较查询&quot;);">生产订单备料差异比较查询</a></li><li type="child" applicationid="1001101160309264" datafullpy="ShengChanDingDanPinBaoChengBenChaXun" datajp="SCDDPBCBCX" class="sel" title="生产订单品保成本查询"><a applicationid="1001101160309264" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOQualityGuaranteeQry&amp;sId=3025nid&amp;mId=1001101160309264&quot;,&quot;生产订单品保成本查询&quot;);">生产订单品保成本查询</a></li></ul></li></ul><ul class="subitem-list"><li groupid="10" type="parent"><ul groupid="10"><li class="text-green sel" applicationid="1001101160309265" title="报表">报表</li><li type="child" applicationid="1001101160309266" datafullpy="ShengChanDingDanRiBao" datajp="SCDDRB" class="sel" title="生产订单日报"><a applicationid="1001101160309266" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MODailyRpt&amp;sId=3025nid&amp;mId=1001101160309266&quot;,&quot;生产订单日报&quot;);">生产订单日报</a></li><li type="child" applicationid="1001101160309267" datafullpy="ShengChanDingDanGongYiLiuChengBiao" datajp="SCDDGYLCB" class="sel" title="生产订单工艺流程表"><a applicationid="1001101160309267" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MORoutingRpt&amp;sId=3025nid&amp;mId=1001101160309267&quot;,&quot;生产订单工艺流程表&quot;);">生产订单工艺流程表</a></li><li type="child" applicationid="1001101160309268" datafullpy="ShengChanDingDanLingLiaoQingKuangBiao" datajp="SCDDLLQKB" class="sel" title="生产订单领料情况表"><a applicationid="1001101160309268" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOPickMaterailRpt&amp;sId=3025nid&amp;mId=1001101160309268&quot;,&quot;生产订单领料情况表&quot;);">生产订单领料情况表</a></li><li type="child" applicationid="1001101160309269" datafullpy="ShengChanWanGongZhuangKuangBiao" datajp="SCWGZKB" class="sel" title="生产完工状况表"><a applicationid="1001101160309269" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOCompleteRpt.MOCompleteRpt&amp;Function=4&amp;sId=3025nid&amp;mId=1001101160309269&quot;,&quot;生产完工状况表&quot;);">生产完工状况表</a></li><li type="child" applicationid="1001101160309270" datafullpy="ShengChanXianLiaoPinRiJiHuaBiao" datajp="SCXLPRJHB" class="sel" title="生产线料品日计划表"><a applicationid="1001101160309270" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.PLSRpt&amp;sId=3025nid&amp;mId=1001101160309270&quot;,&quot;生产线料品日计划表&quot;);">生产线料品日计划表</a></li><li type="child" applicationid="1001101160309271" datafullpy="ShengChanXianRiBao" datajp="SCXRB" class="sel" title="生产线日报"><a applicationid="1001101160309271" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.PorductlineDailyRpt&amp;sId=3025nid&amp;mId=1001101160309271&quot;,&quot;生产线日报&quot;);">生产线日报</a></li><li type="child" applicationid="1001101160309272" datafullpy="ShengChanDingDanChengBenFenXi" datajp="SCDDCBFX" class="sel" title="生产订单成本分析"><a applicationid="1001101160309272" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOEarnedDetailCostRpt&amp;sId=3025nid&amp;mId=1001101160309272&quot;,&quot;生产订单成本分析&quot;);">生产订单成本分析</a></li><li type="child" applicationid="1001101160309273" datafullpy="ShengChanTongZhiDan" datajp="SCTZD" class="sel" title="生产通知单"><a applicationid="1001101160309273" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ProductionRequisitionRpt&amp;sId=3025nid&amp;mId=1001101160309273&quot;,&quot;生产通知单&quot;);">生产通知单</a></li><li type="child" applicationid="1001101160309274" datafullpy="FanGongShengChanDingDanLieBiao" datajp="FGSCDDLB" class="sel" title="返工生产订单列表"><a applicationid="1001101160309274" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOReWorkRpt&amp;sId=3025nid&amp;mId=1001101160309274&quot;,&quot;返工生产订单列表&quot;);">返工生产订单列表</a></li><li type="child" applicationid="1001101160309275" datafullpy="ShengChanDingDanMuZiDanLieBiao" datajp="SCDDMZDLB" class="sel" title="生产订单母子单列表"><a applicationid="1001101160309275" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOPsubListRpt&amp;sId=3025nid&amp;mId=1001101160309275&quot;,&quot;生产订单母子单列表&quot;);">生产订单母子单列表</a></li><li type="child" applicationid="1001101160309276" datafullpy="WanGongRuKuChanPinChaXun" datajp="WGRKCPCX" class="sel" title="完工入库产品查询"><a applicationid="1001101160309276" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.ProductCompleteInInvRpt&amp;sId=3025nid&amp;mId=1001101160309276&quot;,&quot;完工入库产品查询&quot;);">完工入库产品查询</a></li><li type="child" applicationid="1001101160309277" datafullpy="BuMenChanLiangHuiZongBiao" datajp="BMCLHZB" class="sel" title="部门产量汇总表"><a applicationid="1001101160309277" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.DepartmentProductionQtyRpt&amp;sId=3025nid&amp;mId=1001101160309277&quot;,&quot;部门产量汇总表&quot;);">部门产量汇总表</a></li><li type="child" applicationid="1001101160309278" datafullpy="ShengChanJiHuaZhiXingFenXi" datajp="SCJHZXFX" class="sel" title="生产计划执行分析"><a applicationid="1001101160309278" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MenuPlanAndTotalRpt&amp;sId=3025nid&amp;mId=1001101160309278&quot;,&quot;生产计划执行分析&quot;);">生产计划执行分析</a></li><li type="child" applicationid="1001101160309279" datafullpy="ChanPinZhiLiangZhuiSu" datajp="CPZLZS" class="sel" title="产品质量追溯"><a applicationid="1001101160309279" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOParentItemQualityRpt&amp;sId=3025nid&amp;mId=1001101160309279&quot;,&quot;产品质量追溯&quot;);">产品质量追溯</a></li><li type="child" applicationid="1001101160309280" datafullpy="ZiJianZhiLiangZhuiSu" datajp="ZJZLZS" class="sel" title="子件质量追溯"><a applicationid="1001101160309280" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOPickItemQualityRpt&amp;sId=3025nid&amp;mId=1001101160309280&quot;,&quot;子件质量追溯&quot;);">子件质量追溯</a></li><li type="child" applicationid="1001101160309281" datafullpy="ShengChanXianNengLiBiao" datajp="SCXNLB" class="sel" title="生产线能力表"><a applicationid="1001101160309281" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOProductionCapacityRpt&amp;sId=3025nid&amp;mId=1001101160309281&quot;,&quot;生产线能力表&quot;);">生产线能力表</a></li><li type="child" applicationid="1001101160309282" datafullpy="WanGongBeiLiaoDuiZhaoBiao" datajp="WGBLDZB" class="sel" title="完工备料对照表"><a applicationid="1001101160309282" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.CompleteStockRpt&amp;sId=3025nid&amp;mId=1001101160309282&quot;,&quot;完工备料对照表&quot;);">完工备料对照表</a></li><li type="child" applicationid="1001101160309283" datafullpy="CheJianZaiZhiYuanCaiLiaoTongJiBiao" datajp="CJZZYCLTJB" class="sel" title="车间在制原材料统计表"><a applicationid="1001101160309283" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.WorkShopPMaterail&amp;sId=3025nid&amp;mId=1001101160309283&quot;,&quot;车间在制原材料统计表&quot;);">车间在制原材料统计表</a></li><li type="child" applicationid="1001101160309284" datafullpy="ShengChanGongXuZhuangKuangBiao" datajp="SCGXZKB" class="sel" title="生产工序状况表"><a applicationid="1001101160309284" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFGOperationStateReport&amp;sId=3025nid&amp;mId=1001101160309284&quot;,&quot;生产工序状况表&quot;);">生产工序状况表</a></li></ul></li></ul><ul class="subitem-list"><li groupid="10" type="parent"><ul groupid="10"><li type="child" applicationid="1001101160309285" datafullpy="CheJianZhiXingJieGuoBiao" datajp="CJZXJGB" class="sel" title="车间执行结果表"><a applicationid="1001101160309285" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.WorkshopExcuteResultRpt&amp;sId=3025nid&amp;mId=1001101160309285&quot;,&quot;车间执行结果表&quot;);">车间执行结果表</a></li><li type="child" applicationid="1001101160309286" datafullpy="XiaoShouDingDanHeShengChanDingDanJiaoQiChaYiBiao" datajp="XSDDHSCDDJQCYB" class="sel" title="销售订单和生产订单交期差异表"><a applicationid="1001101160309286" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.U9.MFG.MO.CompleteDifferRptUI&amp;sId=3025nid&amp;mId=1001101160309286&quot;,&quot;销售订单和生产订单交期差异表&quot;);">销售订单和生产订单交期差异表</a></li><li type="child" applicationid="1001101160309287" datafullpy="QiJianGongXuChanLiangChaXun" datajp="QJGXCLCX" class="sel" title="期间工序产量查询"><a applicationid="1001101160309287" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MFG.MO.MOOpPeriodQtyRpt&amp;sId=3025nid&amp;mId=1001101160309287&quot;,&quot;期间工序产量查询&quot;);">期间工序产量查询</a></li><li type="child" applicationid="1001407319529390" datafullpy="ShengChanLingLiaoChaYiHuiZongBiao" datajp="SCLLCYHZB" class="sel" title="生产领料差异汇总表"><a applicationid="1001407319529390" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=MOMaterialRequisitionDiffRptRpt&amp;sId=3025nid&amp;mId=1001407319529390&quot;,&quot;生产领料差异汇总表&quot;);">生产领料差异汇总表</a></li></ul></li><li groupid="11" type="parent"><ul groupid="11"><li class="text-green sel" applicationid="1001611050110001" title="报表查询">报表查询</li><li type="child" applicationid="1001611090110001" datafullpy="GongDanBeiLiaoLingYongMingXi" datajp="GDBLLYMX" class="sel" title="工单备料领用明细"><a applicationid="1001611090110001" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=e4c101ad-ac85-4a7b-8233-ad6455a2171c&amp;ReportDisplayName=工单备料领用明细&amp;sId=3025nid&amp;mId=1001611090110001&quot;,&quot;工单备料领用明细&quot;);">工单备料领用明细</a></li><li type="child" applicationid="1001612050110001" datafullpy="ChanXianWuLiaoJieYu" datajp="CXWLJY" class="sel" title="产线物料结余"><a applicationid="1001612050110001" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=b5f2a5af-768e-4f71-8eca-40447bff6d28&amp;ReportDisplayName=产线物料结余&amp;sId=3025nid&amp;mId=1001612050110001&quot;,&quot;产线物料结余&quot;);">产线物料结余</a></li><li type="child" applicationid="1001612140110001" datafullpy="GongDanJieAnLv" datajp="GDJAL" class="sel" title="工单结案率"><a applicationid="1001612140110001" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=190019d7-901c-4fd1-b5cd-7ff73bc8cb4b&amp;ReportDisplayName=工单结案率&amp;sId=3025nid&amp;mId=1001612140110001&quot;,&quot;工单结案率&quot;);">工单结案率</a></li><li type="child" applicationid="1001709153662160" datafullpy="ShengChanDingDanJiaoQiChaYiBaoBiao" datajp="SCDDJQCYBB" class="sel" title="生产订单交期差异报表"><a applicationid="1001709153662160" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=490835b4-8911-4717-ad9b-c9829567ec28&amp;ReportDisplayName=生产订单交期差异报表&amp;sId=3025nid&amp;mId=1001709153662160&quot;,&quot;生产订单交期差异报表&quot;);">生产订单交期差异报表</a></li><li type="child" applicationid="1001709250464836" datafullpy="GongDanWeiWanGongBaoBiao" datajp="GDWWGBB" class="sel" title="工单未完工报表"><a applicationid="1001709250464836" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=bda77671-7050-4e84-bde1-7d0210f3d1fb&amp;ReportDisplayName=工单未完工报表&amp;sId=3025nid&amp;mId=1001709250464836&quot;,&quot;工单未完工报表&quot;);">工单未完工报表</a></li><li type="child" applicationid="1001711131359517" datafullpy="ShengChanDingDanJiaoQiDaChengLv" datajp="SCDDJQDCL" class="sel" title="生产订单交期达成率"><a applicationid="1001711131359517" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=14b06942-1b0c-4816-8099-6a9f845b5cfb&amp;ReportDisplayName=生产订单交期达成率&amp;sId=3025nid&amp;mId=1001711131359517&quot;,&quot;生产订单交期达成率&quot;);">生产订单交期达成率</a></li><li type="child" applicationid="1001801170220001" datafullpy="BiaoZhunGongShiChaYiBaoBiao" datajp="BZGSCYBB" class="sel" title="标准工时差异报表"><a applicationid="1001801170220001" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=a721347a-88f8-4dc3-b3c4-4e83b9e7e13f&amp;ReportDisplayName=标准工时差异报表&amp;sId=3025nid&amp;mId=1001801170220001&quot;,&quot;标准工时差异报表&quot;);">标准工时差异报表</a></li><li type="child" applicationid="1001803151577485" datafullpy="ShengChanDingDanXiaDaLv" datajp="SCDDXDL" class="sel" title="生产订单下达率"><a applicationid="1001803151577485" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=c6c774a8-354c-4310-adea-0502c559bd10&amp;ReportDisplayName=生产订单下达率&amp;sId=3025nid&amp;mId=1001803151577485&quot;,&quot;生产订单下达率&quot;);">生产订单下达率</a></li><li type="child" applicationid="1001803160110001" datafullpy="GongDanQiTaoLv" datajp="GDQTL" class="sel" title="工单齐套率"><a applicationid="1001803160110001" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=8affe641-b2b6-40a2-933b-5416a4cca357&amp;ReportDisplayName=工单齐套率&amp;sId=3025nid&amp;mId=1001803160110001&quot;,&quot;工单齐套率&quot;);">工单齐套率</a></li><li type="child" applicationid="1001806101371647" datafullpy="GongDanJieAnJiShiLv" datajp="GDJAJSL" class="sel" title="工单结案及时率"><a applicationid="1001806101371647" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=d87f4b71-12ff-407f-9cda-0f17ddd73624&amp;ReportDisplayName=工单结案及时率&amp;sId=3025nid&amp;mId=1001806101371647&quot;,&quot;工单结案及时率&quot;);">工单结案及时率</a></li><li type="child" applicationid="1001808077695344" datafullpy="GongDanFenGeBaoBiao" datajp="GDFGBB" class="sel" title="工单分割报表"><a applicationid="1001808077695344" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=84055210-30ae-495a-973f-30ec2e11eaec&amp;ReportDisplayName=工单分割报表&amp;sId=3025nid&amp;mId=1001808077695344&quot;,&quot;工单分割报表&quot;);">工单分割报表</a></li><li type="child" applicationid="1001809262435496" datafullpy="QiTaoFenXiBaoBiao2" datajp="QTFXBB" class="sel" title="齐套分析报表2"><a applicationid="1001809262435496" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=5983ccbc-8511-41cf-8e2d-fd0cbc078b73&amp;ReportDisplayName=齐套分析报表2&amp;sId=3025nid&amp;mId=1001809262435496&quot;,&quot;齐套分析报表2&quot;);">齐套分析报表2</a></li><li type="child" applicationid="1001811157502794" datafullpy="CaiGouZhouQiBaoBiao" datajp="CGZQBB" class="sel" title="采购周期报表"><a applicationid="1001811157502794" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=ac2033e0-163a-4b6a-b427-5329cf368e96&amp;ReportDisplayName=采购周期报表&amp;sId=3025nid&amp;mId=1001811157502794&quot;,&quot;采购周期报表&quot;);">采购周期报表</a></li><li type="child" applicationid="1001811290515681" datafullpy="LJ_TEST" datajp="LJTEST" class="sel" title="LJ_TEST"><a applicationid="1001811290515681" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=970f70d1-3cb7-40f9-8436-bfdfc67ca40e&amp;ReportDisplayName=LJ_TEST&amp;sId=3025nid&amp;mId=1001811290515681&quot;,&quot;LJ_TEST&quot;);">LJ_TEST</a></li></ul></li><li groupid="12" type="parent"><ul groupid="12"><li class="text-green sel" applicationid="1001804200110004" title="报表查询II">报表查询II</li></ul></li></ul><ul class="subitem-list"><li groupid="12" type="parent"><ul groupid="12"><li type="child" applicationid="1001805091670275" datafullpy="MeiRiWanGongGongDanChengBen" datajp="MRWGGDCB" class="sel" title="每日完工工单成本"><a applicationid="1001805091670275" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=c00af2be-8781-49d6-882d-b92edb38abb1&amp;ReportDisplayName=每日完工工单成本&amp;sId=3025nid&amp;mId=1001805091670275&quot;,&quot;每日完工工单成本&quot;);">每日完工工单成本</a></li><li type="child" applicationid="1001805103709802" datafullpy="GongDanRuanJianChengBen" datajp="GDRJCB" class="sel" title="工单软件成本"><a applicationid="1001805103709802" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=70c62e5e-7d51-4fcb-a80e-b88cf877d1b8&amp;ReportDisplayName=工单软件成本&amp;sId=3025nid&amp;mId=1001805103709802&quot;,&quot;工单软件成本&quot;);">工单软件成本</a></li><li type="child" applicationid="1001805232166169" datafullpy="BomRuanJianChengBen" datajp="BRJCB" class="sel" title="Bom软件成本"><a applicationid="1001805232166169" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=69215b71-057b-4ae4-8926-64029d8f3696&amp;ReportDisplayName=Bom软件成本&amp;sId=3025nid&amp;mId=1001805232166169&quot;,&quot;Bom软件成本&quot;);">Bom软件成本</a></li><li type="child" applicationid="1001806027063876" datafullpy="XiaoShouMaoLiLvBaoBiao" datajp="XSMLLBB" class="sel" title="销售毛利率报表"><a applicationid="1001806027063876" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=c218679a-99bf-4b9b-a3c2-77e60d733366&amp;ReportDisplayName=销售毛利率报表&amp;sId=3025nid&amp;mId=1001806027063876&quot;,&quot;销售毛利率报表&quot;);">销售毛利率报表</a></li><li type="child" applicationid="1001806027063877" datafullpy="ShengChanMaoLiLvBaoBiao" datajp="SCMLLBB" class="sel" title="生产毛利率报表"><a applicationid="1001806027063877" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=d47276fb-c6ae-44a9-9632-9dfb2cd5daa3&amp;ReportDisplayName=生产毛利率报表&amp;sId=3025nid&amp;mId=1001806027063877&quot;,&quot;生产毛利率报表&quot;);">生产毛利率报表</a></li><li type="child" applicationid="1001806050328741" datafullpy="ChengBenLiRunFenXiBiao" datajp="CBLRFXB" class="sel" title="成本利润分析表"><a applicationid="1001806050328741" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=63e39a1d-4040-4d33-b769-493a27faba69&amp;ReportDisplayName=成本利润分析表&amp;sId=3025nid&amp;mId=1001806050328741&quot;,&quot;成本利润分析表&quot;);">成本利润分析表</a></li><li type="child" applicationid="1001806072419713" datafullpy="CaiWuChengBenFenXi" datajp="CWCBFX" class="sel" title="财务成本分析"><a applicationid="1001806072419713" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=1a69e083-a20c-40c3-82af-dc3f259b9ff9&amp;ReportDisplayName=财务成本分析&amp;sId=3025nid&amp;mId=1001806072419713&quot;,&quot;财务成本分析&quot;);">财务成本分析</a></li><li type="child" applicationid="1001811290515682" datafullpy="LJ12" datajp="LJ" class="sel" title="LJ12"><a applicationid="1001811290515682" href="javascript:menuManager.closeBox();TabPanelManager.addUrlTab(&quot;../../erp/display.aspx?lnk=UFIDA.UBF.Process.Report.IndividualRpt&amp;ReportContent=970f70d1-3cb7-40f9-8436-bfdfc67ca40e&amp;ReportDisplayName=LJ12&amp;sId=3025nid&amp;mId=1001811290515682&quot;,&quot;LJ12&quot;);">LJ12</a></li></ul></li></ul><div class="clear"></div><div class="btns"><p class="edit">编辑</p><div class="otherBtn hidden"><em class="yesBtn">确定</em><em class="cencelBtn">取消</em></div></div></div></dd><dd flag_m2="2"><div class="erji" title="需求计划">需求计划</div><div class="item-list " style="display: none;"></div></dd></dl></div><div class="item" flag_m="4"><h3><i class="fa fa-plus"></i>系统管理</h3><dl class="item-ul" style="display: none;"><dd flag_m2="0"><div class="erji" title="系统管理">系统管理</div><div class="item-list " style="display: none;"></div></dd></dl></div></div>
+    </div>
+    <div class="modal screen-shot" id="screenShot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-warning" role="alert">
+                  <strong>截屏中，请耐心等待~</strong> 
+            </div>
+           
+        </div>
+    </div>
+    <div class="modal" id="addToFavoritesDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 440px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加快捷菜单</h4>
+                </div>
+                <div class="modal-body my-form-horizontal">
+                    <input type="hidden" name="favoriteUrl" id="favoriteUrl" value="">
+                    <input type="hidden" name="favoriteTitle" id="favoriteTitle" value="">
+                    <div class="prompt" prompt="true"> </div>
+                    <div class="form-group">
+                        <label class="label-sm">
+                            名称</label>
+                        <input type="text" class="form-control input-sm" name="favoriteName" id="favoriteName" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                
+                    <button type="button" class="btn btn-white m-l  btn-lg" data-dismiss="modal" name="btnCancel">
+                        取消</button>
+                    <button type="button" class="btn btn-primary  btn-lg" name="btnOk">
+                        确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="favoritesManagerDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        快捷功能管理</h4>
+                </div>
+                <div class="modal-body quick">
+                    <ul class="quick-ul">
+                        <li double-up="1"><i class="fa fa-angle-double-up"></i></li>
+                        <li up="1"><i class="fa fa-angle-up"></i></li>
+                        <li down="1"><i class="fa fa-angle-down"></i></li>
+                        <li double-down="1"><i class="fa fa-angle-double-down"></i></li>
+                    </ul>
+                    <div class="panel m-b-none">
+                        <div class="table-responsive">
+                            <table class="table  table-striped table-quick b-t text-sm" quicktab="true">
+                                <thead>
+                                    <tr>
+                                        <th width="70">
+                                            显示
+                                        </th>
+                                        <th data-toggle="class" class="th-sortable">
+                                            快捷功能节点
+                                        </th>
+                                        <th>
+                                            名称
+                                        </th>
+                                        <th width="70">
+                                            操作
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="favoritesManagerUl" data-listidx="0">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white m-l  btn-lg" data-dismiss="modal" name="btnCancel">
+                         取消</button>
+                    <button type="button" class="btn btn-primary  btn-lg" name="btnOk">
+                        确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="passwordModifyDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 440px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="my-form-horizontal">
+                    <div class="prompt" prompt="true"></div>
+                    <div class="form-group">
+                        <label>
+                            旧密码</label>
+                        <input type="password" class="form-control input-sm" id="oldPassword" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            新密码</label>
+                        <input type="password" class="form-control input-sm" id="newPassword" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            确认密码</label>
+                        <input type="password" class="form-control input-sm" id="comfirmPassword" value="">
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                
+                    <button type="button" class="btn btn-white m-l  btn-lg" data-dismiss="modal" name="btnCancel">
+                        取消</button>
+                    <button type="button" class="btn btn-primary btn-lg" name="btnOk">
+                        确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 嘟嘟弹出层 -->
+    <div class="modal mydudu" id="dudu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" id="closeDudu">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        电话会议
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="dodo-title">
+
+                        <div class="dodo-search placeholder-lable" placeholder="2">
+                            
+                            <img src="./请购_files/icon_tip.png">&nbsp;&nbsp;&nbsp;<font color="gray">5~6人通话时效果最好！</font>
+                        </div>
+
+                        <div class="inputNun" placeholder="2" id="inputDiv">
+                            <!--<span class="placeholder2">输入多个手机号码以 , 隔开</span>-->
+                            <input type="text" id="addPhone" value="请输入姓名或电话" class="inputTxt"><em title="添加" id="addCall"></em>
+                        </div>
+                        
+                    </div>
+                    <div class="panel m-b-none panel-height-md">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-dodo b-t text-sm" table-striped="true" id="table-dudu">
+                                <thead>
+                                    <tr>
+                                        <th width="40">
+                                            <input type="checkbox" id="chooseAll">
+                                        </th>
+                                        <th width="70">
+                                            通话状态
+                                        </th>
+                                        <th width="130" data-toggle="class" class="th-sortable">
+                                            人员
+                                        </th>
+                                        <th width="130">
+                                            手机号
+                                        </th>
+                                        <th width="130">
+                                            部门
+                                        </th>
+                                        <th>
+                                            操作
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="pull-left">
+                        发起人：
+                        <a href="http://192.168.1.82:90/U9/mvc/main/index#" class="text-pink" id="originator"></a><span class="m-l">已选 <em id="picthNum">0</em> 人</span>
+                    </p>
+                    <div class="pull-right addPerson">
+                        <button class="btn-pink-sp m-l" id="toCall">
+                            <span>发起多方通话</span>
+                        </button>
+                        <button class="btn-pink-sp m-l" style="display:none;" id="overCall">
+                            <span>结束通话</span>
+                        </button>
+                        <!-- <em class="addOthers" id="addOthers">
+                        添加参与人
+                        </em> -->
+                    </div>
+                    <!-- <button type="button" class="btn btn-white m-l btn-lg" data-dismiss="modal" name="btnCancel">
+                    取消</button> -->
+                    <!-- <button type="button" class="btn btn-primary btn-lg" name="btnOk"> 确定</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 关于U9 -->
+    <div class="modal" id="infoU9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 430px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        关于 yonyou U9</h4>
+                </div>
+                <div class="modal-body my-form-horizontal boxU9">
+                    <div class="logu-u9">
+                        <img src="./请购_files/info1.jpg" alt="">
+                    </div>
+                    <p class="info-txt">
+                        yonyou U9企业管理软件<br>
+                        版本：U9V6.1<br>
+                        正式许可:I4000014</p>
+                    <ul class="iPics">
+                        <li>
+                            <img src="./请购_files/info3.jpg" alt="">
+                            <em>用友U9</em> 
+                        </li>
+                        <li>
+                            <img src="./请购_files/u9-work-mobile.png" alt="">
+                            <em>U9移动应用</em>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="msg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        我的信息</h4>
+                </div>
+                <div class="modal-body my-form-horizontal">
+                    <div class="of-h">
+                        <div class="col-8  msg-col-index0">
+                            <div class="info-title">
+                                 <div class="col-6">
+                                    名称信息
+                                </div>
+                                <div class="col-6">
+                                    其他信息
+                                </div>
+
+                            </div>
+                            <div class="info-content">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>
+                                        编码</label>
+                                    <input type="text" class="form-control input-sm" id="code">
+                                    <span class="asterisk ">*</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        名称</label>
+                                    <input type="text" class="form-control input-sm" id="Names">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        名</label>
+                                    <input type="text" class="form-control input-sm" id="FirstName">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        姓</label>
+                                    <input type="text" class="form-control input-sm" id="LastName">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        中间名</label>
+                                    <input type="text" class="form-control input-sm" id="betweenName">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        昵称</label>
+                                    <input type="text" class="form-control input-sm" id="otherName">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>
+                                        头衔</label>
+                                    <input type="text" class="form-control input-sm" id="newTitle">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        部门</label>
+                                    <input type="text" class="form-control input-sm" id="Department">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        性别</label>
+                                    <!-- <label class="text-left m-l-sm"> -->
+                                    <p class="sex">
+                                        <span>
+                                            <input type="radio" name="gender" checked="checked" value="0">男</span> <span>
+                                                <input type="radio" name="gender" value="1">女</span> <span>
+                                                    <input type="radio" name="gender" value="2">不确定</span>
+                                    </p>
+                                    <!-- </label> -->
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        电话</label>
+                                    <input type="text" class="form-control input-sm" id="telNum">
+                                    <span class="asterisk ">*</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        移动电话</label>
+                                    <input type="text" class="form-control input-sm" id="MobilNum">
+                                    <span class="asterisk ">*</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        邮箱</label>
+                                    <input type="text" class="form-control input-sm" id="EmailAddr" sts="">
+                                    <span class="asterisk ">*</span>
+                                </div>
+                            </div>
+                            </div>
+                             <div class="text-center">
+                                <input type="hidden" id="proID">
+                                <input type="hidden" id="PhoneID">
+                                <input type="hidden" id="MobilID">
+                                <input type="hidden" id="EmailID">
+                                 <input type="hidden" id="IsAdd">
+                                <button type="button" class="btn btn-primary btn-lg btnSure">
+                        确定</button>
+                                <button type="button" class="btn btn-white m-l btn-lg btnNo" data-dismiss="modal">
+                                    取消</button>
+                                  
+                             </div>
+                        </div>
+                        <form id="myPhotoForm" action="http://192.168.1.82:90/U9/mvc/photo/Upload" enctype="multipart/form-data" method="post">
+                            <div class="col-4  msg-col-index1">
+                                <div class="info-title">
+                                    头像
+                                </div>
+                                <!-- <div class="upload-box" id="upload-box">
+                                      <a id="uploadPhoto" href="javascript:void(0);" class="file-select-common file-select">
+                                          <em>+</em>上传头像
+                                         <input type="file" name="fileName" id="myPhoto">
+                                      </a>
+                                      <p>只支持JPG、PNG、GIF，大小不超过2M</p>
+                                </div>
+                                -->
+                                 <div class="upload-box" id="upload-box">
+                                     <img src="./请购_files/avatar.png" id="finnalPhoto">
+                                 </div>
+                                <div class="crop-box" id="crop-box" style="display: none;">
+                                    <div class="crop-con">
+                                        <div id="cropform" class="cropform">
+                                           <div id="cropContainer">
+                                                  <div id="cropDisplay">
+                                                      <img src="http://192.168.1.82:90/U9/mvc/main/index" id="target" class="cropImage">
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="crop-bottom">
+                                    <a id="reUploadPhoto" href="javascript:void(0);" class=" file-select-common btn btn-white btn-sm">
+                                         <em>+</em>
+                                         <span class="upload-btn-text">上传头像</span>
+                                        <!--  <input type="file" name="">-->
+                                         <input type="file" name="fileName" id="myPhoto">
+                                      </a>
+                                    <button type="button" class="btn btn-info btn-sm" id="cropBtn" style="display: none;">剪裁上传</button>
+                                    <button type="button" class="btn btn-white btn-sm" id="delPhotoBtn">删除头像</button>
+                                    <input type="hidden" id="ImageId">
+                                    <input type="hidden" id="FileName">
+                                    <input type="hidden" id="CropX">
+                                    <input type="hidden" id="CropY">
+                                    <input type="hidden" id="CropW">
+                                    <input type="hidden" id="CropH">
+                                </div>
+
+                                <div id="uploadPrompt" class="alert alert-warning none  m-t-sm" role="alert" style="display: none;">
+                                  <button type="button" class="close">
+                                   ×
+                                  </button>
+                                  <strong id="uploadPromptText"></strong>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                 <!-- <div class="modal-footer">
+                    
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="rbBox" id="rbBox">
+    </div>
+    <!--新增二维码录入区域-->
+    <div class="enterBoxWrap ui-draggable ui-draggable-handle" id="enterBoxWrap">
+        <div class="enterMsg" id="enterMsg" style="display: none;"></div>
+
+        <div id="enterBox" class="enterBox" style="display: none;">
+            <div class="codeshowBox">
+                <i class="arrows"></i>
+                <p class="textEnter" id="textEnter"></p>
+                <input id="textCode" class="recordCode" autofocus="autofocus">
+            </div> 
+        </div>
+    </div>
+    <div id="diagnosticDiv"><div id="diagnosticConsole" style="display: none;"><div><div class="el-tabs el-tabs--top"><div class="el-tabs__header"><div class="el-tabs__nav-wrap"><div class="el-tabs__nav-scroll"><div role="tablist" class="el-tabs__nav" style="transform: translateX(0px);"><div class="el-tabs__active-bar" style="transform: translateX(0px);"></div><div id="tab-0" aria-controls="pane-0" role="tab" aria-selected="true" tabindex="0" class="el-tabs__item is-active">诊断配置</div></div></div><div class="resize-triggers"><div class="expand-trigger"><div style="width: 1px; height: 1px;"></div></div><div class="contract-trigger"></div></div></div></div><div class="el-tabs__content"><div role="tabpanel" id="pane-0" aria-labelledby="tab-0" class="el-tab-pane" style=""><div><div role="group" aria-label="checkbox-group" class="el-checkbox-group"><label role="checkbox" class="el-checkbox"><span aria-checked="mixed" class="el-checkbox__input"><span class="el-checkbox__inner"></span><input type="checkbox" class="el-checkbox__original" value="personal"></span><span class="el-checkbox__label">禁用个性化<!----></span></label></div> <div class="diag_operator"><div class="el-row">
+                                    点击按钮<button type="button" title="开启诊断模式" class="icon start_icon"></button>启用诊断模式
+                                </div> <div class="el-row">
+                                    点击按钮<button type="button" disabled="disabled" title="结束诊断模式" class="icon end_icon"></button>结束诊断模式
+                                </div></div></div></div> </div></div></div></div> <!----> <ul id="clearBox" class=""><li>清空</li></ul></div>
+    <!-- mobile带二维码hub -->
+    <script id="mobileShowTemplate" type="text/x-handlebars-template">
+        <div class="error-info error-info-common">
+            <div class="error-info-content">
+                <p class="p-text error-page hidden"></p>
+                {{#if QRCode}}
+                    <p class="error-info-QRcode text-center"><img src="" class="errorQRCode" width="170" height="170"/></p>    
+                    <p class="p-text text-center">扫描二维码，快速找答案</p>
+                {{/if}}
+            </div>
+        </div>
+    </script>
+
+
+    <!-- PC上错误hub展示 -->
+    <script id="pcShowTemplate" type="text/x-handlebars-template">
+        <div class="error-info-common error-info-detail">
+
+            <div class="pcHubShow" >
+                <p class="error-info-content p-text errorTxt"></p>
+                <div class="error-title">
+                    <p class="bg-gray p-1" style="position:relative;">
+                        来自 U9HUB的专业回答：
+                        {{#if this.Data.data}}
+                        
+                        {{/if}}
+                    </p>    
+                    <p class="errorTags">
+                        {{#each this.Tags}}
+                        <em class="bgHover">{{this}}</em>
+                        
+                        {{/each}}
+                    </p>
+                </div>
+                <div class="error-lists">
+                    
+                </div>
+            </div>
+            
+        </div>
+    </script>
+    
+    <script id="ErrorListTemplate" type="text/x-handlebars-template">
+        {{#if this.Data.data}}
+        <span class='iconfont y-icon-changeOther y-text-primary changeNextMsg' title='换一批'><i class="changeAnim loader-4 hidden"></i><em>换一批</em></span>
+        <div class="error-list">
+        {{#each this.Data.data}}
+        <div class="error-Box">
+            <p class="p-text errorTitle"><b>{{title}}</b></p>
+            <p class="error-info-text-muted">{{user_name}}   {{created_at}}</p>
+            <div class="error-info-content errorContent">
+                <div class="error-info-tooltip top" role="tooltip">
+                    <div class="error-info-tooltip-arrow y-border-t-color"></div>
+                    <div class="error-info-tooltip-inner y-bg-primary">知识描述</div>
+                </div>
+                <p>{{{content_highlight}}}</p>
+                <div class="error-info-tooltip top" role="tooltip">
+                    <div class="error-info-tooltip-arrow y-border-t-color"></div>
+                    <div class="error-info-tooltip-inner y-bg-primary">专业答案</div>
+                </div>
+                {{#if answer_content_highlight}}
+                <p class="answerContent">{{{answer_content_highlight}}}</p>
+                {{else}}
+                <p class="answerContent">{{{content_highlight}}}</p>
+                {{/if}}
+                <div class="icon-bar">
+                    <a href="javascript:void(0);" class="yes-icon-good" upvoteId="{{id}}"><i class="iconfont y-icon-good y-text-primary"></i> <span>{{total_plusone}}</span></a>
+                    <a href="javascript:void(0);"><i class="iconfont y-icon-bad"></i> 0</a>
+                    <a href="javascript:void(0);"><i class="iconfont y-icon-eye"></i> 浏览 {{total_view}}</a>
+                    <a href="javascript:void(0);"><i class="iconfont y-icon-comment"></i> 评论 {{total_comment}}</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        </div>
+        {{else}}
+        <div class="nothingTips">
+            <img src="../../css/images/none_icon.png" width="172" height="136" />
+            <p>抱歉,搜索结果为空</p>
+        </div>
+        {{/if}}
+
+    </script>
+
+    
+    <div class="errorLoad " id="errorLoad" style="display:none;">
+        <div class="sk-wave">
+            <div class="sk-rect sk-rect1"></div>
+            <div class="sk-rect sk-rect2"></div>
+            <div class="sk-rect sk-rect3"></div>
+            <div class="sk-rect sk-rect4"></div>
+            <div class="sk-rect sk-rect5"></div>
+            <p>努力加载中...</p>
+        </div>
+    </div>
+   <div id="myPrompt" class="myPrompt">
+        <b>×</b>
+        <ul class="myPromptContent"></ul> 
+   </div>
+
+   
+   <div id="myErrorNotify" class="myPrompt">
+        <b>×</b>
+        <ul class="myPromptContent"></ul>
+    </div>
+   <div class="errorListMsgDiv" id="errorListMsgDiv" style="display:none;">
+       <h3>错误信息汇总：</h3>
+       
+   </div>
+    <!--友户通密码弹层-->
+    <div class="modal" id="yhtPasswordCheckDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 340px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="javascript:;" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </a>
+                    <h4 class="modal-title" id="myModalLabel">
+                        友户通登录
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div role="form" class="my-form-horizontal">
+                        <div class="prompt" prompt="true"></div>
+                        <div class="form-group">
+                            <label>
+                                友户通密码
+                            </label>
+                            <input type="password" class="form-control input-sm" id="yhtPassword" value="" sts="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white m-l  btn-lg" data-dismiss="modal" name="btnCancel">
+                        取消
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" name="btnOk">
+                        确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--退出翻译模式弹框-->
+    <div id="myTranslate" class="myTranslate">
+        按ESC退出翻译模式
+        <i class="icon iconfont y-icon-shanchu" onclick="translateTool.off();"></i>
+    </div>
+
+
+
+<div class="autoDis"><iframe id="contactDataList" frameborder="0" scrolling="no" style="z-index: -1; position: absolute; left: 0px; top: 0px;" src="./请购_files/saved_resource.html"></iframe><ul></ul></div><span style="display: none;" id="tempSpan">400&nbsp;&nbsp;&nbsp;力同科技股份有限公司上海分公司</span></body></html>

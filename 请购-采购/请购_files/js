@@ -1,0 +1,32 @@
+var UFDataService=function() {
+UFDataService.initializeBase(this);
+this._timeout = 0;
+this._userContext = null;
+this._succeeded = null;
+this._failed = null;
+}
+UFDataService.prototype={
+_get_path:function() {
+ var p = this.get_path();
+ if (p) return p;
+ else return UFDataService._staticInstance.get_path();},
+GetData:function(strCommand,succeededCallback, failedCallback, userContext) {
+return this._invoke(this._get_path(), 'GetData',false,{strCommand:strCommand},succeededCallback,failedCallback,userContext); }}
+UFDataService.registerClass('UFDataService',Sys.Net.WebServiceProxy);
+UFDataService._staticInstance = new UFDataService();
+UFDataService.set_path = function(value) { UFDataService._staticInstance.set_path(value); }
+UFDataService.get_path = function() { return UFDataService._staticInstance.get_path(); }
+UFDataService.set_timeout = function(value) { UFDataService._staticInstance.set_timeout(value); }
+UFDataService.get_timeout = function() { return UFDataService._staticInstance.get_timeout(); }
+UFDataService.set_defaultUserContext = function(value) { UFDataService._staticInstance.set_defaultUserContext(value); }
+UFDataService.get_defaultUserContext = function() { return UFDataService._staticInstance.get_defaultUserContext(); }
+UFDataService.set_defaultSucceededCallback = function(value) { UFDataService._staticInstance.set_defaultSucceededCallback(value); }
+UFDataService.get_defaultSucceededCallback = function() { return UFDataService._staticInstance.get_defaultSucceededCallback(); }
+UFDataService.set_defaultFailedCallback = function(value) { UFDataService._staticInstance.set_defaultFailedCallback(value); }
+UFDataService.get_defaultFailedCallback = function() { return UFDataService._staticInstance.get_defaultFailedCallback(); }
+UFDataService.set_enableJsonp = function(value) { UFDataService._staticInstance.set_enableJsonp(value); }
+UFDataService.get_enableJsonp = function() { return UFDataService._staticInstance.get_enableJsonp(); }
+UFDataService.set_jsonpCallbackParameter = function(value) { UFDataService._staticInstance.set_jsonpCallbackParameter(value); }
+UFDataService.get_jsonpCallbackParameter = function() { return UFDataService._staticInstance.get_jsonpCallbackParameter(); }
+UFDataService.set_path("/U9/Ajax/Service/DataService.asmx");
+UFDataService.GetData= function(strCommand,onSuccess,onFailed,userContext) {UFDataService._staticInstance.GetData(strCommand,onSuccess,onFailed,userContext); }

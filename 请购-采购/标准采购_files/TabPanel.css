@@ -1,0 +1,270 @@
+﻿@charset "utf-8";
+
+.tabpanel {
+  position: relative;
+}
+.tabpanel_tab_contentBox{
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.tabpanel_tab_content {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  white-space: nowrap;
+  position: relative;
+}
+#tab .tabpanel_tab_content{padding-left:20px;}
+#tab .tabpanel_content .html_content{background: #f3f3f3}
+#tab .portal-con{padding:27px 20px 0 20px;}
+#tab .portal-con-sm{padding:15px 15px 0 15px;}
+.tabpanel_tab_content .tabpanel_move_content {
+  width: 0px;
+  overflow: hidden;
+}
+
+.tabpanel_move_content_scroll {
+  
+}
+
+.tabpanel_mover {
+  width: 5000000px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.tabpanel_mover li {
+  background: #fff;
+  padding: 0 25px;
+  height: 30px;
+  float: left;
+  position: relative;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.tabpanel_mover li .closer {
+ 
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -7px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+
+.tabpanel_mover li .title {
+  overflow: hidden;
+  font-size: 14px;
+  font-family: "microsoft yahei";
+  text-align: center;
+}
+.tabpanel_mover li div {
+  color: #909090;
+}
+.tabpanel_mover li .controlBg,
+.tabpanel_select_content .controlBg,
+.tabpanel_mover li .translateBg,
+.tabpanel_select_content .translateBg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .2;
+    z-index: 999;
+}
+.tabpanel_mover li .controlBg,
+.tabpanel_select_content .controlBg{
+    cursor: help!important;
+}
+.tabpanel_mover li .translateBg,
+.tabpanel_select_content .translateBg,
+.tabpanel_mover li:first-child .translateBg{
+    cursor: not-allowed!important;
+}
+.tabpanel_mover li:first-child .controlBg{
+  cursor: not-allowed!important;
+}
+.tabpanel_mover li .icon_title {
+  padding-left: 24px;
+  font-size: 14px;
+  font-family: "microsoft yahei";
+  background-repeat: no-repeat;
+  background-position: left center;
+  overflow: hidden;
+  float: left;
+  background: url(images/homo1.png) no-repeat left center;
+
+}
+.tabpanel_mover li.active div {
+  color: #fff;
+}
+
+.tabpanel_tab_content .tabpanel_left_scroll {
+  background: transparent url(../images/btnL.png) no-repeat
+    left center;
+  position: absolute;
+  width: 18px;
+  height: 24px;
+  right: 25px;
+  top: 50%;
+  margin-top: -12px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.tabpanel_tab_content .tabpanel_right_scroll {
+  background: transparent url(../images/btnR.png)
+    no-repeat right center;
+  position: absolute;
+  width: 18px;
+  height: 24px;
+  right: 0px;
+  top: 50%;
+  margin-top: -12px;
+
+  cursor: pointer;
+  z-index: 10000;
+}
+
+/*.tabpanel_tab_content .tabpanel_scroll_over {
+  background-position: -18px 0;
+}*/
+
+.tabpanel_tab_content .tabpanel_left_scroll_disabled {
+  /*background-position: 0 0;*/
+  opacity: .5;
+  -moz-opacity: .5;
+  filter: alpha(opacity = 50);
+  cursor: default;
+}
+
+.tabpanel_right_scroll_disabled {
+  background-position: -36px 0;
+  opacity: .5;
+  -moz-opacity: .5;
+  filter: alpha(opacity = 50);
+  cursor: default;
+}
+
+.display_none {
+  display: none;
+}
+
+.disabled {
+  color: gray;
+}
+
+.tabpanel_tab_content .tabpanel_tab_spacer {
+/*  border-top: 1px solid #8DB2E3;
+  height: 2px;
+  background: #DEECFD;
+  font-size: 1px;
+  line-height: 1px;
+  margin-top: -1px;*/
+}
+
+.tabpanel_content {
+  background-color: #FFF;
+  overflow: auto;
+  position: relative;
+}
+
+.tabpanel_content .html_content {
+  width: 100%;
+  height: 100%;
+  background-color:#FFF;
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+
+/*新增样式部分*/
+
+
+/*************右侧下拉框*****************/
+.tabpanel_select_content{ position: absolute; z-index: 999; right:0; top: 0; width: 90px;height:30px; text-align: right; padding-right: 10px; cursor: pointer;}
+
+
+
+
+
+/*************右侧下拉框*****************/
+.lists{ font: 12px/20px "microsoft yahei"; color: #666666; background: #fff; border: 1px #d2d2d2 solid; position: absolute; top: 28px;  right: 20px;}
+.tabpanel_select_content a{ color: #666666; text-decoration: none; display: block; white-space:nowrap; padding: 0 25px; text-align: left;}
+.tabpanel_select_content a:hover{ color: #fff!important; background: #ff716b;}
+.tabpanel_select_content .controlBg{cursor: not-allowed!important;}
+.lists1{ font: 12px/20px "microsoft yahei"; color: #666666; background: #fff;  border: 1px #d2d2d2 solid; position: absolute; top: 28px; right: 20px;}
+.lists1 a{width:100%; text-align: right;color: #666666; text-decoration: none; display: block; padding: 1px 20px;}
+.lists1 a:hover{ color: #fff!important; background: #ff716b;}
+.lists1 a.notBg:hover{background: none!important; color: #888!important; cursor: not-allowed;}
+.otherlists{border-top: 1px solid #ddd}
+.hidden{ display: none;}
+
+
+
+
+
+
+
+/*鼠标右键弹出样式*/
+.menu{
+    background-color:#ccc;
+    border:1px solid #888888;
+    border-bottom:0px;
+    position:absolute;
+    width:100px;
+    height:auto;
+    display:none;
+    text-align:left;
+    padding:0px;
+    z-index: 9999;
+}
+.menuItem{
+    border-bottom:1px solid #888888;
+    width:100%;
+    height:20px;
+    padding:0px;
+    margin:0px;
+}
+.menuItemOnMouseOver{
+    background:green;
+}
+.menuItemIcon{
+    position:absolute;
+    /*width:40px;*/
+    height:100%;
+    text-align:center;
+    padding:0px;
+    margin:0px;
+}
+.menuItemName{
+    /*position:absolute;*/
+    /*width:130px;*/
+    height:100%;
+    /*margin-left:40px;*/
+    /*padding-left:2px;*/
+    text-align:center;
+}
+.menuItemRight{
+    position:absolute;
+    width:30px;
+    height:100%;
+    margin-left:170px;
+    padding:0px;
+    text-align:center;
+}
+ /*遮罩*/
+.iframgBg{position: absolute; left: 0; top: 0; width: 100%; height: 100%;  /*opacity: .8; filter: alpha(opacity=80);*/ background: url(../images/loading1.gif) no-repeat center center #f1f1f1;}
+/*.iframgBg{ background: url(../images/customImage/loading1.gif) no-repeat center center;}*/

@@ -1,0 +1,48 @@
+  ul,li,p,dd,dl{margin: 0;padding: 0;list-style: none}
+  .wpapproval-div,.approval-div{right: 60px;top:60px;position: absolute;}
+  /*.wpapproval-div{width: 312px;height: 451px;
+  filter:alpha(opacity=100);
+  opacity:1;background: #fff;border:1px solid #ddd;box-shadow:0 0 10px #ccc}*/
+  .approval-div{z-index: 71;width: 312px;font-size: 12px;position: absolute;box-sizing:border-box;background: #fff;border:1px solid #ddd;box-shadow:0 0 10px #ccc;transform:translateZ(0);}
+  .approval-div .approval-ul{overflow-y: auto;overflow-x:hidden;padding:0px 16px 30px 16px;cursor: move;}
+  .approval-div  .approvalHeader{height: 30px;cursor: move}
+  .approval-list .last-li-text{position: absolute;top: 8px;left: 34px}
+  /*ie7hack滚动条拖动问题*/
+  .approval-div .approval-ul{*+position: relative;*+zoom:1;}
+  .close-ex{position: absolute;right:14px;top: 6px;z-index: 4;cursor: pointer;}
+  .approval-div li{border-left:1px solid #ccc;zoom:1;position: relative;margin-bottom:-3px;cursor: default;}
+  .approval-div li.stamp-li{font-size: 15px;height:35px;}
+  .approval-div li.stamp-li .stamp{ width: 95px;height: 66px;display: inline-block;position: absolute;top: -10px;left: 30px;}
+  .approval-div li.stamp-li .stampPass{background:url("images/stampPass.png");}
+  .approval-div li.stamp-li .stampRefulse{background:url("images/stampRefulse.png");}
+  .approval-div small{font-size: 12px;}
+  .approval-div li .approval-list{height: 100%;position: relative;padding-left:36px;padding-top:0px;padding-bottom:16px;_zoom:1;box-sizing: border-box;}
+  .approval-list .time-interval{position: absolute;top:100%;left: -10px;background: #fff;display: inline-block;z-index: 3;width: 44px;color: #999}
+  .approval-list  i.timeline-icon{position: absolute;z-index: 4;left: -12px;width:22px;height:22px;}
+  .approval-list  .cover-bar{background: #fff;width: 4px;position: absolute;top: 0;left:-1px;height: 50%;z-index: 1}
+    .stamp-li .approval-list  .cover-bar{top:50%;}
+  .approval-list   .triangle-left{
+  background: url("images/triangleLeft.png");
+  position: absolute;z-index: 20;
+  left:22px;height: 20px;width: 15px;
+  }
+  .approval-list  i.timeline-icon,.approval-list   .triangle-left{top:50%;margin-top: -10px;}
+ .approval-div .bracket-bar{
+  left:16px;height: 90px;top:50%;width: 6px;position: absolute;z-index: 3;border-top-left-radius: 6px;border-bottom-left-radius: 6px;margin-top: -1px}
+  .approval-list .approval-dl{position: relative;zoom:1;padding:5px 7px;background: #eee;border-radius: 10px;display: block;}
+  .approval-dl .approval-dd-1{border-bottom:1px solid #d9d9d9;overflow: hidden}
+  .approval-dl .approval-dd-2{overflow: hidden;}
+  
+  .approval-dd-1 .list-left{position: relative;margin-top: 3px;background: #aaa;border-radius: 50% 50%;width:36px;height: 36px;line-height: 36px;z-index: 2;text-align: center;color: #fff;font-size: 21px;font-family: "Microsoft Yahei";float: left}
+   .approval-dd-1 .list-right{margin-left:40px;}
+   .approve-time{position: absolute;top:6px;right: 7px;color: #666;display: block;cursor: pointer;}
+  .approval-dd-1 .operate-user{font-size: 14px;color: #333;padding:0 0 2px 0;font-weight: bold;width: 80px;display: block} 
+  .approval-dd-1 .list-info{padding-bottom: 5px;padding-top:2px;overflow: hidden;display: block}
+   .list-info .list-info-con{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 140px;display: block;}
+   .list-info  .list-info-right{float: right;font-size: 14px;font-weight: bold;color: #666}
+  .text-ellipsis{text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+  .approval-dd-2 .approve-options{width:160px;margin-left: 20px;margin-right: 20px;display: block;line-height: 20px;}
+  .approval-dd-2  .fa-comment{float: left}
+  .approval-dd-2  .more-ex{float: right;margin-top:1px;cursor: pointer;}
+  .approvalBtn{display: block;}
+  .approval-avatar{width: 36px;border-radius: 50%;position: absolute;top: 0;left: 0;}

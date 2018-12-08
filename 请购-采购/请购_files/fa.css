@@ -1,0 +1,247 @@
+.fa {
+  display: inline-block;
+  text-rendering: auto;
+  width: 20px;
+  height: 20px;
+  padding: 0; }
+
+.fa-lg {
+  width: 30px;
+  height: 30px; }
+
+.fa-xs {
+  width: 8px;
+  height: 8px; }
+
+.fa-sm {
+  width: 15px;
+  height: 15px; }
+
+.con-area .fa-angle-up {
+  background-position: -38px -0px; }
+
+.con-area .fa-angle-up:hover {
+  background-position: -38px -31px; }
+
+.con-area .fa-angle-down {
+  background-position: -37px -66px; }
+
+.con-area .fa-angle-down:hover {
+  background-position: -37px -98px; }
+
+.classify .fa-angle-down, .classify .fa-angle-down:hover {
+  background-position: -37px -131px; }
+
+.fa-search {
+  background-position: -153px -39px; }
+
+.fa-search-2, .fa-search-3 {
+  width: 22px;
+  height: 20px; }
+
+.fa-caret-down {
+  background-position: -175px -9px; }
+
+.fa-star {
+  background-position: -144px -3px; }
+
+.fa-bars {
+  background-position: -110px -9px; }
+
+.fa-plus {
+  background-position: -117px -107px; }
+
+.fa-minus {
+  background-position: -117px -140px; }
+
+.fa-log {
+  background-position: -157px -77px; }
+
+.select .fa-bars {
+  background-position: -110px -79px; }
+
+.fa-check, .listmMenu .hover .listSubMenu .fa-check {
+  background-position: -200px -7px; }
+
+.listmMenu .fa-check {
+  position: absolute;
+  top: 3px;
+  left: 2px; }
+
+.listmMenu .hover .fa-check, .listmMenu .hover .listSubMenu .hover .fa-check {
+  background-position: -200px -22px; }
+
+.adminUl li .fa-caret-down {
+  position: absolute;
+  top: 2px;
+  right: 0px; }
+
+.fa-chevron-right {
+  background-position: -78px -6px; }
+
+.fa-comment-o {
+  background-position: -80px -42px; }
+
+.fa-list-ul {
+  background-position: -78px -77px; }
+
+.fa-edit {
+  background-position: -78px -116px; }
+
+.fa-paw {
+  background-position: -78px -157px; }
+
+.quick-ul .fa-angle-double-up {
+  background-position: -5px -4px; }
+
+.quick-ul .fa-angle-up {
+  background-position: -5px -26px; }
+
+.quick-ul .fa-angle-down {
+  background-position: -5px -47px; }
+
+.quick-ul .fa-angle-double-down {
+  background-position: -5px -75px; }
+
+.fa-times-circle-o {
+  background-position: -4px -168px; }
+
+.oprate .fa-times-circle-o, a:hover .fa-times-circle-o {
+  background-position: -4px -200px; }
+
+.fa-times {
+  background-position: -5px -106px; }
+
+a:hover .fa-times {
+  background-position: -5px -136px; }
+
+.fa-angle-circle-o-right {
+  background-position: -11px -247px; }
+
+.fa-angle-circle-o-down {
+  background-position: -51px -247px; }
+
+.fa-angle-circle-o-left {
+  background-position: -91px -247px; }
+
+.fa-angle-circle-o-up {
+  background-position: -126px -247px; }
+
+.fa-angle-circle-down {
+  background-position: -119px -174px; }
+
+.fa-angle-circle-up {
+  background-position: -203px -199px; }
+
+.fa-angle-circle-left {
+  background-position: -44px -328px; }
+
+.fa-angle-circle-right {
+  background-position: -92px -332px; }
+
+.fa-plus-circle-color {
+  background-position: -156px -199px; }
+
+.fa-minus-circle-color {
+  background-position: -97px -286px; }
+
+.fa-search-gray {
+  background-position: -200px -72px; }
+
+.fa-times-golden {
+  background-position: -202px -46px; }
+
+.fa-times-circle-color {
+  background-position: -168px -247px; }
+
+.fa-rss {
+  background-position: -160px -114px; }
+
+.fa-rss-white, .select .fa-rss, a:hover .fa-rss {
+  background-position: -160px -150px; }
+
+.fa-bar {
+  background-position: -197px -110px; }
+
+.fa-bar-white, .select .fa-bar, a:hover .fa-bar {
+  background-position: -197px -146px; }
+
+.fa-bar-white-sm {
+  background-position: -6px -336px; }
+
+.fa-ok-circle-color {
+  background-position: -207px -247px; }
+
+.fa-edit-circle-color {
+  background-position: -146px -287px; }
+
+.fa-top-color, .toTop {
+  background-position: -12px -286px; }
+
+.fa-top-gray, .toTopHui {
+  background-position: -51px -286px; }
+
+.triangle-white {
+  background-position: -203px -290px; }
+
+.fa-play-circle {
+  background-position: -6px -376px; }
+
+.fa-ok-circle-color-22 {
+  background-position: -59px -376px; }
+
+.fa-times-circle-22 {
+  background-position: -110px -376px; }
+
+.fa-warning-circle {
+  background-position: -166px -376px; }
+
+.fa-pause-circle {
+  background-position: -220px -338px; }
+
+.fa-end-circle {
+  background-position: -221px -376px; }
+
+.fa-end-warning-circle {
+  background-position: -6px -419px; }
+
+.fa-comment {
+  background-position: -178px -338px; }
+
+.fa-stamp-white {
+  background-position: -53px -420px; }
+
+/*挂起*/
+.fa-hang-warning-circle {
+  background-position: -111px -421px; }
+
+/*加签*/
+.fa-addSign-warning-circle {
+  background-position: -167px -420px; }
+
+/*重启*/
+.fa-restart-circle-color {
+  background-position: -7px -465px; }
+
+/*转发*/
+.fa-forward-warning-circle {
+  background-position: -167px -462px; }
+
+/*撤回*/
+.fa-recall-warning-circle {
+  background-position: -57px -464px; }
+
+/*退回*/
+.fa-return-warning-circle {
+  background-position: -111px -463px; }
+
+.fa-download-gray{background-position: -7px -505px}
+.fa-more-gray{background-position: -46px -506px}
+.fa-add-gray{background-position: -83px -506px}
+.fa-menu-right{background-position: -128px -502px;width: 30px;height: 30px;}
+.fa-telephone-white {background-position: -216px -420px;}
+.fa-cut-white{
+  background-position: -185px -503px;
+}
+.fa-map-white{background-position: -9px -551px;}
+/*# sourceMappingURL=fa.css.map */

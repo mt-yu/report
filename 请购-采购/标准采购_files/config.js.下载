@@ -1,0 +1,38 @@
+﻿/** require的入口文件及配置信息
+ * created by Mahx 20180104
+ */
+require.config({
+    baseUrl: '../../Scripts/NewPortal/index',
+    paths: {
+        'vue': '../../vue@2.4.2',
+        'jquery':'../../jquery',
+        'gridster': 'jquery.gridster',
+        'U9.dashboards.list': 'widgetProvider',
+        'U9.dashboards.iframe': 'widgetProvider',
+        'U9.dashboards.image': 'widgetProvider',
+        'U9.dashboards.service': 'widgetProvider',
+        'U9.dashboards.list.multidata': 'widgetProvider',
+        'U9.dashboards.multimedia': 'widgetProvider',
+        'U9.dashboards.powerBI': 'widgetProvider',
+        'bluebird': '../bluebird',
+        'ELEMENT': '../../element-ui',
+        'sortablejs':'sortable',
+        'draggable':'vuedraggable',
+        'JSON': '../json2'
+
+    },
+    shim:{
+        'draggable':{
+            deps: ['vue'],
+            exports: 'draggable'
+        },
+        'gridster': {
+            deps: ['jquery'],
+            exports: 'jQuery.fn.gridster'
+        },
+        'jquery': {
+            exports: 'jQuery'
+        }
+    }
+});
+require(['index']);

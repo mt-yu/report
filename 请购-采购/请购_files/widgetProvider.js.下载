@@ -1,0 +1,978 @@
+﻿/** 组件的引擎，用Require的模块方式注册，方便扩展。
+ * created by Mahx 20180108
+ * 目前支持：
+ * 列表模块 U9.dashboards.list
+ * Iframe模块
+ */
+//列表模块
+define('U9.dashboards.list', ['vue', 'exports', 'http', 'bluebird', 'ELEMENT', 'layoutTools'], function (Vue, exports, http, Promise, ELEMENT, tools) {
+    Vue.use(ELEMENT)
+    function resizeAttr(list, data) {
+        var d = {};
+        if (list)
+            $.each(list, function (i, item) {
+                d[item.key] = item.value;
+                if (item.vModel && data) {
+                    if (item.vModelTemplate) {
+                        d[item.key] = item.vModelTemplate.replace("{{" + item.vModel + "}}", data[item.vModel]);
+                    } else {
+                        d[item.key] = data[item.vModel];//优先取modal绑定关系，没有才取value
+                    }
+                }
+            });
+        return d;
+    }
+
+    function createElementTool(element, data) {
+        if (!element)
+            return {};
+        return {
+            'class': element.className || undefined,
+            style: resizeAttr(element.style, data),
+            attrs: $.extend(resizeAttr(element.attrs, data), { 'so': element.so }),
+            domProps: element.innerHTML && !element.innerExtend ? {//有innerExtend则不在这里显示innerHTML
+                innerHTML: element.innerHTML
+            } : undefined
+
+        }
+    }
+    function skipNull(options) {
+        for (name in options) {
+            copy = options[name];
+            if ((jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)))) {
+                if (copyIsArray && copy.length === 0)
+                    options[name] = undefined;
+                else
+                    skipNull(copy)
+            } else if (copy === null) {
+                options[name] = undefined;
+            }
+        }
+    }
+    function createPageTool(_c) {
+        /*
+               <el-pagination
+                                         :current-page="page.currentPage"
+                                         :page-size="page.pageSize"
+                                         layout="prev,pager,next"
+                                         :total="page.totalElements"
+                                         v-on:current-change="onCurrentPageChange" v-on:size-change="onPageSizeChange">
+                                        </el-pagination>
+                                        */
+        return _c("el-pagination", {
+            'class': 'pagination-bottom',
+            props: {
+                layout: "prev, pager, next",
+                'page-size': this.size,//this为vue的this
+                'total': this.total
+            },
+            on: {
+                'current-change': this.pageChange
+            },
+            attrs: {
+                'so': 'pagetool'
+            }
+        });
+    }
+    var listProvider = (function () {
+        var listProvider = function (options) {
+            this._config = options || {};//存储id、path、名称等配置信息
+            this._element = null;
+            this._elId = this._config.elId;
+            this._vm = null;
+            this.isFirstLoad = false;
+            //组件显示分为上中下，中间内容显示内容，上下区域可以进行扩展
+            var bgh = 'top';
+            var agh = 'bottom';
+            var ge = 'content';
+            //此Data完全与后端的Dashboard_ListDTO匹配 存储数据
+            this._data = null;
+            listProvider.prototype.InitData = function () {
+                var _this = this;
+                this._data = {
+                    htmlType: 0,//默认为0，0为流式布局,1为响应式布局
+                    clickType: 0,//默认为0，0为点击之后弹框显示详情，1位新窗口打开显示详情
+                    /*响应式布局结构如下
+                    <element>
+                        <div top>
+                            <title>
+                            <用户扩展部分>
+                        </div>
+                        <div content>
+                            <groupElement>
+                        </div>
+                        <div bottom>
+                            <分页>
+                            <用户扩展部分>
+                        </div>
+                    </element>
+                    */
+                    htmlForResponse: {
+                        rootElement: { tag: "div", className: "responsive-list" },
+                        //top部分的结构开始
+                        titleHtml: {
+                            tag: "span",
+                            className:this._config.isShowTitle?"show list-title-text":"hide list-title-text"
+                        },
+                        beforeGridHtml: {
+                            tag: "div",
+                            className: "",
+                            attrs: [],
+                            style: [],
+                            innerHTML: "",
+                            innerExtend: undefined//innerExtend是函数，用来返回inner具体的元素对象，如果没有则取innerHTML显示。
+                        },//top部分的结构结束
+                        //content部分的结构开始
+                        gridElement: {
+                            tag: "ul",
+                            so: ge
+                        },
+                        groupElement: { tag: "li" },
+                        contentElement: { tag: "p" },//content部分结构结束
+                        //bottom部分开始
+                        afterGridHtml: {
+                            tag: "div",
+                            className: "",
+                            attrs: [],
+                            innerHTML: "",
+                            innerExtend: undefined,//innerExtend和innerHtml二选一，innerExtend是函数，用来返回具体的元素对象，innerHtml是html，是静态的。
+                            //有Extend则调用此innerExtend方法用来创建子元素，没有则直接显示innerHTML
+                            style: []
+                        }//bottom部分结束
+
+                    },
+                    /*
+                    流式布局
+                    结构
+                    <element>
+                        <div top>
+                            <title>
+                            <用户扩展部分>
+                        </div>
+                        <table content>
+                            <tr>
+                        </table>
+                        <div bottom>
+                            <分页>
+                            <用户扩展部分>
+                        </div>
+                    </element>
+                    */
+                    htmlForFlowLayout: {
+                        rootElement: { tag: "div", className: "flowlayout-list" },
+                        titleHtml: {
+                            tag: "span",
+                            className:this._config.isShowTitle?"show list-title-text":"hide list-title-text"
+                        },
+                        beforeGridHtml: {
+                            tag: "div",
+                            className:"list-title",
+                            attrs: [],
+                            style: [],
+                            innerHTML: "",
+                            innerExtend: undefined//innerExtend是函数，用来返回inner具体的元素对象，如果没有则取innerHTML显示。
+                        },
+
+                        afterGridHtml: {
+                            tag: "div",
+                            className: "",
+                            attrs: [],
+                            innerExtend: undefined,//innerExtend和innerHtml二选一，innerExtend是函数，用来返回具体的元素对象，innerHtml是html，是静态的。
+                            //有Extend则调用此innerExtend方法用来创建子元素，没有则直接显示innerHTML
+                            innerHTML: "",
+                            style: []
+                        }
+                    },
+                    displayItems: [],
+                    data: [],
+                    pageIndex: 1,
+                    size: 1,
+                    total: 0,
+                    isShowPageTool: true,
+                    config: this._config,
+                    urlForClickTemplate: undefined,
+                    //组件显示分为上中下，中间内容显示内容，上下区域可以进行扩展
+                    bgh: 'top',
+                    agh: 'bottom',
+                    ge: 'content'
+                };
+                this._data = $.extend(true, this._data, this._config.setting);
+            }
+        };
+        listProvider.prototype.loadData = function (url, paras, success, error) {
+            var _this = this;
+            http.get(url, paras).then(function (data) {
+                success(data);
+            }, function (data) {
+                console.log("列表组件ID:" + _this._config.id + " url:" + _this._config.path + " 请求异常，请开发人员检查！");
+                !error || error(data);
+            })
+        };
+        listProvider.prototype.reLoadData = function (paras) {
+            var _this = this;
+            paras = paras || (this._data ? {
+                PageIndex: this._data.pageIndex,
+                PageSize: this._data.size,
+            } : undefined);
+            this.loadData(this._config.path, paras, function (data) {
+                _this._data.data = data.data;
+                //_this._data.pageIndex = data.pageIndex;
+                //_this._data.size = data.size;
+                _this._data.total = data.total;
+            }, function () {
+
+            });
+        };
+        listProvider.prototype.noData = function () {
+            var className = _this._config.isShowTitle?"show":"hide";
+             $("#" + this._elId).html('<div class="list-title"><span class="'+className+' list-title-text">' + this._config.name + '</span></div>')
+                .append('<div class="content"><div class="widget-message-text">配置小组件</div><div class="bgImage"></div></div>');   
+        };
+        listProvider.prototype.init = function () {
+            this.InitData();//初始化数据
+            if (!this._config.path){
+               return;
+            }
+            //将元素添加到element中
+            //_this._element.append(this.s(this._data.htmlType == 0 ? this._data.htmlForFlowLayout : this._data.htmlForResponse));
+            //列表需要根据用户设置的大小自由变换请求数量，而数量又跟列表的显示样式有关系，而显示样式在不请求服务的情况下又得不到，这样有了一个矛盾之处。
+            //解决办法就是在第一次先请求1条数据，根据数据渲染的结果分析还需要多少数据，再发一次完整数量的请求。请看Vue模板创建位置，会在updated中调用二次加载
+            //this._config.path = this._config.path.replace(/(&\|?)*PageSize=\d*/, "").replace(/(&\|?)*PageIndex=\d*/, "");
+            this.firstLoad();
+        };
+        //第一次加载
+        listProvider.prototype.firstLoad = function () {
+            var _this = this;
+            this.loadData(this._config.path, { PageIndex: 1, PageSize: this._data.size }, function (data) {
+                if (data.data && data.data.length > 0) {
+                    skipNull(data);
+                    data.pageIndex = data.pageIndex <= 0 ? 1 : data.pageIndex;
+                    data.size = data.size <= 0 ? 1 : data.size;
+                    _this._data = $.extend(true, _this._data, data);
+                    var nextTick = function () {
+                        _this._element = $("#" + _this._elId);//更新一下_element的定义
+                        //判断是否为真正需要二次加载的情况
+                        //启动了分页则用分页的total来做判断，如果当前内容为1并且total大于1那么就视图进行二次加载，二次加载会根据组件大小来确定真正显示的条数
+                        //没启动分页，则减少两个个判断项，因为没启动分页那返回的PageIndex和PageSize有可能都是0，total也是0，因为数据源不关注分页相关内容。但是最大限度减少误差。
+                        //这里用data.data.count=1来判断返回的数据是否为1条。如果本身数据源并不关注分页数据，有可能第一次就返回多条。那么就不用进行二次加载了，说明数据源不关注页面的设置情况。
+                        if (((_this._data.isShowPageTool && _this._data.pageIndex == 1 && _this._data.total > 1)
+                            || (!_this._data.isShowPageTool)) && (data.data && data.data.length == 1)) {
+                            this.isFirstLoad = true;
+                            _this["sl" + _this._data.htmlType]();
+                        }
+                    };
+                    //二次加载数据
+                    Vue.nextTick(nextTick);
+                    ////成功之后将组件实例返回，方便使用者调用
+                    //success(_this);
+                }
+                _this._element = $("#" + _this._elId);//更新一下_element的定义
+            }, function () {
+                //error(_this);
+            })
+        }
+        //流式布局
+        listProvider.prototype.f0 = function (_c) {
+            var _this = this;//this是vue的this。
+            var layout = this.htmlForFlowLayout;
+            //创建根元素
+            return _c(layout.rootElement.tag, $.extend(true, createElementTool(layout.rootElement), { attrs: { id: this.$el.id } }), [
+                //top区域的渲染
+                (_c("div", {
+                    "class": _this.bgh + " list-title",//top
+                    attrs: {
+                        'so': _this.bgh
+                    }
+                }, [(
+                    //titleHTML
+                    layout.titleHtml && layout.titleHtml.tag ?
+                        _c(layout.titleHtml.tag,
+                            createElementTool(layout.titleHtml),
+                            _this.config.name)
+                        : undefined),
+                //用户扩展部分
+                layout.beforeGridHtml && layout.beforeGridHtml.tag ?
+                    _c(layout.beforeGridHtml.tag, createElementTool(layout.beforeGridHtml), [
+                        //有innerExtend则调用,最终这里会调入到扩展里，达到对top的扩展
+                        layout.beforeGridHtml.innerExtend ? layout.beforeGridHtml.innerExtend.call(this, _c) : undefined
+                    ])
+                    : undefined])),
+
+
+                //content部分
+                //创建Grid控件，使用Element的table控件
+                _c('el-table', {
+                    props: {
+                        data: this.data,
+                        //'show-summary':
+                    },
+                    style: {
+                        width: '100%'
+                    },
+                    on: {
+                        'row-dblclick': function (row) { _this.click.call(_this, row); }
+                    }
+                }, _this.displayItems.map(function (item) {
+                    //创建列
+                    return _c('el-table-column', {
+                        props: {
+                            fixed: item.fix,
+                            prop: item.name,
+                            label: item.title,
+                            width: item.width ? item.width : 150,
+                            align: item.align,
+                            "show-overflow-tooltip":true
+                            //formatter: item.isImage?function (r,c,v) {
+                            //    return "<image src='"+v+"'>";
+                            //}:undefined
+                        }
+                    }
+                        //,
+                        //[//如果是图片，要按照图片格式显示
+                        //  item.isImage?_c('template', {
+                        //     props: {
+                        //         'scope': 'scope'
+                        //     }
+                        // }, [
+                        //     _c("image","dd")
+                        // ]):undefined
+                        //]
+                    )
+                })),
+
+
+                //bottom部分开始
+                (_c("div", {
+                    "class": _this.agh,//bottom
+                    attrs: {
+                        'so': _this.agh
+                    }
+                }, [
+                        //创建页码控件
+                        _this.isShowPageTool ? createPageTool.call(_this, _c) : undefined,
+                        //用户扩展部分
+                        layout.afterGridHtml && layout.afterGridHtml.tag ? _c(layout.afterGridHtml.tag, createElementTool(layout.afterGridHtml),
+                            [layout.afterGridHtml.innerExtend ? layout.afterGridHtml.innerExtend.call(this, _c) : undefined]//如果有innerExtent函数，则调用，用来显示具体的内容
+                        ) : undefined])
+                )
+            ])
+        };
+
+        //流式布局二次请求
+        listProvider.prototype.sl0 = function () {
+            ////根据渲染出的一条数据，计算页面可以渲染出的条数。
+            //条数计算方法
+            //总组件区域减去top，减去bottom，因为这两个是定值，得到content区域，
+            //得到content高度除去已知一条数据的高度，得到条数，作为一页显示的size。
+            var _this = this, layout = this._data.htmlForResponse;
+            var size = tools.getWidgetSize(_this._config.width, _this._config.height);
+            var height = size.height - _this._element.find("[so='" + _this._data.bgh + "']").outerHeight(true) - _this._element.find("[so='" + _this._data.agh + "']").outerHeight(true) - _this._element.find(".el-table__header-wrapper").outerHeight(true);
+            //var width = _this._element.width();
+            //var groupE = _this._element.find("[so='" + ge + "']").find(layout.groupElement.tag);
+            var caseHeight = _this._element.find(".el-table__row").outerHeight(true);
+
+            // var x = parseInt(width / caseWidth), y = parseInt(height / caseHeight);
+
+            var sizeZ = caseHeight <= 0 ? 1 : parseInt(height / caseHeight);
+            _this._data.size = sizeZ <= 1 ? 1 : sizeZ;//size变化会自动引发数据请求
+            this.isFirstLoad = false;
+        }
+        //响应式布局
+        listProvider.prototype.f1 = function (_c) {
+            var _this = this;//this是vue的this。
+            var layout = this.htmlForResponse;
+            //创建根元素
+            return _c(layout.rootElement.tag, $.extend(true, createElementTool(layout.rootElement), { attrs: { id: this.$el.id } }), [
+                //top部分
+                (_c("div", {
+                    "class": _this.bgh +" list-title",//top开始
+                    attrs: {
+                        'so': _this.bgh
+                    }
+                }, [(
+                    //titleHTML
+                    layout.titleHtml && layout.titleHtml.tag ?
+                        _c(layout.titleHtml.tag,
+                            createElementTool(layout.titleHtml),
+                            _this.config.name)
+                        : undefined),
+                layout.beforeGridHtml && layout.beforeGridHtml.tag ?//用户自定义部分
+                    _c(layout.beforeGridHtml.tag, createElementTool(layout.beforeGridHtml), [
+                        //有innerExtend则调用
+                        layout.beforeGridHtml.innerExtend ? layout.beforeGridHtml.innerExtend.call(this, _c) : undefined
+                    ]) : undefined])),
+
+                //content部分
+                //创建列表元素
+                _c(layout.gridElement.tag, createElementTool(layout.gridElement), _this.data.map(function (item) {
+                    //创建组元素
+                    return _c(layout.groupElement.tag, $.extend({}, createElementTool(layout.groupElement, item), {
+                        //为内容绑定click事件
+                        on: {
+                            click: function (e) { _this.click.call(_this, item); }
+                        }
+                    }), _this.displayItems.map(function (obj) {
+                        //根据显示列，创建每列显示元素
+                        var element = $.extend({}, layout.contentElement, obj.bodyCellElement);
+                        var attr = createElementTool(element, item);
+                        if ('p,div,span,h1,h2,h3,h4,h5,h6,h7,lable'.indexOf(element.tag.toLowerCase()) > -1) {
+                            //如果是文字表情，则把title当做属性放出来，title的内容是要显示的内容
+                            attr.attrs.title = attr.attrs.title || item[obj.name];
+                        }
+                        if (item[obj.name].indexOf("<a")>-1)
+                            attr.domProps = { innerHTML: item[obj.name] };
+                        return _c(element.tag, attr, item[obj.name]);
+                    }))
+                    //return createElement("p", "ss");
+                })),
+
+
+                //bottom部分
+                (_c("div", {
+                    "class": "bottom",//bottom
+                    attrs: {
+                        'so': _this.agh
+                    }
+                }, [
+                        //创建页码控件
+                        _this.isShowPageTool === true ? createPageTool.call(_this, _c) : undefined,
+
+                        //扩展部分
+                        layout.afterGridHtml && layout.afterGridHtml.tag ? _c(layout.afterGridHtml.tag, createElementTool(layout.afterGridHtml),
+                            [layout.afterGridHtml.innerExtend ? layout.afterGridHtml.innerExtend.call(this, _c) : undefined]//如果有innerExtent函数，则调用，用来显示具体的内容
+                        ) : undefined
+                    ]))
+            ])
+
+        };
+        //响应式布局二次请求
+        listProvider.prototype.sl1 = function () {
+            //根据渲染出的一条数据，计算页面可以渲染出的条数。
+            //响应式布局算法
+            //总组件区域减去top，减去bottom，因为这两个是定值，得到content区域，
+            //得到一条数据的宽和高，分别用cotent的宽和高去除以，得到x和y，然后x*y是总条数作为size。
+            var _this = this, layout = this._data.htmlForResponse;
+            var size = tools.getWidgetSize(_this._config.width, _this._config.height);
+            var height = size.height - _this._element.find("[so='" + _this._data.bgh + "']").outerHeight(true) - _this._element.find("[so='" + _this._data.agh + "']").outerHeight(true);
+            var width = size.width;
+            var content = _this._element.find("[so='" + _this._data.ge + "']");
+            var padding_width = content.innerWidth() - content.width();
+            var padding_height = content.innerHeight() - content.height();
+            var groupE = content.find(layout.groupElement.tag);
+            var caseHeight = groupE.outerHeight(true), caseWidth = groupE.outerWidth(true);
+            width = width - padding_width;
+            height = height - padding_height;
+            var x = parseInt(width / caseWidth), y = parseInt(height / caseHeight);
+            x = x < 1 ? 1 : x; y = y < 1 ? 1 : y;
+            var sizeZ = x * y;
+            _this._data.size = sizeZ;//size变化会自动引发数据请求
+            this.isFirstLoad = false;
+        }
+        listProvider.prototype.s = function (layout) {
+            var start = '<' + layout.rootElement.tag + '></' + layout.rootElement.tag + '>';
+            return $(start);
+        };
+        ////渲染和事件处理的方法
+        //listProvider.prototype.render = function () {
+        //    return this._element = this.s(this._data.htmlType == 0 ? this._data.htmlForFlowLayout : this._data.htmlForResponse);
+        //};
+        listProvider.prototype.bind = function () {
+            var _this = this;
+            this._vm = new Vue({
+                el: '#' + this._elId,
+                render: function (createElement) {
+                    return _this["f" + _this._data.htmlType].call(this, createElement);
+                },
+                data: this._data,
+                watch: {
+                    //监控页面的size变化，引发重现请求
+                    size: function (newSize, oldSize) {
+                        if (newSize <= 0)
+                            return;
+                        _this.reLoadData();
+                    },
+                    pageIndex: function (newIndex, oldIndex) {
+                        if (newIndex <= 0)
+                            return;
+                        _this.reLoadData();
+                    }
+                },
+                methods: {
+                    click: function (item) {
+
+                        if (item.urlData) {
+                            if (this.clickType == 0) {
+                                window.top.DocumentManager.showDialog(item.urlData, function () {
+                                    //弹出框之后刷新模块数据
+                                    if (item.urlData.isFresh) {
+                                        _this.reLoadData();
+                                    }
+                                });
+                            } else {
+                                window.top.TabPanelManager.addUrlTab(item.urlData.url);
+                            }
+                        }
+                    },
+                    pageChange: function (val) {
+                        this.pageIndex = val;//改变引擎，自动重新加载页面数据
+                        //_this.reLoadData();
+                    }
+                }
+            });
+        };
+        listProvider.prototype.load = function () {
+            if (!this._config.path) {
+                throw new tools.exceptions.emptyErr(this._config,this._elId,this._config.name);
+            } else {
+                this.init();
+                this.bind();
+             }
+        };
+        //重新加载数据，如果组件在改变了大小之后，需要重新获取数据则提供此方法。
+        listProvider.prototype.reloadData = function () {
+            this["sl" + this._data.htmlType]();
+        };
+        listProvider.prototype.disponse = function () {
+            if (this._element)
+                this._element.html("");
+            if(this._vm){
+                this._vm.$destroy();
+            }
+            
+        };
+        //重新加载组件，不仅数据重新加载，其余的也重新加载
+        listProvider.prototype.reload = function () {
+            this.disponse();
+            this.load();
+        };
+        return listProvider;
+    })();
+    //使用Promise的方式来巧妙的在数据请求成功之后插入方法，
+    //主要是为了提供一种机制，方便在数据请求后再继续操作渲染。
+    //调用方式参考index.js
+    //return function (options) {
+    //    var item = new listProvider(options);
+    //    return new Promise(function (resolve, reject) {
+    //        item.init(function (data) {
+    //            resolve(data);
+    //        }, function (data) {
+    //            reject(data);
+    //        });
+    //    });
+    //};
+    return function (options) {
+        var item = new listProvider(options);
+        //返回实例
+        return item;
+    };
+});
+
+
+//多数据源列表模块
+//此模块，暂时最多支持两个数据源的列表，列表模块多一个类似的页签，页签切换代表数据源切换
+//默认使用的是path1做数据源
+//如果path2没有值，只有path1有值则只提供path1数据源，不提供切换功能
+//此模块还多了一些列表的高级用途，下载、新增和更多
+define('U9.dashboards.list.multidata', ['vue', 'exports', 'http', 'bluebird', 'U9.dashboards.list'], function (Vue, exports, http, Promise, listPro) {
+    var multidataProvider = (function () {
+        var multidataProvider = function (options) {
+            var _this = this;
+            var checked = 0;
+            var multiAfterFunction = function (_c) {
+                return _c("div", {
+                    'class': 'multidata'
+                },
+                    [
+                        //(_this._config.path1 && _this._config.path2 ?
+                        //_c("div", { "class": "check" }, [
+                        //    _c("label", {}, [_this._config.multiDataText]),
+                        //    _c("input", {
+                        //        attrs: {
+                        //            'type': 'checkbox'
+                        //        },
+                        //        domProps: {
+                        //            checked: checked
+                        //        },
+                        //        on: {
+                        //            change: function (e) {
+                        //                //_this._listProvider.disponse();
+                        //                _this._listProvider._config.path = e.target.checked ? _this._config.path2 : _this._config.path1;//不选择为数据源1,选中为数据源2
+                        //                checked = e.target.checked
+                        //                _this._listProvider.firstLoad();//重新加载数据
+                        //            }
+                        //        }
+                        //    })]) : undefined),//有多个数据源的时候才显示checkbox
+                        (_this._config.downloadPath ? _c("a", {
+                            'class': 'text-pink',
+                            attrs: {
+                                'href': _this._config.downloadPath
+                            }
+                        }, [_c("i", {
+                            'class': 'fa fa-download-gray'
+                        }), "下载"]) : undefined),//需要显示下载的时候才显示
+                        (_this._config.addPath ? _c("a", {
+                            'class': 'flag',
+                            attrs: {
+                                'href': _this._config.addPath
+                            }
+                        }, [_c("i", {
+                            'class': 'fa fa-add-gray'
+                        }), "添加"]) : undefined),//需要显示下载的时候才显示
+                        (_this._config.morePath ? _c("a", {
+                            'class': '',
+                            attrs: {
+                                'href': "javascript:window.top.TabPanelManager.addUrlTab('" + _this._config.morePath + "')"
+                            }
+                        }, [_c("i", {
+                            'class': 'fa fa-more-gray'
+                        }), "更多"]) : undefined)
+                    ]);
+            };
+            var changePath = function (ch) {
+                if (checked == ch)//不需要改变
+                    return;
+                path = ch == 0 ? _this._config.path1 : _this._config.path2;
+                if (path != _this._listProvider._config.path) {
+                    checked = ch;
+                    _this._listProvider.disponse();
+
+                    _this._listProvider._config.path = path;//不选择为数据源1,选中为数据源2
+                    _this._listProvider.load();//重新加载数据
+                }
+            }
+            var multiBeforeFunction = function (_c) {
+                return _c("div", {
+                    'class': ''
+                },
+                    [
+
+                        (_this._config.path1 && _this._config.path2 ? _c("ul", {
+                            'class': 'nav-tabs2'
+                        }, [
+                                (_this._config.path1Name ? _c("li", {
+                                    'class': {
+                                        select: checked == 0
+                                    },
+                                    on: {
+                                        click: function () {
+                                            changePath(0);
+                                        }
+                                    }
+                                }, [_this._config.path1Name]) : undefined)
+                                , (_this._config.path1Name ? _c("li", {
+                                    'class': {
+                                        select: checked == 1
+                                    },
+                                    on: {
+                                        click: function () {
+                                            changePath(1);
+                                        }
+                                    }
+                                }, [_this._config.path2Name]) : undefined)
+                            ]) : undefined)//有多数据源时才显示
+                    ]);
+            };
+            this._config = options || {};//存储id、path、名称等配置信息
+            this._config.setting = {
+                htmlForResponse: {
+                    beforeGridHtml: {
+                        className: _this._config.path1 && _this._config.path2 ? 'multidata-before' : 'before',//多数据源样式进行统一处理，这样区分当前数据源
+                        innerExtend: multiBeforeFunction
+                    },
+                    afterGridHtml: {
+                        className: 'multidata-after' ,
+                        innerExtend: multiAfterFunction
+                    },
+                },
+                htmlForFlowLayout: {
+                    beforeGridHtml: {
+                        className: _this._config.path1 && _this._config.path2 ? 'multidata-before' : 'before',//多数据源样式进行统一处理，这样区分当前数据源
+                        innerExtend: multiBeforeFunction
+                    },
+                    afterGridHtml: {
+                        className: 'multidata-after',
+                        innerExtend: multiAfterFunction
+                    }
+                }
+            };
+            var listOptions = $.extend(true, {}, this._config);
+            delete listOptions.path1;
+            delete listOptions.path2;
+            listOptions.path = this._config.path1;
+            this._listProvider = listPro(listOptions);;
+        };
+        multidataProvider.prototype.load = function () {
+            this._listProvider.load();
+        };
+        multidataProvider.prototype.reloadData = function () {
+            this._listProvider.reloadData();
+        };
+        multidataProvider.prototype.reload = function () {
+            this._listProvider._config = $.extend(true, this._listProvider._config, this._config);
+            this._listProvider.reload();
+        };
+        multidataProvider.prototype.disponse = function () {
+            this._listProvider.disponse();
+        }
+        return multidataProvider;
+    })();
+    return function (options) {
+        var item = new multidataProvider(options);
+        return item;
+    };
+});
+
+//iframe模块
+define('U9.dashboards.iframe', ['vue', 'exports', 'http', 'bluebird', 'layoutTools'], function (Vue, exports, http, Promise,tools) {
+
+    var iframeProvider = (function () {
+        var iframeProvider = function (options) {
+            this._config = options || {};//存储id、path、名称等配置信息
+            this._element = null;
+            this._elId = this._config.elId;
+            this._vm = null;
+        };
+        iframeProvider.prototype.init = function (success, error) {
+            this._element = $("#" + this._elId);
+        };
+        ////渲染和事件处理的方法
+        //iframeProvider.prototype.render = function () {
+        //    return this._element = $('<div/>').css('height', '100%');
+        //};
+        iframeProvider.prototype.bind = function () {
+            if (!this._config.path) {
+                throw new tools.exceptions.emptyErr(this._config,this._elId, this._config.name);
+                return;
+            }
+            this._element.html("");
+            var className= this._config.isShowTitle?'show':'hide';
+            var d = '<div class="list-title"><span class="list-title-text '+className+'">' + this._config.name + '</span></div>'
+                +'<div class="'+className+'-half">'
+                +'<iframe src="'+this._config.path+'" style="width:100%;height:100%;border:0"></iframe>'
+                +'</div>'
+            this._element.append(d);
+        }
+        iframeProvider.prototype.load = function () {
+            this.init();
+            this.bind();
+        }
+        return iframeProvider;
+    })();
+    //使用Promise的方式来巧妙的在数据请求成功之后插入方法，
+    //主要是为了提供一种机制，方便在数据请求后再继续操作渲染。
+    //调用方式参考index.js
+    return function (options) {
+        var item = new iframeProvider(options);
+        //返回实例
+        return item;
+        //return new Promise(function (resolve, reject) {
+        //    item.init(function (data) {
+        //        resolve(data);
+        //    }, function (data) {
+        //        reject(data);
+        //    });
+        //});
+    };
+});
+//image模块
+define('U9.dashboards.image', ['vue', 'exports', 'http', 'bluebird', 'layoutTools'], function (Vue, exports, http, Promise,tools) {
+    var imageProvider = function (options) {
+        this._config = options || {};//存储id、path、名称等配置信息
+        this._element = null;
+        this._elId = this._config.elId;
+        this._vm = null;
+    };
+    imageProvider.prototype.init = function (success, error) {
+        this._element = $("#" + this._elId);
+    };
+    ////渲染和事件处理的方法
+    //iframeProvider.prototype.render = function () {
+    //    return this._element = $('<div/>').css('height', '100%');
+    //};
+    imageProvider.prototype.bind = function () {
+        if (!this._config.path) {
+            throw new tools.exceptions.emptyErr(this._config,this._elId, this._config.name);
+            return;
+        }
+        this._element.html("");
+        var className= this._config.isShowTitle?'show':'hide';
+        var d = '<div class="list-title"><span class="list-title-text '+className+'">' + this._config.name + '</span></div>'
+              +'<div class="'+className+'-half">'
+              +'<img src="'+this._config.path+'" style="width:100%;height:100%;border:0"/>'
+              +'</div>';
+        this._element.append(d);
+    }
+    imageProvider.prototype.load = function () {
+        this.init();
+        this.bind();
+    }
+    return function (options) {
+        var item = new imageProvider(options);
+        //返回实例
+        return item;
+    }
+});
+
+//系统信息模块
+define('U9.dashboards.service', ['vue', 'exports', 'http', 'bluebird', 'ELEMENT', 'layoutTools'], function (Vue, exports, http, Promise, ELEMENT,tools) {
+    Vue.use(ELEMENT)
+    var serviceProvider = (function () {
+        var serviceProvider = function (options) {
+            this._config = options || {};//存储id、path、名称等配置信息
+            this._elId = this._config.elId;
+            this._className= this._config.isShowTitle?'show':'hide';
+            this._timer = null;
+            this._vm = null;
+            this.data = {
+                name: "",
+                ip: "",
+                memory: "",
+                cpu: "",
+                config:this._config
+            };
+        };
+        serviceProvider.prototype.load = function () {
+            var _this = this;
+            this._vm = new Vue({
+                data: _this.data,
+                el: '#' + this._elId,
+                template:
+                '<div id="' + this._elId+'"><div class="list-title"><span class="list-title-text '+_this._className+'">{{config.name|| "系统信息"}}</span></div>' +
+                '<div class="'+className+'-half">'+
+                '<ul class="service-config">' +
+                '<li><span>机器名：</span>{{name}}</li>' +
+                '<li><span>IP：</span>{{ip}}</li>' +
+                '<li class="cpu"><div><el-progress type="circle" :percentage="parseInt(cpu)?parseInt(cpu):0" color="#8e71c7"></el-progress></div><span>CPU</span></li>' +
+                '<li class="memory"><el-progress type="circle" :percentage="parseInt(memory)?parseInt(memory):0" color="#8e71c7"></el-progress><span>内存</span></li>' +
+                '</ul></div></div>',
+                methods: {
+
+                },
+                mounted: function () {
+
+                    // if (!this._config.path){
+                    //     return;
+                    // }
+                    _this._timer = window.setInterval(function () {
+                        http.get("../widgetservice/GetServiceInfo", {}).then(function (data) {
+                            _this.data = $.extend(true, _this.data, data);
+                        }, function () {
+                            window.clearInterval(_this._timer);
+                            console.log("系统信息id:" + _this._config.id + " path:" + _this._config.path + " 请求异常，请开发人员检查！");
+                        })
+                    }, 1000)
+                }
+            });
+        };
+        serviceProvider.prototype.disponse = function () {
+            window.clearInterval(this._timer);
+            this._vm.$destroy();
+        }
+        return serviceProvider;
+    })();
+    return function (options) {
+        var item = new serviceProvider(options);
+        return item;
+    };
+});
+
+//多媒体组件
+define('U9.dashboards.multimedia', ['vue', 'exports', 'http', 'bluebird', 'ELEMENT', 'layoutTools'], function (Vue, exports, http, Promise, ELEMENT,tools) {
+    Vue.use(ELEMENT)
+    var multimediaProvider = function (options) {
+        this._config = options || {};//存储id、path、名称等配置信息
+        this._element = null;
+        this._elId = this._config.elId;
+        this._vm = null;
+    };
+    multimediaProvider.prototype.init = function (success, error) {
+        this._element = $("#" + this._elId);
+    };
+    ////渲染和事件处理的方法
+    multimediaProvider.prototype.bind = function () {
+        if (!this._config.path) {
+            throw new tools.exceptions.emptyErr(this._config,this._elId, this._config.name);
+            return;
+        }
+        this._element.html("");
+        var className= this._config.isShowTitle?'show':'hide';
+        var d = '';
+        if( this._config.isShowTitle){
+            d += '<div class="list-title"><span class="list-title-text '+className+'">' + this._config.name + '</span></div><div class="'+className+'-half">';
+        }
+        if(this._config.mediaType == 0){//视频
+            d += '<video style="height:100%;width:100%" src="'+this._config.path+'" controls="true" ';
+            if(this._config.isLoop){
+               d += 'loop '; 
+            }
+            if(this._config.isAuto){
+               d += 'autoplay muted ';
+            }
+            d += '></video>';
+        }else{
+            d +='<audio src="'+this._config.path+'" controls="true" ';   
+            if(this._config.isLoop){
+                d +='loop '; 
+            }
+            if(this._config.isAuto){
+               d += 'autoplay muted ';
+            }
+            d +='></audio>';
+        }
+        d +='</div>';
+        this._element.append(d).css({ 'height': '100%', 'width': '100%', 'border': 'none' });
+        
+        var video = this._element.find("video");
+        if(video.length>0){
+            video[0].volume = 0.5;
+        }
+        
+    }
+    multimediaProvider.prototype.load = function () {
+        this.init();
+        this.bind();
+    }
+    return function (options) {
+        var item = new multimediaProvider(options);
+        //返回实例
+        return item;
+    }
+});
+
+//powerBI模块
+define('U9.dashboards.powerBI', ['vue', 'exports', 'http', 'bluebird', 'layoutTools'], function (Vue, exports, http, Promise,tools) {
+    var powerBIProvider = (function () {
+        var powerBIProvider = function (options) {
+            this._config = options || {};//存储id、path、名称等配置信息
+            this._element = null;
+            this._elId = this._config.elId;
+            this._vm = null;
+        };
+        powerBIProvider.prototype.init = function (success, error) {
+            this._element = $("#" + this._elId);
+        };
+        powerBIProvider.prototype.bind = function () {
+            if (!this._config.path){
+                throw new tools.exceptions.emptyErr(this._config,this._elId, this._config.name);
+                return;
+            }
+            this._element.html("");
+            var className= this._config.isShowTitle?'show':'hide';
+            var d = '<div class="list-title"><span class="list-title-text '+className+'">' + this._config.name + '</span></div>'
+                +'<div class="'+className+'-half">'
+                +'<iframe src="'+this._config.path+'" style="width:100%;height:100%;border:0"></iframe>'
+                +'</div>';
+            this._element.append(d);
+        }
+        powerBIProvider.prototype.load = function () {
+            this.init();
+            this.bind();
+        }
+        return powerBIProvider;
+    })();
+    return function (options) {
+        var item = new powerBIProvider(options);
+        //返回实例
+        return item;
+    };
+});

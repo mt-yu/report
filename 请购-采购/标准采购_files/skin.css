@@ -1,0 +1,381 @@
+.fa {
+  background-image: url("images/fa.png?v=201709201018"); }
+
+.fa-search-2, .fa-search-3 {
+  background: url(images/search.png) no-repeat right center; }
+
+.header-search {
+  border: 2px solid #46a02e; }
+
+.header-search-btn {
+  background-color: #46a02e; }
+
+.lists1 a:hover, .el-popover ul li:hover,.share-list li:hover{
+  background-color: #46a02e; 
+  color:#fff;
+}
+
+.nav-tabs2 li.select {color: #46a02e; }
+
+.nav-tabs {
+  border-bottom: 2px solid #46a02e; }
+  .nav-tabs li.select {
+    color: #fff;
+    background-color: #46a02e; }
+  .nav-tabs li i.text-pink {
+    color: #46a02e; }
+
+.navs-top .navs-ul li .nav-more-dl dd a:hover {
+  background-color: #46a02e;
+  color: #fff; }
+
+.text-pink {
+  color: #46a02e; }
+.y-text-primary{ color: #46a02e !important; }
+.y-bg-primary{ background: #46a02e !important;}
+.y-border-t-color{border-top-color:#46a02e !important;}
+
+.page-ul li.select {
+  background-color: #46a02e; }
+.page-ul li.page:hover{
+  background-color: #46a02e;border:1px solid #46a02e;color: #fff
+}
+.modules-list .item .item-ul dd.hover {
+  background-color: #46a02e; }
+
+.modules-list .item a:hover {
+  color: #46a02e; }
+
+.item-list li.text-green {
+  color: #46a02e; }
+  .item-list li.text-green label {
+    color: #46a02e; }
+
+.fixed-module li.select {
+  background-color: #46a02e; }
+
+.fixed-module li.approvalBtn.lighten {
+  background-color: #46a02e !important; }
+
+.fixed-module li.approvalBtn.greyen {
+  background-color: #8d8d8d !important; }
+
+.fixed-module li.duDuBtn.lighten {
+  background-color: #5eb235 !important; }
+
+.fixed-module li.duDuBtn.greyen  {
+  background-color: #8d8d8d !important; }
+
+.fixed-module li.select .tab-text {
+  background-color: #46a02e; }
+
+.fixed-module li.approvalBtn.lighten .tab-text {
+  background-color: #46a02e !important; }
+
+.fixed-module li.approvalBtn.greyen .tab-text {
+  background-color: #8d8d8d !important; }
+
+.fixed-module li.duDuBtn.lighten  .tab-text{
+  background-color: #5eb235 !important; }
+  
+.fixed-module li.duDuBtn.greyen .tab-text  {
+  background-color: #8d8d8d !important; }
+
+.btns em, .btns p {
+  background-color: #46a02e; }
+
+.btns .otherBtn em.yesBtn {
+  border: 1px #46a02e solid; }
+
+.result p a {
+  color: #46a02e; }
+
+.result p a:hover {
+  color: #357823; }
+
+dl.listmMenu dd.hover, dl.listmMenu dd:hover {
+  background-color: #46a02e; }
+
+/* tabpanel */
+.tabpanel_mover li.active .closer {
+  background: url("images/fa.png") no-repeat -97px -203px; }
+
+.tabpanel_mover li .closer {
+  background: url("images/fa.png") no-repeat -61px -203px; }
+
+.tabpanel_select_content span {
+  background: url(images/tips.png) no-repeat 0 0;
+  display: inline-block;
+  margin-right: 10px; }
+.tabpanel_select_content .btn1 {
+  background-position: 9px 8px;
+  width: 30px;
+  height: 30px; }
+.tabpanel_select_content .btn1a {
+  background-position: 9px -60px;
+  width: 30px;
+  height: 30px; }
+.tabpanel_select_content .btn2 {
+  background-position: -79px 10px;
+  width: 30px;
+  height: 30px; }
+.tabpanel_select_content .btn2a {
+  background-position: -79px -64px;
+  width: 30px;
+  height: 30px; }
+
+.tabpanel_tab_contentBox {
+  border-bottom: 2px solid #46a02e; }
+
+.tabpanel_mover li.active {
+  background: #46a02e !important; }
+
+.tabpanel_select_content a:hover {
+  background: #46a02e !important; }
+
+.table-quick tbody tr.select td {
+  background-color: #cae5dc !important; }
+.btn-primary {
+  background-color: #46a02e;
+  border: 1px solid #46a02e !important; }
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff !important;
+  background-color: #58c73a !important;
+  border: none; }
+.btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active{
+      background-color: #58c73a;
+      border-color: #58c73a
+}
+.report-list-title .list-left {
+  border-bottom: 2px solid #46a02e; }
+
+.tabpanel_select_content a.onlys {
+  background: url(images/fa.png) no-repeat -195px -5px; }
+
+.tabpanel_select_content a.onlys:hover {
+  background: url(images/fa.png) #46a02e no-repeat -195px -20px !important; }
+
+.classify .selectUl {
+  border: 2px solid #46a02e;
+  border-top: 0; }
+
+.classify .selectUl li.selectBg {
+  background-color: #46a02e;
+  color: #fff; }
+
+.prompt {
+  color: #46a02e; }
+
+.form-control:focus {
+  border-color: #46a02e; }
+
+.modal-header H4 {
+  border-bottom: 2px solid #46a02e; }
+
+.rbBox .thA {
+  background-color: #46a02e; }
+
+.rbBox .iContent .msgMore {
+  color: #46a02e;
+  cursor: pointer; }
+
+.select-control {
+  border-color: #46a02e !important; }
+
+dl.list-organize dd.hover, dl.list-organize dd:hover {
+  background-color: #46a02e; }
+
+.mydudu .btn-pink-sp {
+  background: url(images/btn-dudu.png) no-repeat; }
+/*.mydudu .inputNun em {  background-color: #46a02e; }*/
+.mydudu .inputNun em {background:url(images/icon_add.png) no-repeat 100% 50%;}
+
+/* grid page */
+.r-grid-pager .page-icon {
+  background: url(images/page.png); }
+.r-grid-pager .pageUp {
+  background-position: -74px -16px; }
+.r-grid-pager .pageDown {
+  background-position: -190px -16px; }
+.r-grid-pager .pagePre {
+  background-position: -14px -15px; }
+.r-grid-pager .pageNext {
+  background-position: -131px -16px; }
+.r-grid-pager .pageGreyUp {
+  background-position: -74px -70px; }
+.r-grid-pager .pageGreyDown {
+  background-position: -190px -70px; }
+.r-grid-pager .pageGreyPre {
+  background-position: -14px -69px; }
+.r-grid-pager .pageGreyNext {
+  background-position: -131px -70px; }
+.r-grid-pager .cPageNum {
+  background-position: -253px -15px; }
+
+.reportResult p a {
+  color: #46a02e; }
+
+.reportResult p a:hover {
+  color: #58c73a; }
+
+/*add saoma  weiyin*/
+
+.hoverB, .recordCode {
+  background: url("../images/m.png") 50% 50% no-repeat #46a02e; }
+
+.approval-ul .bracket-bar {
+  border: 2px solid #46a02e;
+  border-right: 0; }
+
+.list-con-name {
+  color: #46a02e; }
+
+.list-title-text {
+  color: #46a02e; }
+
+/*# sourceMappingURL=skin.css.map */
+.csstransforms .cn-wrapper li a:hover,
+.csstransforms .cn-wrapper li a:active,
+.csstransforms .cn-wrapper li.lighten a,.csstransforms .cn-wrapper li.lighten a:hover{
+  background: -webkit-radial-gradient(transparent 36%, #46a02e 37%);
+  background: -moz-radial-gradient(transparent 36%, #46a02e 37%);
+  background: radial-gradient(transparent 36%, #46a02e 37%);
+}
+.csstransforms .cn-wrapper li.greyen a,.csstransforms .cn-wrapper li.greyen a:hover {
+  background: -webkit-radial-gradient(transparent 36%, #888 37%);
+  background: -moz-radial-gradient(transparent 36%, #888 37%);
+  background: radial-gradient(transparent 36%, #888 37%);
+}
+.cn-button-add{
+   background: #46a02e
+}
+
+/*导航图菜单hover高亮样式*/
+.flow-nav li:hover{ background: #46a02e; color: #fff;}
+.flow-nav li.current {
+  background: #46a02e;
+}
+.ztree-extend-index li a.curSelectedNode{background-color: #46a02e !important;}
+/*tags标签背景色*/
+.errorTags em.bgHover {
+    background:#46a02e;
+    color:#fff;
+}
+
+/*载入时动画效果*/
+.loader-4 { border: 4px double #46a02e;}
+.loader-4:before,  .loader-4:after { background: #46a02e;}
+.el-pagination-extend .el-pager li.active{background:#46a02e }
+/*u9hub错误弹出层loading载入动画层样式*/
+.sk-wave .sk-rect {
+    background-color: #46a02e;
+}
+
+/*预制清单样式*/
+.presetPage .operate i{
+    border:none;
+    background:url(Images/presetBg.png) no-repeat;
+    display:block
+}
+.presetPage .iconBtn{
+    background:url(Images/presetBg.png) no-repeat;
+    width:24px; 
+    height:24px;
+    display:inline-block;
+    margin-right:12px;
+}
+.presetPage .el-button--info {
+    border:none;
+    background:#46a02e;
+}
+
+/*暂存的换肤样式*/
+.recoverPage .el-checkbox__inner{
+  border:1px solid #46a02e!important;
+}
+
+.recoverPage .el-checkbox__input.is-checked .el-checkbox__inner, .recoverPage .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+  background:#46a02e!important;
+  border:1px solid #46a02e!important;
+}
+
+.recoverPage .el-checkbox__inner:hover{
+  border:1px solid #46a02e!important;
+}
+
+.recoverPage .operate i {
+    background:url(../../css/green/Images/presetBg.png) no-repeat;
+}
+/*实体参照树*/
+.menuTree .highlightLine{
+  border-color:#46a02e!important;
+}
+.menuTree .el-button--primary {
+    background-color: #46a02e;
+    border-color: #46a02e;
+}
+.menuTree .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+    background-color: #46a02e;
+    color: #fff;
+}
+.menuTree .el-table .ascending .sort-caret.ascending, 
+.menuTree .el-table .descending .sort-caret.descending{color:#46a02e;}
+.menuTree .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .menuTree .el-table__body tr.current-row>td, .menuTree .el-table__body tr.hover-row.current-row>td, .menuTree .el-table__body tr.hover-row.el-table__row--striped.current-row>td, .menuTree .el-table__body tr.hover-row.el-table__row--striped>td, .menuTree .el-table__body tr.hover-row>td {
+    background-color: #cae5dc;
+}
+.el-input.is-active .el-input__inner, .el-input__inner:focus,.el-select .el-input__inner:focus,.el-select .el-input.is-focus .el-input__inner {
+    border-color: #46a02e;
+}
+.menuTree .btns .taglist .el-tag:hover {
+    border-color: #46a02e;
+    background-color: #46a02e;
+}
+.menuTree .btns .taglist .tagmore:hover {
+    color: #46a02e;
+}
+.el-tag .el-icon-close,
+.el-tag .el-icon-close:hover ,
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
+    background-color: #99cb80;
+    color:#fff;
+}
+/*诊断模式start*/
+.start_icon{
+  background-image:url(Images/start.png);
+}
+.end_icon{
+  background-image:url(Images/end.png);
+}
+.el-tabs__item.is-active,
+.el-tabs__item:hover,
+.el-checkbox__input.is-checked+.el-checkbox__label,
+.el-select-dropdown__item.selected,
+.tabs-config .el-button:hover,
+.tabs-config .el-button:focus,
+.tabs-config .el-button:active{
+  color:#46a02e;
+}
+.el-checkbox__inner,
+.el-checkbox__inner:hover{
+  border-color:#46a02e; 
+}
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #46a02e;
+  border-color: #46a02e;
+}
+.el-tabs__active-bar{
+  background-color: #46a02e;
+}
+.el-checkbox__input.is-focus .el-checkbox__inner{
+  border-color:#46a02e; 
+}
+.el-tabs--card>.el-tabs__header .el-tabs__item.is-active{
+  border-bottom-color:#46a02e; 
+  color: #46a02e;
+}
+/*诊断模式end*/

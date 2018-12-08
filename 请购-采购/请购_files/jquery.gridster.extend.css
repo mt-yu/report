@@ -1,0 +1,268 @@
+/*! gridster.js - v0.6.10 - 2015-05-31
+* https://dsmorse.github.io/gridster.js/
+* Copyright (c) 2015 ducksboard; Licensed MIT */
+body {
+  background: #26941f;
+  font-size: 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #ffffff;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 10px;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.demo {
+  margin: 3em 0;
+  padding: 7.5em 0 5.5em;
+  background: #26941f;
+}
+.demo:hover .gridster {
+  margin: 0 auto;
+  opacity: .8;
+  -webkit-transition: opacity .6s;
+  -moz-transition: opacity .6s;
+  -o-transition: opacity .6s;
+  -ms-transition: opacity .6s;
+  transition: opacity .6s;
+}
+.content {
+  color: white;
+}
+.gridster .gs-w {
+  background: #fff;
+  cursor: pointer;
+  /*-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);*/
+}
+.gridster .player {
+  -webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  /*background: #BBB;*/
+}
+.gridster .gs-w.try {
+  background-image: url(../img/sprite.png);
+  background-repeat: no-repeat;
+  background-position: 37px -169px;
+}
+.gridster .preview-holder {
+  border: none !important;
+  border-radius: 0 !important;
+  background: red !important;
+}
+.gridster ul {
+  background-color: #EFEFEF;
+}
+.gridster-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.controls {
+  margin-bottom: 20px;
+}
+/*# sourceMappingURL=demos/assets/css/demo.css.map */
+.grid-list {
+    color: #333;
+    font-size: 12px;
+    border: none;
+    padding: 14px;
+    box-sizing: content-box;
+}
+
+.grid-list table {
+    width: 100%;
+    text-align: left;
+}
+
+.grid-list table tr {
+    height: 24px;
+}
+
+.grid-list table tr:hover {
+    background: #efefef
+}
+
+.grid-list table tr td {
+    color: #666
+}
+.el-table__fixed, .el-table__fixed-right{
+  box-shadow: 0 0 0;
+  -webkit-box-shadow:0 0 0;
+}
+.el-table td, .el-table th{
+  padding:5px 0;
+}
+.el-table th>.cell{
+  text-align: center;
+}
+.el-select-dropdown {
+    border: 1px #d2d2d2 solid;
+}
+.el-select-dropdown__list{
+  padding:0;
+}
+.el-select-dropdown__item{
+  height:28px;
+  line-height:28px;
+}
+.el-popper[x-placement^=bottom] {
+    margin-top: 10px;
+}
+.responsive-list {
+  color: #333;
+  text-align: left;height:100%;
+}
+  
+.responsive-list p {
+  padding: 0;
+  margin: 0;
+  height: 22px;
+  line-height: 22px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:12px;color:#333;
+}
+.responsive-list ul{
+  padding:0;
+  margin: 0;
+}
+.responsive-list [so=content]{
+  padding:10px 10px 0;
+}
+.responsive-list [so=content] li.hasImg{
+  padding: 5px 14px 0px 70px;
+  position: relative;
+  width: 325px;
+  float: left;
+  overflow: hidden;
+  margin:0;
+  position:relative;
+  height:77px;
+}
+.responsive-list [so=content] li.hasImg p{
+  color:#565656;
+}
+.responsive-list [so=content] li.hasImg p:first-child{
+  color:#000;
+}
+.responsive-list [so=content] li.hasImg p:last-child{
+  color:#999;
+}
+.responsive-list .hasImg:hover{
+  background: #efefef;
+  border-radius: 10px;
+}
+.responsive-list .hasImg img {
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+.responsive-list .hasImg:hover>img{
+  width: 60px;
+  height:60px;
+  top:6px;
+  left:2px;
+  transition: all .5s;
+}  
+/*
+    Dragging left change the z axis of few degrees
+*/
+#widgets-container .widgethost.dragging.player.leftdrag {
+    transform: scale(1.05, 1.05) rotateZ(-1deg);
+}
+
+/*
+    Dragging right change the z axis of few degrees
+*/
+#widgets-container .widgethost.dragging.player.rightdrag {
+    transform: scale(1.05, 1.05) rotateZ(1deg);
+}
+.el-table .cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.pagination-bottom {
+    /*position: absolute;
+    bottom: 0;
+    left: 0*/
+    float:left;
+}
+#widgets-container{text-align:left}
+
+/*系统信息组件样式*/
+.gridster .service-config{
+  padding:0 15px;
+  background:#fff;
+}    
+.gridster .service-config li{
+  list-style: none;
+  height:30px;
+  line-height:30px;
+  color:#000;
+}
+.gridster .service-config li span{
+  display: inline-block;
+  vertical-align: top;
+}
+.gridster .service-config li.cpu,
+.gridster .service-config li.memory{
+  height:126px;
+  width:50%;
+  float: left;
+  text-align: center;
+}
+.gridster .service-config li.cpu span,
+.gridster .service-config li.memory span{
+  width:100%;
+}
+.flowlayout-list{
+  height:100%;
+}
+.flowlayout-list .el-table{
+  height: calc(100% - 34px);
+}
+.flowlayout-list .el-table .el-table__body-wrapper{
+  height: calc(100% - 85px);
+}
+/*公告和新闻*/
+.widgethost [so=content]{
+  background: transparent;
+}
+.widgethost [so=content] li{
+  height: 26px;
+  line-height: 26px;
+  background: #fff;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 5px;
+}
+.widgethost [so=content] li a{
+  max-width: calc(100% - 75px);
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+  word-break: break-all;
+  color: #000;
+  font-size: 12px;
+  height: 26px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.widgethost [so=content] li a:hover{
+  color: #1e7bdc;
+}
+.widgethost [so=content] li span{
+  font-size: 12px;
+}

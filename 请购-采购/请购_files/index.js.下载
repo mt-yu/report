@@ -1,0 +1,1261 @@
+﻿/** 首页总控逻辑以及对GridSter的封装
+ * created by Mahx 20180105
+ */
+
+define('index', ['vue', 'exports', 'ster', 'http', 'jquery', 'draggable', 'bluebird', 'widgetManager', 'ELEMENT', 'dashboard'], function (Vue, exports, ster, http, $, draggable, Promise, widgetManager, ELEMENT, dashboard) {
+    Vue.use(ELEMENT)
+    var data = (function (data) {
+        var addTabName = function (rule, value, callback) {
+            data.AddDashboardData.addTabConfimBtn = false;
+            var dashboardNameList = [];
+            $.each(data.dashboardList, function (i, item) {
+                //删除的数据刨除掉
+                if (!item.IsDelete) {
+                    dashboardNameList.push(item.Name.trim());
+                }
+
+            });
+            var index = $.inArray(value.trim(), dashboardNameList);
+            if (index >= 0) {
+                data.AddDashboardData.addTabConfimBtn = true;
+                callback(new Error('仪表板名称已在使用中。请尝试其他名称。'));
+            }
+            if (value === '') {
+                data.AddDashboardData.addTabConfimBtn = true;
+                callback(new Error('请输入仪表盘名称'));
+            }
+        };
+        var copyTabName = function (rule, value, callback) {
+            data.CopyDashboardData.copyTabConfimBtn = false;
+            var dashboardNameList = [];
+            var count = 0;//可复制的仪表盘(显示的仪表盘)数量统计
+            $.each(data.dashboardList, function (i, item) {
+                if (!item.IsDelete && item.IsShow) {
+                    count++;
+                }
+                dashboardNameList.push(item.Name.trim());
+            });
+            var index = $.inArray(value.trim(), dashboardNameList);
+            if (index >= 0) {
+                data.CopyDashboardData.copyTabConfimBtn = true;
+                callback(new Error('仪表板名称已在使用中。请尝试其他名称。'));
+            }
+            if (value === '') {
+                data.CopyDashboardData.copyTabConfimBtn = true;
+                callback(new Error('请输入仪表盘名称'));
+            }
+            if (count == 0) {
+                data.CopyDashboardData.copyTabConfimBtn = true;
+                callback(new Error('当前没有可复制的仪表盘'));
+            }
+        };
+        data = {
+            AddDashboardData: {
+                addDialogVisible: false, //新建tab弹框是否显示
+                addTabConfimBtn: true,//添加tab页签确定按钮是否可点击
+                addForm: {
+                    title: ''
+                },
+                addRules: {
+                    title: [
+                        { validator: addTabName, trigger: ['blur', 'change'] }
+                    ]
+                }
+            },
+            ConfigDashboardData: {
+                activeConfigTabName: 'first',
+                configDialogVisible: false,//配置tab弹框是否显示
+                configTabConfimBtn: false, //配置仪表盘弹框内的确定按钮是否disabled
+                configDashboardList: []
+            },
+            CopyDashboardData: {
+                copyDialogVisible: false, //复制仪表盘弹框是否显示
+                copyTabConfimBtn: false,//复制仪表盘弹框内的确定按钮是否disabled
+                copyForm: {
+                    title: ''
+                },
+                copyRules: {
+                    title: [
+                        { validator: copyTabName, trigger: ['blur', 'change'] }
+                    ]
+                }
+            },
+            enumF: [{
+                name: "可编辑",
+                value: true
+            }, {
+                name: "只读",
+                value: false
+            }
+            ],
+            ShareDashboardData: {
+                shareData: null,
+                shareDialogVisible: false,
+                activeShareTabName: 'first',
+                shareListVisible: false,
+                shareForm: {
+                    title: ''
+                },
+                shareRules: {
+                },
+                //查询列表
+                shareList: [/*{
+                    Code: "",
+                    ID: 0,
+                    Name: "",
+                    Type: 1 //1是用户，2是角色
+                }*/],
+                //表格数据
+                shareTableData: [
+                    /*{Id:'',
+                    Code:'',
+                    Name: '',
+                    Type:0,
+                    CanEdit:false,
+                    IsOwner:false}*/
+                ]
+            },
+            operateMoreVisible: false, //...下拉操作是否显示
+            currentDashboardId: '',
+            tabIndex: 2,
+            dashboardList: [],
+            currentDashboard: null,
+            loading:true
+        };
+        return data;
+    }(data));
+    var vm = new Vue({
+        el: '#portalContent',
+        data: data,
+        components: {
+            'dashboard': dashboard,
+            'draggable': draggable
+        },
+        mounted: function () {
+            var _this = this;
+            
+            http.get('../dashboards/GetMyDashboardList', {}).then(function (vv) {
+                _this.loading = false;
+                data.dashboardList = vv;
+                _this.currentDashboard = null;
+                $.each(vv, function (i, item) {
+                    if (item.IsDefault) {
+                        _this.currentDashboardId = item.Id;
+                        _this.currentDashboard = item;
+                        return false;
+                    }
+                    if(!item.IsDelete && item.IsShow){
+                        _this.currentDashboardId = item.Id;
+                        _this.currentDashboard = item;
+                        return false;
+                    }
+                });
+                //拷贝一份dashboardList用来做配置时使用
+                _this.ConfigDashboardData.configDashboardList = $.extend(true, [], data.dashboardList);
+
+
+            });
+        },
+        computed: {
+            shareTableDataFilter: function () {
+                var _this = this;
+                return this.ShareDashboardData.shareTableData.filter(function(item) {
+                    if (item.IsOwner == false && item.Id + '' != _this.currentDashboard.UserID){
+                        return item;
+                    }
+                })
+            }
+        },
+        methods: {
+            tabClick: function (tab, event) {
+                var _this = this;
+                $.each(this.dashboardList, function (i, item) {
+                    if (item.Id == tab.name) {
+                        _this.currentDashboardId = item.Id;
+                        _this.currentDashboard = item;
+                        $(".container-with-scroll").scrollTop(0);
+                        return false;
+                    }
+                });
+            },
+            addTab: function (formName) {
+                var _this = this;
+                var newTabTitle = _this.AddDashboardData.addForm.title;
+                if(newTabTitle && !_this.AddDashboardData.addTabConfimBtn){   
+                    _this.AddDashboardData.addTabConfimBtn = false;
+                    http.post('../dashboards/AddDashboard', { name: newTabTitle }).then(function (vv) {
+                        if (vv && vv.value) {
+                            _this.currentDashboardId = vv.value.Id;
+                            data.dashboardList.push(vv.value);
+                            //同步配置仪表盘的数据
+                            _this.ConfigDashboardData.configDashboardList = $.extend(true, [], data.dashboardList);
+                            _this.currentDashboard = vv.value;
+                        }
+                    })
+                    _this.AddDashboardData.addDialogVisible = false;
+                }else{
+                    _this.AddDashboardData.addTabConfimBtn = true;
+                }
+            },
+            delTab: function (item,index) {
+                var _this = this;
+                item.IsDelete = true;
+                var dashboardNameList = [];
+                //统计重名的数量
+                var count = 0;
+                var ii = -1;
+                $.each(_this.ConfigDashboardData.configDashboardList, function (i, data) {
+                    //删除的数据刨除掉
+                    if(!data.IsDelete && data.Name.trim() == item.Name.trim()){
+                        count++;
+                        ii = i;
+                    }
+                });
+                //如果有一个重名的
+                if(count == 1){
+                    _this.ConfigDashboardData.configTabConfimBtn = false;
+                    $("#config-error-"+_this.ConfigDashboardData.configDashboardList[ii].Id).html('');
+                }
+            },
+            showCopyDashboard:function(){
+                var _this = this;
+                _this.CopyDashboardData.copyForm.title = "";
+                _this.operateMoreVisible = false;
+                _this.CopyDashboardData.copyDialogVisible = true;
+                Vue.nextTick(function () { //先清空再赋值是为了触发change事件来做校验
+                    _this.CopyDashboardData.copyForm.title = _this.currentDashboard.Name+"_副本";
+                })
+            },
+            copyTab:function(form){
+                var _this = this;
+                var newTabTitle = _this.CopyDashboardData.copyForm.title;
+                _this.$refs[form].validate(function(valid){
+                    if (valid) {
+                        http.post('../dashboards/CopyDashboard', { oldId:_this.currentDashboardId,name: newTabTitle}).then(function (vv) {
+                            if (vv && vv.value) {
+                                _this.currentDashboardId = vv.value.Id;
+                                data.dashboardList.push(vv.value);
+                                _this.currentDashboard = vv.value;
+                                //同步配置仪表盘的数据
+                                _this.ConfigDashboardData.configDashboardList = $.extend(true, [], data.dashboardList);
+                            }
+                        })
+                        _this.CopyDashboardData.copyDialogVisible = false; 
+                    }else {
+                        return false;
+                    }
+                });
+            },
+            showConfigDashboard:function(){
+                this.ConfigDashboardData.configDialogVisible = true;
+                //同步配置仪表盘的数据
+                this.ConfigDashboardData.configDashboardList = $.extend(true, [], data.dashboardList);
+            },
+            configDragStart:function(evt){
+                $(".config-tab-list-details").addClass("transparent");
+            },
+            configDragEnd:function(evt){
+                $(".config-tab-list-details").removeClass("transparent");
+            },
+            configNameChange:function(item,index){
+                var _this = this;
+                _this.ConfigDashboardData.configTabConfimBtn = false;
+                $("#config-error-"+item.Id).html("");
+                if(item.Name.trim() == ""){
+                    $("#config-error-"+item.Id).html("仪表盘名称不能为空");
+                    _this.ConfigDashboardData.configTabConfimBtn = true;
+                }
+                var dashboardNameList = [];
+                $.each(_this.ConfigDashboardData.configDashboardList, function (i, data) {
+                    //删除的数据刨除掉
+                    if(!data.IsDelete && index != i){
+                        dashboardNameList.push(data.Name.trim());
+                    }
+                });
+                var index = $.inArray(item.Name.trim(),dashboardNameList);
+                if(index >= 0){
+                    _this.ConfigDashboardData.configTabConfimBtn = true;
+                    $("#config-error-"+item.Id).html('仪表板名称已在使用中。请尝试其他名称。');
+                }
+            },
+            configTab:function(){
+                var _this = this;
+                var config_data = _this.ConfigDashboardData.configDashboardList;
+                var modelStr = JSON.stringify(config_data);
+                http.post('../dashboards/UpdateDashboards', {modelStr:modelStr}).then(function (vv) {
+                    if (vv) {
+                        _this.dashboardList= null;
+                        Vue.nextTick(function () {
+                            _this.dashboardList= $.extend(true, [], config_data);
+                            //设置active状态的dashboard
+                            $.each(_this.dashboardList, function (i, item) {
+                                if(_this.currentDashboardId == item.Id){
+                                    if(!item.IsDelete && item.IsShow){//默认activeDashboard为当前dashboard
+                                        _this.currentDashboardId = item.Id;
+                                        _this.currentDashboard = item;
+                                    }
+                                    if (item.IsDelete || !item.IsDelete&&!item.IsShow) {//当它被删除或者不显示时
+                                        var count = 0; //统计显示在页面的dashboard数量
+                                        $.each(_this.dashboardList, function (j, data) {
+                                            if(!data.IsDelete && data.IsShow){
+                                                count++;
+                                                _this.currentDashboardId = data.Id;
+                                                _this.currentDashboard = data;
+                                                return;
+                                            }
+                                            
+                                        })
+                                        if(count == 0){
+                                            _this.currentDashboardId = '';
+                                            _this.currentDashboard = null;
+                                        }
+                                    }
+                                }
+                                //当仪表盘空白，但是有隐藏的数据时
+                                if(!_this.currentDashboardId){
+                                    $.each(_this.dashboardList, function (j, data) {
+                                        if(!data.IsDelete && data.IsShow){
+                                            _this.currentDashboardId = data.Id;
+                                            _this.currentDashboard = data;
+                                            return;
+                                        }
+                                    })
+                                }
+                            });
+                        })
+                    }
+                })
+                _this.ConfigDashboardData.configDialogVisible = false;
+            },
+            cancelConfig:function(){
+                this.ConfigDashboardData.configDialogVisible = false;
+                this.ConfigDashboardData.configTabConfimBtn = false;
+                $(".config-error").html("");
+            },
+            showShareDashboard:function(){
+                var _this = this;
+                this.operateMoreVisible = false;
+                this.ShareDashboardData.shareDialogVisible = true;
+                http.post('../dashboards/GetDashoboardToShare', { id:_this.currentDashboardId}).then(function (vv) {
+                    if (vv) {
+                        _this.ShareDashboardData.shareData = vv;
+                        _this.ShareDashboardData.shareTableData = vv.ShareMembers;
+                    }
+                });
+            },
+            clearShareData:function(){
+                var _this = this;
+                _this.ShareDashboardData.shareListVisible = false;
+                _this.ShareDashboardData.shareList = null;
+            },
+            shareSearch:function(){
+                var _this = this;
+                http.post('../dashboards/GetMemebersByKey', { key: _this.ShareDashboardData.shareForm.title, dashboardId: _this.currentDashboardId}).then(function (vv) {
+                    if (vv && vv.value) {
+                        _this.ShareDashboardData.shareListVisible = true;
+                        vv.value.filter(function(item){
+                            item.IsOwner = false;
+                            item.CanEdit = false;
+                        });
+                        _this.ShareDashboardData.shareList = vv.value;
+                    }
+                });
+            },
+            //点击用户或角色显示详情
+            showShareInfo:function(item){
+                this.ShareDashboardData.shareListVisible = false; //查询列表数据隐藏
+                this.ShareDashboardData.shareForm.title = "";
+                var list = this.ShareDashboardData.shareTableData;
+                var count = 0;
+                list.forEach(function(e,index){
+                    if(list[index].ID != item.ID){
+                        count ++;
+                    }else{
+                        alert("请勿重复添加");
+                        return;
+                    }
+                });
+                if(count == list.length){
+                    this.ShareDashboardData.shareTableData.unshift(item);
+                }
+            },
+            deleteShareRow:function(index,data){
+                this.ShareDashboardData.shareTableData.splice(index,1);
+            },
+            shareSubmit:function(){
+                var _this = this;
+                _this.ShareDashboardData.shareData.ShareMembers = _this.ShareDashboardData.shareTableData;
+                var modelStr = JSON.stringify(_this.ShareDashboardData.shareData);
+                http.post('../dashboards/ShareDashboard', {modelStr:modelStr}).then(function (vv) {
+                    if (vv) {
+                        _this.ShareDashboardData.shareDialogVisible=false;
+                    }
+                });
+            }
+        }
+    });
+    exports.data = data;
+});
+define('dashboard', ['vue', 'exports', 'ster', 'http', 'jquery', 'bluebird', 'widgetManager', 'ELEMENT', 'layoutTools'], function (Vue, exports, ster, http, $, Promise, widgetManager, ELEMENT, tools) {
+    Vue.use(ELEMENT);
+    var child = {
+        template: '#template-wds-button',
+        props: ['content'],
+        data: function () {
+            return {
+                widget: '',//搜索部件名称
+                widgetList: [], //默认添加列表组件 
+                currentWidget: {},
+                currentWidgetId: '',//当前widget的id
+                name: "",
+                editStatus: false,
+                addStatus: false, //组件列表显示否
+                isAddBtnDisabled: true,
+                showAddBtn: false,
+                active: '',
+                gridControl: null,
+                dashboard: this.content
+            };
+        },
+        directives:{
+            drag:function(el,bindings){
+                var _this = this; //this指的是window
+                _this.isDrag = true;
+                var firstTime = 0;
+                var lastTime = 0;
+                el.onmousedown = function(e){
+                    firstTime = new Date().getTime();
+                    var disx = e.pageX - el.offsetLeft;
+                    var disy = e.pageY - el.offsetTop;
+                    document.onmousemove = function (e){
+                        el.style.left = e.pageX - disx +'px';
+                        el.style.top = e.pageY - disy+'px';
+                    }
+                    document.onmouseup = function(){
+                        lastTime = new Date().getTime();
+                        if( (lastTime - firstTime) < 200){
+                            _this.isDrag = false;
+                        }
+                        document.onmousemove = document.onmouseup = null;
+                    }
+                }
+            }
+        },
+        watch: {
+            content: function () {
+                widgetManager.clear();
+                this.clear();
+                this.gridControl.clear();
+                this.widget = "";
+                this.gridControl = null;
+                this.dashboard = this.content;
+                this.currentWidget = {};
+                this.currentWidgetId = '';//当前widget的id
+                this.name = "";
+                this.editStatus = false;
+                this.addStatus = false; //组件列表显示否
+                this.isAddBtnDisabled = true;
+                this.showAddBtn = false;
+                this.active = '';
+                this.refresh();
+            },
+            dashboard: function () {
+                this.content = this.dashboard;
+            }
+        },
+        computed: {
+            //过滤添加列表数据
+            filterList: function () {
+                var _this = this;
+                var list = [];
+                for (var i = 0; i < this.widgetList.length; i++) {
+                    if (this.widgetList[i].name && this.widgetList[i].name.toLowerCase().search(this.widget) != -1
+                        || this.widgetList[i].memo && this.widgetList[i].memo.toLowerCase().search(this.widget) != -1) {
+                        list.push(this.widgetList[i]);
+                    }
+                }
+                return list;
+            }
+        },
+        methods: {
+            editWidget: function () {
+                if(!window.isDrag){
+                    if (this.editStatus) {
+                        this.showAddBtn = false;
+                    } else {
+                        this.showAddBtn = true;
+                    }
+                    if (this.gridControl) {
+                        this.gridControl.setEnable(this.editStatus = !this.editStatus);
+                        //完成编辑后要上传组件
+                        if (!this.editStatus) {
+                            widgetManager.uploadToService(this.dashboard.Id);
+                        }
+                    }
+                }
+            },
+            addWidget: function () {
+                var _this = this;
+                if (_this.isAddBtnDisabled)
+                    return;
+                var widgetType = _this.currentWidget;
+
+                var widget = $.extend(true, {}, widgetType);
+                this.gridControl.autoPostion(widget);
+                //删除和修改位置大小等，都是在点击确定后才向数据库中存储
+                //而添加，是在添加的一瞬间就保存到库中，所以这里面需要特殊处理一下
+                widgetManager.addToService(this.dashboard.Id, widgetType.id, widget).then(function (data) {
+                    widget = $.extend(true, {}, widget, data);
+                    widget.widgetId = widgetType.id;
+                    _this.dashboard.WidgetList.push(widget);
+                    //widgetManager.add(widget);//这句不写也可以，因为在addDoneCallback中会判定widgetManager中有没有此组件，没有会自动添加
+                    var element = _this.gridControl.addNewWidget(widget, "add");
+                });
+            },
+            selectWidget: function (item) {
+                this.currentWidget = null;
+                this.isAddBtnDisabled = true;
+                if (item.isDisabled)
+                    return;
+                this.currentWidget = item;
+                this.widgetId = item.id;
+                this.active = item.name;
+                this.isAddBtnDisabled = false;
+            },
+            showWidgetList: function () {
+                var _this = this;
+                _this.addStatus = true;
+                _this.widget = "";
+                if (!this.editStatus) {
+                    _this.editWidget();
+                }
+                http.get('../dashboards/GetWidgets', {}).then(function (data) {
+                    _this.widgetList = [];
+                    $.each(data.Widgets, function (i, item) {
+                        var wid = item;
+                        $.each(item.props, function (j, obj) {
+                            wid[obj.name] = obj.value;
+                        })
+                        delete wid.props;
+                        _this.widgetList.push(wid);
+                    })
+                    _this.widgetList.sort(function (a, b) {
+                        return a.name.localeCompare(b.name, "zh");
+                    })
+                });
+            },
+            hideWidgetList: function () {
+                this.active = '';
+                this.addStatus = false;
+                this.isAddBtnDisabled = true;
+            },
+            clear: function () {
+                if (this.dashboard.Id) {
+                    $("#" + this.dashboard.Id + " widgets-container gridster gridster-items").html("");
+                }
+            },
+            refresh: function () {
+                var _this = this;
+                //加载组件
+                widgetManager.loadWidgets(this.dashboard.WidgetList).then(function () {
+                    //在这个位置初始化才可以，这时页面才准备好。
+                    _this.gridControl = new ster({
+                        id: _this.dashboard.Id,
+                        //拖拽后把变更后的数据更新到data中
+                        widgetDoneDragCallback: function (dragItem) {
+                            //更新组件
+                            widgetManager.updateWidgetInfo(dragItem);
+                        },
+                        getWidgetList: function () {
+                            return widgetManager.getWidgetList();
+                        },//获取组件列表的方法传给Ster，Ster不进行数据的关注，只做页面相关展示，所以需要集中使用widgetManager去获取数据，为了解耦合widgetManager和ster的关系，所有的数据交互采用callback方式
+                        //拖拽后把变更后的数据更新到data中
+                        changeSizeCallback: function (dragItem) {
+                            //更新组件
+                            widgetManager.updateWidgetInfo(dragItem);
+                            widgetManager.reloadData(dragItem);//改变大小重新加载一下数据（浅度加载），因为大小可能影响数据源的条数
+                        },
+                        addDoneCallback: function (item) {//gridster添加完组件后执行的方法，添加完组件，但是只有了组件的框架，内容还需要各个组件的引擎去解析并且渲染，所以这里面的工作就是解析组件引擎进行渲染
+                            var wigetObj = widgetManager.getWidgetById(item.id);
+                            if (!wigetObj) {
+                                //没有则添加到队列中，有则直接更新即可
+                                widgetManager.add(item);
+                                wigetObj = widgetManager.getWidgetById(item.id);
+                            }
+                            if (wigetObj) {
+                                //根据组件类型加载解析引擎并渲染
+                                require([item.type], function (provider) {
+                                    var instance = provider(item);
+                                    wigetObj.instance = instance;
+
+                                    tools.loadProvider(instance, 'load', item);
+                                }, function (ex) {
+                                    if (ex.requireType == "scripterror")
+                                        new tools.exceptions.typeErr(item,item.elId, item.name, item.type).show();
+                                    else
+                                        console.log(ex);
+                                });
+                                //widgetManager.update([item]);//添加完再更新一下，因为有可能添加的item的x,y在添加过程中已经被改变了。如果这个过程一直是引用类型，没有这句话也可以，因为item变化自动会变化对应的引用
+                            }
+                        }
+                    });
+                });
+            }
+        },
+        mounted: function () {
+            this.refresh();
+        }
+    };
+    return child;
+});
+define('widgetManager', ['exports', 'http', 'jquery', 'bluebird', 'layoutTools'], function (exports, http, $, Promise, tools) {
+    var manager = {
+        widgetList: {},
+        gridControl: null,
+        preList: [],
+        loadWidgets: function (list) {
+            var _this = this;
+            return new Promise(function (resolve, reject) {
+                _this.clear();
+                $.each(list, function (i, item) {
+                    _this.add(item);
+                });
+                _this.preList = list;
+                resolve();
+            });
+
+        },
+        //浅度重新加载，基本上只是重新加载数据
+        reloadData: function (items) {
+            var _this = this;
+            $.each(items, function (i, item) {
+                //传入的组合如果是组件信息，就找到组件实例进行操作，如果是带有instance的上下文实例则直接使用
+                var instance = item.instance;
+                if (!instance && item.id)
+                    instance = _this.widgetList[item.id] ? _this.widgetList[item.id].instance : undefined;
+
+                instance && instance.reloadData && instance.reloadData();
+            });
+        },
+        //深度重新加载，不仅数据，整个组件重新加载，因为数据源之类的可能已经变了。
+        reloadWidget: function (items) {
+            var _this = this;
+            $.each(items, function (i, item) {
+                //传入的组合如果是组件信息，就找到组件实例进行操作，如果是带有instance的上下文实例则直接使用
+                var instance = item.instance;
+                if (!instance && item.id)
+                    instance = _this.widgetList[item.id] ? _this.widgetList[item.id].instance : undefined;
+                if (instance) {
+                    if (instance.reload) {
+                        tools.loadProvider(instance, 'reload', item.item);
+                    }
+                    else {//如果没有reload方法，则根据情况先调用销毁，后调用加载。
+                        (instance.disponse && instance.disponse());
+                        tools.loadProvider(instance, 'load', item.item);
+                    }
+                }
+            });
+        },
+        getWidgetList: function () {
+            var list = [];
+            for (var i in this.widgetList) {
+                list.push(this.widgetList[i].widget);
+            }
+            return list;
+        },
+        configWidget: function (e, item, id, callback) {
+            var _this = this;
+            var dashboardId = $(e.target).closest(".container-dashboard").attr("id");
+            window.zlayer.open({
+                title: item.name,
+                area: ["450px", "520px"],
+                argument: window,
+                content: 'mvc/dashboards/Edit?dashboardId=' + dashboardId + '&id=' + id +'&width='+item.width + '&height='+item.height,
+                endHandle: function (data) {
+                    if (data) {
+                        var widget = _this.getWidgetById(id);
+                        $.extend(widget.widget, data);
+                        if (callback)//如果有回调函数，则调用回调函数。一般用作更新GridSter等操作
+                            callback(data);
+                        _this.reloadWidget([widget]);
+                    }
+                }
+            });
+        },
+        updateWidgetInfo: function (dragItem) {
+            var _this = this;
+            $.each(dragItem, function (i, item) {
+                _this.widgetList[item.id].widget = $.extend(_this.widgetList[item.id].widget, item);
+            })
+        },
+        uploadToService: function (dashboardId) {
+            var _this = this;
+            var list = this.getWidgetList();
+            var newList = [];
+            for (var i = 0; i < list.length; i++) {
+                newList.push({
+                    id: list[i].id,
+                    x: list[i].x,
+                    y: list[i].y,
+                    width: list[i].width,
+                    height: list[i].height,
+                    widgetId: list[i].widgetId
+                });
+            }
+            http.post('../dashboards/upload', { dashboardId: dashboardId, items: JSON.stringify(newList) }).then(function (data) {
+                if (data && data.value){
+                    _this.preList.splice(0, _this.preList.length);;
+                    $.extend(_this.preList, list);
+                }
+            });
+
+        },
+        addToService: function (dashboardId, widgthId, widget) {
+            return new Promise(function (resolve, reject) {
+                http.post('../dashboards/AddWidget', { dashboardId: dashboardId, widgthId: widgthId, x: widget.x, y: widget.y }).then(function (data) {
+                    resolve(data);
+                });
+            });
+        },
+        getWidgetById: function (id) {
+            return this.widgetList[id];
+        },
+        add: function (item) {
+            var _this = this;
+            var obj = {
+                instance: null,
+                widget: item
+            }
+            _this.widgetList[item.id] = obj;
+        },
+        delete: function (id) {
+            var _this = this;
+            _this.widgetList[id] && _this.widgetList[id].instance && _this.widgetList[id].instance.disponse ? _this.widgetList[id].instance.disponse() : null;
+            delete _this.widgetList[id];
+        },
+        clone: function () {
+            return $.extend(true, [], this.widgetList);
+        },
+        clear: function () {
+            for (var i in this.widgetList) {
+                this.delete(i);
+            }
+            this.preList = [];
+            this.widgetList = {};
+        }
+    }
+    return {
+        getWidgetList: function () {
+            return manager.getWidgetList();
+        },
+        loadWidgets: function (list) {
+            return manager.loadWidgets(list);
+        },
+        reloadData: function (items) {
+            manager.reloadData(items);
+        },
+        reloadWidget: function (items) {
+            manager.reloadWidget(items);
+        },
+        configWidget: function (e, item, id, callback) {
+            manager.configWidget(e, item, id, callback);
+        },
+        updateWidgetInfo: function (dragItem) {
+            manager.updateWidgetInfo(dragItem);
+        },
+        uploadToService: function (dashboardId) {
+            manager.uploadToService(dashboardId);
+        },
+        addToService: function (dashboardId, widgthId, widget) {
+            return manager.addToService(dashboardId, widgthId, widget);
+        },
+        getWidgetById: function (id) {
+            return manager.getWidgetById(id);
+        },
+        add: function (item) {
+            manager.add(item);
+        },
+        delete: function (id) {
+            manager.delete(id);
+        },
+        clone: function () {
+            return manager.clone();
+        },
+        clear: function () {
+            manager.clear();
+        }
+    }
+});
+//封装对GridSter的操作
+define('ster', ['gridster', 'jquery', 'exports', 'widgetManager', 'layoutTools'], function (gridster, $, exports, widgetManager, tools) {
+
+    var config = function (id) {
+        var s = id ? '#' + id + ' ' : '';
+        var item = {
+            widgetHostClass: 'widgethost',
+            widgetContainerSelector: s + '.widgets-container',
+            dragHandle: s + '.widget-drag-handle',
+            showHandle: 'widget-edit-overlay-control-show',
+            dragControl: s + '.widget-edit-overlay-control',
+            widgetContainerScorll: s + '.container-with-scroll',
+            bladeMenu: s + '.blade-menu'
+        };
+        return $.extend(item, tools.sterWidgetSizeBase);
+    };
+    //gridSter的操作对象
+    var ster = (function () {
+        var ster = function (options) {
+            this._options = options || {};
+            this.getWidgetList = options.getWidgetList || function () { return [] };
+            this._grid = null;
+            this.enabled = false;
+            this.config = config(options.id);
+            this.init();
+        };
+        ster.prototype._maxRowColumn = function () {
+            var result = {
+                column: 2,
+                row: 2
+            };
+            (this.getWidgetList() || []).forEach(function (widget) {
+                var rightMost = widget.x + widget.width - 1;
+                if (result.column < rightMost) {
+                    result.column = rightMost;
+                }
+                result.row += widget.height;
+            });
+            return result;
+        };
+        ster.prototype._getVisibleWidth = function () {
+            return $(this.config.widgetContainerScorll).width() - $(this.config.bladeMenu).outerWidth();
+        }
+        ster.prototype._smartAdjustPositionsAndSize = function (widgetData, maximumColumns) {
+            var widgetsSpace = this._getWidgetSpaceMatrix(maximumColumns);
+            var foundAnEmptySpace = false;
+
+            for (var heightIndex = 0; heightIndex < widgetsSpace[0].length; heightIndex++) {
+                if (foundAnEmptySpace) {
+                    break;
+                }
+                for (var widthIndex = 0; widthIndex < widgetsSpace.length; widthIndex++) {
+
+                    if (!widgetsSpace[widthIndex][heightIndex]) {
+                        var isAllSquareEmpty = true;
+
+                        for (var widthSizeIndex = 0; widthSizeIndex < widgetData.width; widthSizeIndex++) {
+                            if (widgetsSpace[widthIndex + widthSizeIndex] == null) {
+                                isAllSquareEmpty = false;
+                                break;
+                            }
+                            for (var heightSizeIndex = 0; heightSizeIndex < widgetData.height; heightSizeIndex++) {
+                                if (widgetsSpace[widthIndex + widthSizeIndex][heightIndex + heightSizeIndex]) {
+                                    isAllSquareEmpty = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (isAllSquareEmpty) {
+
+                            foundAnEmptySpace = true;
+                            widgetData.y = heightIndex + 1;
+                            widgetData.x = widthIndex + 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!foundAnEmptySpace) {
+                widgetData.y = this._getLastRows() + 1;
+                widgetData.x = 1;
+            }
+        };
+        ster.prototype._getWidgetSpaceMatrix = function (maximumColumns) {
+            var widgetsSpace = [];
+
+            for (var widthIndex = 0; widthIndex < maximumColumns; widthIndex++) {
+                widgetsSpace[widthIndex] = [];
+            }
+            this.getWidgetList().forEach(function (elem) {
+                if (elem.x > 0 && elem.y > 0) {
+                    var x = elem.x - 1;
+                    var y = elem.y - 1;
+                    var w = elem.width;
+                    var h = elem.height;
+
+                    if (x < maximumColumns) {
+                        for (var widthIndex = 0; widthIndex < w; widthIndex++) {
+
+                            if (x + widthIndex < maximumColumns) {
+                                for (var heightIndex = 0; heightIndex < h; heightIndex++) {
+                                    widgetsSpace[x + widthIndex][y + heightIndex] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            return widgetsSpace;
+        };
+        ster.prototype._getLastRows = function () {
+            var lastRowsIndex = 0;
+            this.getWidgetList().forEach(function (elem) {
+                var widgetBottomRow = elem.y + (elem.height - 1);
+                if (widgetBottomRow > lastRowsIndex) {
+                    lastRowsIndex = widgetBottomRow;
+                }
+            });
+            return lastRowsIndex;
+        };
+        ster.prototype.scrollToNewlyAddedWidget = function ($widget) {
+            var $dashboardContainer = $(this.config.widgetContainerScorll);
+
+
+            var widgetTop = $widget.position().top;
+            var widgetBottom = widgetTop + $widget.height();
+            var viewTop = $dashboardContainer.scrollTop();
+            var viewBottom = $dashboardContainer.scrollTop() + $dashboardContainer.height();
+            if (widgetTop < viewTop || widgetBottom > viewBottom) {
+
+                $widget.hide();
+                $dashboardContainer.animate({
+                    scrollTop: widgetTop
+                }, {
+                        duration: 500,
+                        complete: function () { return $widget.fadeIn(); }
+                    });
+            }
+        };
+        ster.prototype.getOptions = function () {
+            var _this = this;
+            var preventClick = function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            };
+            var minSettings = this._maxRowColumn(_this._options.initList || [])
+            return {
+                widget_selector: this.config.widgetHostClass,
+                widget_base_dimensions: [this.config.cellWidth, this.config.cellHeight],
+                avoid_overlapped_widgets: true,//不允许叠加
+                limit: {
+                    width: false,
+                    height: false
+                },
+                autogrow_cols: true, //是否允许出现横向滚动条
+                widget_margins: [this.config.marginWidth, this.config.marginHeight],
+                min_cols: minSettings.column,
+                min_rows: minSettings.row,
+                resize: {
+                    enabled: true,
+                    stop: function (event, ui, player) {
+                        if (typeof _this._options.changeSizeCallback === "function") {
+                            _this._options.changeSizeCallback(_this.getWidgetJsonData(player));
+                        }
+                    }
+                },
+                move_widgets_down_only: true,
+                serialize_params: function ($w, wgd) {
+                    return {
+                        x: wgd.col,
+                        y: wgd.row,
+                        width: wgd.size_x,
+                        height: wgd.size_y,
+                        id: $w.attr('forid')
+                    };
+                },
+                draggable: {
+                    handle: this.config.dragHandle,
+                    stop: function (event, ui) {
+                        //_this.dragging = false;
+                        var player = ui.$player;
+                        setTimeout(function () {
+                            player[0].removeEventListener('click', preventClick, true);
+                        });
+                        //_this._updateWidgetPositionIfChanged(false, Dashboards_Resources.ErrorMessage_UpdateWidgetPositionConflict_MoveAction);
+                        $(player).removeClass('leftdrag').removeClass('rightdrag');
+                        $(player).removeClass('player-revert');
+                        //Diag.Debug.logInfo(new Date() + "-----------------Stop Drag-----------------");
+                        //if (_this.wasBladeOpenedBeforeDrag) {
+                        //    _this._options.toggleBladeMenu(true);
+                        //}
+                        if (typeof _this._options.widgetDoneDragCallback === "function") {
+                            _this._options.widgetDoneDragCallback(_this.getWidgetJsonData());
+                        }
+                    },
+                    drag: function (event, ui) {
+                        var player = ui.$player;
+                        var currentMouseX = event.pageX;
+                        if (_this.prevX > currentMouseX) {
+                            $(player).removeClass('rightdrag').addClass('leftdrag');
+                        }
+                        else if (_this.prevX < currentMouseX) {
+                            $(player).removeClass('leftdrag').addClass('rightdrag');
+                        }
+                        //if (_this.wasBladeOpenedBeforeDrag && parseInt(player.css('left')) + player.width() >= _this._options.getVisibleWidthSize()) {
+                        //    _this._options.toggleBladeMenu(false);
+                        //}
+                        _this.prevX = currentMouseX;
+                    },
+                    start: function (event, ui) {
+                        //_this.dragging = true;
+                        var htmlElementOfDraggedWidget = ui.$player[0];
+                        htmlElementOfDraggedWidget.addEventListener('click', preventClick, true);
+                        //_this.closeMenu(htmlElementOfDraggedWidget);
+                        //if (typeof _this._options.widgetStartDragCallback === "function") {
+                        //    _this._options.widgetStartDragCallback();
+                        //}
+                        //_this._options.isBladeMenuClosed().then(function (value) {
+                        //    _this.wasBladeOpenedBeforeDrag = !value;
+                        //});
+                    },
+                    items: undefined,
+                    distance: undefined,
+                    limit: undefined,
+                    offset_left: undefined
+                }
+            };
+        }
+        ster.prototype.setEnable = function (en) {
+            if (en === true) {
+                this._grid.enable();
+                this._grid.enable_resize();
+                $(this.config.dragControl).addClass(this.config.showHandle);
+            }
+            else if (en === false) {
+                this._grid.disable();
+                this._grid.disable_resize();
+                $(this.config.dragControl).removeClass(this.config.showHandle);
+            }
+            this.enabled = en;
+        };
+        ster.prototype.init = function () {
+            var _this = this;
+            this._grid = $(this.config.widgetContainerSelector).gridster(this.getOptions()).data('gridster');
+            this.setEnable(false);
+            if (this.getWidgetList) {
+                var list = this.getWidgetList();
+                for (var i = 0; i < list.length; i++) {
+                    var item = list[i];
+                    _this.addNewWidget(item);
+                    //_this.addNewWidget({
+                    //    x: item.x,
+                    //    y: item.y,
+                    //    width: item.width || 2,
+                    //    height: item.height || 2,
+                    //    //html: instance.render(),
+                    //    elId: item.elId,
+                    //    id: item.id
+                    //});
+                }
+            }
+        };
+        ster.prototype.autoPostion = function (item) {
+
+            if ((item.y == null || item.x == null || item.y === 0 || item.x === 0)) {
+                var maximumColumns = Math.ceil(this._getVisibleWidth() /
+                    (this.config.cellWidth + this.config.marginWidth));
+                this._smartAdjustPositionsAndSize(item, maximumColumns);
+            }
+        }
+        ster.prototype.addNewWidget = function (item, source) {
+            var _this = this;
+            item.elId = 'w_' + item.id;
+            this.autoPostion(item);
+            var options = {
+                x: item.x,
+                y: item.y,
+                width: item.width || 2,
+                height: item.height || 2,
+                //html: instance.render(),
+                elId: item.elId,
+                id: item.id,
+                maxWidth: item.canEditWidth === false ? item.width : Infinity,
+                minWidth: item.canEditWidth === false ? item.width : 1,
+                maxHeight: item.canEditHeight === false ? item.height : Infinity,
+                minHeight: item.canEditHeight === false ? item.height : 1,
+                canEditWidth: item.canEditWidth === false ? false : true,
+                canEditHeight: item.canEditHeight === false ? false : true
+            };
+            //var defualtOpthions = {
+            //    width: 2,
+            //    height: 2
+            //};
+            //options = $.extend(defualtOpthions, options);
+            var widgetId = options.id;
+            var div = $('<div/>').addClass(this.config.widgetHostClass).attr('forid', widgetId);
+            div.append('<div class="widget-edit-overlay-control widget-drag-handle ' + (this.enabled ? this.config.showHandle : "") + '">' +
+                '<div class="widget-edit-menu">' +
+                '<div title="删除此仪表板中的小组件" class="widget-edit-menu-button-container">' +
+                (!item.isControlled || $("#isManager").val().toLowerCase() == "true" ? (
+                    '<button class="widget-edit-menu-button config" title="配置此仪表板中的小组件">' +
+                    '<i class="icon iconfont y-icon-config"></i>' +
+                    '</button>') : '') +
+                '<button class="widget-edit-menu-button delete" title="删除此仪表板中的小组件">' +
+                '<i class="icon iconfont y-icon-shanchu"></i>' +
+                '</button>' +
+                '</div></div></div>');
+
+            if (options.elId)
+                div.append($("<div/>").attr('id', options.elId).css('height', '100%'));
+            //div.append(options.html.attr('id', options.elId));
+            var player = this._grid.add_widget(div, options.width, options.height, options.x, options.y, [options.maxWidth, options.maxHeight], [options.minWidth, options.minHeight], options.canEditWidth, options.canEditHeight);
+            //删除当前小部件
+            $("[forid=" + widgetId + "] .widget-edit-menu-button.delete").click(function () {
+                _this.deleteWidget(widgetId);
+                widgetManager.delete(widgetId);
+            });
+            //配置当前小部件
+            $("[forid=" + widgetId + "] .widget-edit-menu-button.config").click(function (e) {
+                //弹出配置页面，进行配置，操作由widgetManager控制，传递回调，定义在成功修改后要更新大小
+                widgetManager.configWidget(e, item, widgetId, function (data) {
+                    _this._grid.resize_widget($('[forid=' + widgetId + ']'), data.width, data.height);
+                });
+            });
+            if (options.x == null || options.y == null) {
+                if (typeof _this._options.widgetDoneDragCallback === "function") {
+                    _this._options.widgetDoneDragCallback(_this.getWidgetJsonData(player));
+                }
+            }
+            if (typeof _this._options.addDoneCallback === "function") {
+                _this._options.addDoneCallback(item);
+            }
+            if (source == "add") {
+                this.scrollToNewlyAddedWidget(player)
+            }
+            return player;
+        }
+        ster.prototype.deleteWidget = function (id) {
+            this._grid.remove_widget('[forid=' + id + ']');
+        }
+        ster.prototype.getWidgetJsonData = function ($w) {
+            if (this._grid) {
+                return this._grid.serialize($w);
+            }
+        };
+        ster.prototype.clear = function () {
+            this.getWidgetList = [];
+            $(this.config.widgetContainerSelector).html("");
+            this._grid.destroy();
+            this._grid = null;
+        };
+        return ster;
+    })();
+    return ster;
+
+});
+//封装对请求服务的方法
+define('http', ['jquery', 'exports', 'bluebird'], function ($, exports, Promise) {
+
+    function error(url, data) {
+        var flag = true;
+        if (typeof data == 'string' && data.constructor == String) {
+            if (data.indexOf('errorMessage') > -1) {
+                var errorMessage = $(data).find('#errorMessage');
+                if (errorMessage.length > 0) {
+                    console.log('服务请求错误：' + errorMessage.text());
+                }
+            }
+            else if (data.toLowerCase().indexOf("login/index")) {
+                alert("系统已退出，请刷新页面重新登陆。");
+            }
+            else {
+                console.log('服务请求错误：url:' + url + '；返回数据：' + data);
+            }
+            flag = false;
+        }
+        else if (data && data.errorMsg) {
+            window.top.MsgBox.errorNotify(data.errorMsg);
+            flag = false;
+        }
+        return flag;
+
+    }
+    //目前仅支持url和data作为参数，后续可根据需要继续封装
+    $.each(['get', 'post'], function (i, method) {
+        exports[method] = function (url, data) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: url,
+                    type: method,
+                    cache: false,
+                    data: data,
+                    success: function () {
+                        //在这里对错误数据进行一次过滤
+                        var data = arguments[0];
+                        if (error(url, data)) {
+                            if (resolve) {
+                                resolve(arguments[0]);
+                            }
+                        } else {
+                            reject(arguments);
+                        }
+                    },
+                    error: function () {
+                        console.log('服务请求错误：url:' + url);
+                        reject(arguments);
+                    }
+                });
+            });
+        };
+    });
+
+});
+
+define('layoutTools', ['exports'], function (exports) {
+    return {
+        exceptions: {
+            emptyErr: function (conf,elId, name) {
+                this.message = 'empty';
+                this.code = '001';
+                this.show = function () {
+                    var className = conf.isShowTitle?'show':'hide';
+                    $("#" + elId).html('<div class="list-title"><span class="list-title-text '+className+'">' + name + '</span></div>')
+                        .append('<div class="content"><div class="widget-message-text">配置组件</div><div class="bgImage"></div></div>');
+                }
+            },
+
+            typeErr: function (item,elId, name, type) {
+                this.message = 'typeErr';
+                this.code = '002';
+                this.show = function () {
+                    var className = item.isShowTitle?'show':'hide';
+                    $("#" + elId).html('<div class="list-title"><span class="list-title-text '+className+'">' + name + '</span></div>')
+                        .append('<div class="content text">代码出错，尚未找到类型为' + type + '的组件，请清空缓存或者联系开发者</div>');
+                }
+            }
+        },
+        sterWidgetSizeBase: {
+            cellWidth: 160,
+            cellHeight: 160,
+            marginWidth: 7,
+            marginHeight: 7
+        },
+        getWidgetSize: function (w, h) {
+            var width = this.sterWidgetSizeBase.cellWidth;
+            var height = this.sterWidgetSizeBase.cellHeight;
+            if (w >= 1)
+                width = width * w + (this.sterWidgetSizeBase.marginWidth * (w - 1) * 2);
+            if (h >= 1)
+                height = height * h + (this.sterWidgetSizeBase.marginHeight * (h - 1) * 2);
+            return { width: width, height: height };
+        },
+        loadProvider: function (instance, callFunc, item) {
+            try {
+                instance[callFunc]();
+            } catch (ex) {
+                switch (ex.code) {
+                    case "001":
+                        //空异常，需要配置组件
+                        if (ex.show)
+                            ex.show();
+                        break;
+                    case "002"://类型异常，没有找到对应的组件类型
+                        if (ex.show)
+                            ex.show();
+                    default:
+                        console.log(ex);
+
+                }
+            }
+        }
+    }
+});
