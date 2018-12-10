@@ -1066,15 +1066,22 @@ body .markdown-body
 
 
 <h1 id="_3">需求思路:<a class="headerlink" href="#_3" title="Permanent link"></a></h1>
-<div class="codehilite"><pre>条件是一个时间区间，抓出时间区间范围内的所有PR，抓出PR转的PO，一个PR可能会对应多个PO的，要判定PO的采购数量&gt;=PR的请购数量，
+<div class="codehilite"><pre>条件是一个时间区间，抓出时间区间范围内的所有PR，抓出PR转的PO，一个PR可能会对应多个PO的，要判定PO的采购数量 &gt;= PR的请购数量，
+
+PR 转 PO 的要具体到 PRLine 中去查找
 </pre></div>
 
 
 <h2 id="prpo">什么样的PR转PO算及时呢?<a class="headerlink" href="#prpo" title="Permanent link"></a></h2>
-<div class="codehilite"><pre>就是数量满足了，同时采购单的制单时间-PR的审核时间&lt;24销售
+<div class="codehilite"><pre>就是数量满足了，同时采购单的制单时间-PR的审核时间&lt;24小时
 </pre></div>
 
 
 <h2 id="sql">sql的思路应该是：<a class="headerlink" href="#sql" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>你首先明确你需要取哪些字段，然后筛选条件是什么，最后把你得到的字段进行处理（求和，求平均啊，分组啊）得到你要的结果
+</pre></div>
+
+
+<h2 id="_4">变更说明<a class="headerlink" href="#_4" title="Permanent link"></a></h2>
+<div class="codehilite"><pre>2018/12/10 写出存储过程，可以查找出对应单号的及时与否， 但还未添加 执行采购人员 以及料号进去。
 </pre></div></article></body></html>
