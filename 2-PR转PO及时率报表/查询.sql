@@ -89,6 +89,15 @@ select PurchaseOrder ,count(*) as 计数 from PM_POLine   where CurrentOrg = '10
 	-- 找出 采购的 323 行 以及其对应的 采购单 
 	select * from PM_POLine where CurrentOrg =  '1001708020135665' and SrcDocInfo_SrcDocNo = 'PR30181008002'
 	select PurchaseOrder, COUNT(*) '计数' from PM_PurchaseOrder A left join PM_POLine B ON A.ID = B.PurchaseOrder WHERE A.ORG = '1001708020135665' AND B.SrcDocInfo_SrcDocNo = 'PR30181008002' GROUP BY B.PurchaseOrder ORDER BY '计数'
+	
+	select ItemInfo_ItemCode 料号, sum(ReqQtyTU) 采购需求数量总和 from PM_POLine WHERE CurrentOrg =  '1001708020135665' AND ItemInfo_ItemCode = '335110005' group by ItemInfo_ItemCode
+	
+	select ItemInfo_ItemCode 料号, sum(ReqQtyTU) 请购需求数量总和 from PR_PRLine WHERE CurrentOrg =  '1001708020135665' AND ItemInfo_ItemCode = '335110005' group by ItemInfo_ItemCode
+
+
+	select ItemInfo_ItemCode 料号, Count(*) 采购订单行总和 from PM_POLine WHERE CurrentOrg =  '1001708020135665' AND ItemInfo_ItemCode = '335110005' group by ItemInfo_ItemCode
+
+	select ItemInfo_ItemCode 料号, Count(*) 请购订单行总和 from PR_PRLine WHERE CurrentOrg =  '1001708020135665' AND ItemInfo_ItemCode = '335110005' group by ItemInfo_ItemCode
 
 	-- 说明 一个 PR 可能 对应 多个 PO ， 并且 请购单行 与 采购单行的数量也对应不上
 	-- 例子：行号为1510 的 需求 数量与核准数量对不上 可能是分多次采购的 抓住这个点找   其追溯查询的 采购订单号为 ：PO30181009044

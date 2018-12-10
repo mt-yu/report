@@ -1,61 +1,81 @@
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-ALTER PROCEDURE p_lj_PR_PO
---@Org BIGINT,--组织编码
---@Code varchar(50),--料号编码
---@StartDate datetime,--起始时间
---@EndDate datetime--截至时间
-
-as
+-- =============================================
+-- Author:		lj
+-- Create date: 2018/12/10
+-- Description:	PR转PO及时率报表
+-- =============================================
+CREATE PROCEDURE P_PR_PO_TimelinessRate 
+(
+	@Org BIGINT = '1001708020135665',		--组织
+	--@Code varchar(50),						--料号
+	@StartDT datetime = '2017-09-04',						--起始时间
+	@EndDT datetime	 = '2018-07-31'					--结束时间
+)
+AS
 BEGIN
 
-if OBJECT_ID('tempdb..#temp') is not null
-drop table #temp
--- ① 找出 所有 300 组织下 采购单中来源单据类型为 请购单 的集合
----- ①.a 找出所有采购单行下的 ***来源单据类型的ID*** 并统计 数目     SrcDocInfo_SrcDocTransType_EntityID(来源单据ID)
-		SELECT SrcDocInfo_SrcDocTransType_EntityID as 来源单据类型ID, COUNT(*) as 次数 into #temp 
-			from PM_PurchaseOrder A LEFT JOIN PM_POLine B ON A.ID = B.PurchaseOrder 
-			where A.org = '1001708020135665' AND B.CurrentOrg = '1001708020135665' 
-			GROUP BY SrcDocInfo_SrcDocTransType_EntityID 
-			ORDER BY '次数' --DESC 
-		SELECT * FROM #temp 
-		-- 得到300组织下采购单的总数目
-		SELECT SUM(#temp.次数) as 采购单行数 from #temp 
+	SET @EndDT  = DATEADD(day,1,@EndDT)	--结束日期 加一天
+	IF object_id(N'tempdb.dbo.#temp_Result',N'U') is null
+		BEGIN
+		CREATE TABLE #temp_Result(			--创建存放结果的表
+			
+			PO_DocNo  nvarchar(50),				--采购单号
+			POLine_SrcDocInfo_SrcDocNo nvarchar(50), --采购订单行的来源单行（即对应的请购单行）
+			POLine_SrcDocInfo_SrcDocLineNo INT, --来源单据行号
+			POLine_ID BIGINT,				--采购单行ID
+			PO_Createdon datetime,			--PO 制单时间
+			POLine_PurQtyTU Decimal,		--采购单行的采购数量
+				
+			
+			PR_DocNo  NVARCHAR(50),			--请购单号
+			PRLine_ID BIGINT,				--请购单行ID
+			PRLine_DocLineNo INT,			--请购单行号
+			PR_Approvedon datetime,			--PR 审核时间
+			PRLine_ApprovedQtyPU Decimal,	--请购单行的核准数量（即采购单的 需求数量）
 
----- ①.b  找出所有***来源类别***为"请购单" 的			SrcDocType (来源类别 1 请购单  0 手工)
-		select SrcDocInfo_SrcDocTransType_EntityID,count(*) as 次数  from PM_POLine where SrcDocType = '1' and CurrentOrg = '1001708020135665'  group by SrcDocInfo_SrcDocTransType_EntityID
----- ①.c  查找所有的采购单行
-		select A.org from PM_PurchaseOrder A LEFT JOIN PM_POLine B ON A.ID = B.PurchaseOrder where A.org = '1001708020135665'
----- ①.d  得出 所有的采购单行 就是 由 手工单 和 请购单 组成  共28936条
+			--TimelinessRate	NVARCHAR(4)	default ''			--是否及时	
+		)
+		END
+	ELSE
+		BEGIN
+		TRUNCATE TABLE #temp_Result			--删除所有行， 速度快些
+		END
+	
 
--- ②从请购单表中找出所有的请购单行
----- ②.a 找出所有300组织下的请购订单行
-		Select b.PR from PR_PR A left join PR_PRLine B ON A.ID = B.PR where CurrentOrg = '1001708020135665'
----- ②.b 
+	if OBJECT_ID('tempdb..#temp') is not null
+		drop table #temp
+	BEGIN
+			CREATE TABLE #temp(
+			ID BIGINT,
+			CREATEON DATETIME
+		)
+	END;
 
+	WITH TEST AS -- 找出时间范围内的所有请购单行
+	(
+		select A.DocNo 采购单号,B.SrcDocInfo_SrcDocNo 来源单号,B.SrcDocInfo_SrcDocLineNo 来源行号, B.PurchaseOrder 采购单行ID, A.CreatedOn 采购制单时间, B.PurQtyTU 采购数量 from PM_PurchaseOrder A LEFT JOIN PM_POLine B ON A.ID = B.PurchaseOrder WHERE  A.Org = @Org AND B.SrcDocInfo_SrcDocNo <> '' AND B.CreatedOn BETWEEN @StartDT AND @EndDT 
 
+	),
+	TSET_T AS	--找出时间范围内的所有请购单转过来的采购单行
+	(
+		select A.DocNo 请购单号, B.PR 请购单行ID, B.DocLineNo 请购单行行号, A.Approvedon 请购审核时间 , B.ApprovedQtyPU 请购数量 from PR_PR A LEFT JOIN PR_PRLine B ON A.ID = B.PR WHERE  A.Org = '1001708020135665' AND B.CreatedOn BETWEEN @StartDT AND @EndDT 
+	)
+	INSERT INTO #temp_Result SELECT a.*,b.* FROM TEST A LEFT JOIN TSET_T B ON B.请购单号 = A.来源单号 WHERE B.请购单行行号 = A.来源行号 AND B.请购数量 <= A.采购数量
+	alter table #temp_Result add TimelinessRate nvarchar(4) default ''
+	-- 判断及时不及时 并且修改表中字段
+	update #temp_Result  set TimelinessRate='及时' where Datediff(hh,#temp_Result.PR_Approvedon,#temp_Result.PO_Createdon ) < 24 
+	update #temp_Result  set TimelinessRate='不及时' where Datediff(hh,#temp_Result.PR_Approvedon,#temp_Result.PO_Createdon ) >= 24 
 
-
-select org from PM_PurchaseOrder 
-
--- 找出所有来源类别 为 请购单的			SrcDocType (来源类别 1 请购单  2 手工)
-
-
-
-
-if OBJECT_ID('tempdb..#temp1') is not null
-drop table #temp1
-select PRNO,SrcDocInfo_SrcDocTransType_EntityID  into #temp1 from PM_POLine where   CurrentOrg = '1001708020135665'
-
-SELECT * FROM #temp 
-select SrcDocInfo_SrcDocTransType_EntityID ,Count(*) as 次数 from #temp1 group by SrcDocInfo_SrcDocTransType_EntityID order by '次数'
-
-
+	--SELECT A.PO_DocNo 采购单号,COUNT (*) 采购单行计数  FROM #temp_Result A group by A.PO_DocNo order by A.PO_DocNo
+	SELECT  A.PO_DocNo,A.PR_DocNo,A.TimelinessRate FROM #temp_Result A order by A.TimelinessRate,A.PO_DocNo 
+	
+	Select TimelinessRate, COUNT(*) 计数 from #temp_Result group by TimelinessRate
+	
 END
 GO
 
-exec p_lj_PR_PO
+EXEC P_PR_PO_TimelinessRate '1001708020135665', '2017-11-21','2018-12-10'	
+
