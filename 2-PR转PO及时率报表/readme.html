@@ -1079,9 +1079,11 @@ PR 转 PO 的要具体到 PRLine 中去查找
 
 <h2 id="sql">sql的思路应该是：<a class="headerlink" href="#sql" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>你首先明确你需要取哪些字段，然后筛选条件是什么，最后把你得到的字段进行处理（求和，求平均啊，分组啊）得到你要的结果
+要按照执行采购员 输出 及时率报表 所以需要找出 料品报表中对应的 执行采购字段 之前没有加入 （执行采购 对应 料品下的 可扩展字段 23  DescFlexField_PrivateDescSeg23）
 </pre></div>
 
 
 <h2 id="_4">变更说明<a class="headerlink" href="#_4" title="Permanent link"></a></h2>
 <div class="codehilite"><pre>2018/12/10 写出存储过程，可以查找出对应单号的及时与否， 但还未添加 执行采购人员 以及料号进去。
+2018/12/11 可以再SQL SERVER 中算出及时率，但是还不清楚如何再 UBF 中进行对应的分组
 </pre></div></article></body></html>
