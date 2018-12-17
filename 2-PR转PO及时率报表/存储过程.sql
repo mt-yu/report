@@ -97,3 +97,11 @@ select * from CBO_Operators where org = 1001708020135665
 select * from CBO_Department where org = 1001708020135665
 
 SELECT * FROM Base_WorkCalendar
+
+
+
+
+select * from   CBO_Operators	--业务员表
+
+select * from CBO_OperatorLine where OperatorType = 0  AND Operators = '1001708040000582'	--找出所有的采购业务员行
+select * from CBO_Operators WHERE Code = '308895'

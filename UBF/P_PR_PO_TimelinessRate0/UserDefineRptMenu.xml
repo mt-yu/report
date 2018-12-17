@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserDefineRptMenu>
+  <RptMenu AllocSerials="false">
+    <ID>1001611050110001</ID>
+    <CreatedOn>2016-11-05 10:47:20</CreatedOn>
+    <CreatedBy>
+    </CreatedBy>
+    <SysVersion>0</SysVersion>
+    <Parent>0</Parent>
+    <Sequence>11</Sequence>
+    <Name>报表查询</Name>
+    <ShortName>报表查询</ShortName>
+    <Code>UFSoft.UBF.Report.PersonalMenus!9dae245b-3b23-4b23-a35a-f4d555c7dd07</Code>
+    <PageParameter>
+    </PageParameter>
+    <URI>
+    </URI>
+    <Application>3025</Application>
+  </RptMenu>
+  <RptMenu AllocSerials="false">
+    <ID>1001812170418008</ID>
+    <CreatedOn>2018-12-17 11:29:26</CreatedOn>
+    <CreatedBy>
+    </CreatedBy>
+    <SysVersion>1</SysVersion>
+    <Parent>1001611050110001</Parent>
+    <Sequence>22</Sequence>
+    <Name>PR_PO</Name>
+    <ShortName>PR_PO</ShortName>
+    <Code>UFSoft.UBF.Report.PersonalMenus!3b2c39a4-00e2-4f96-b70a-f54815a4f81e</Code>
+    <PageParameter>ReportContent=761195dd-14f8-4974-91cc-b845f0301f72&amp;ReportDisplayName=PR_PO</PageParameter>
+    <URI>UFIDA.UBF.Process.Report.IndividualRpt</URI>
+    <Application>3025</Application>
+  </RptMenu>
+</UserDefineRptMenu>

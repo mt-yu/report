@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UBF_MD_ASRPT_Categorys Type="Report">
+  <UBF_MD_ASRPT_Category>
+    <ID>761195dd-14f8-4974-91cc-b845f0301f72</ID>
+    <cName>PR_PO</cName>
+    <cDescription>
+    </cDescription>
+    <uParent>1ca2cdea-7fd3-4508-b772-d2571e873e80</uParent>
+    <iType>1</iType>
+    <iLevel>1</iLevel>
+    <iVisible>1</iVisible>
+    <cCreateBy>lijia</cCreateBy>
+    <dCreateDate>2018-12-17 10:34:44</dCreateDate>
+    <dModifyDate>2018-12-17 10:34:44</dModifyDate>
+    <IsExportPoint>True</IsExportPoint>
+    <tPropertys>
+    </tPropertys>
+    <cformID>
+    </cformID>
+    <BEKEY>
+    </BEKEY>
+    <iUserDefine>1</iUserDefine>
+    <mDefaultTemplate>0</mDefaultTemplate>
+    <mIndividuation>
+    </mIndividuation>
+  </UBF_MD_ASRPT_Category>
+  <UBF_MD_ASRPT_Category>
+    <ID>1ca2cdea-7fd3-4508-b772-d2571e873e80</ID>
+    <cName>自定义报表</cName>
+    <cDescription>
+    </cDescription>
+    <uParent>
+    </uParent>
+    <iType>0</iType>
+    <iLevel>0</iLevel>
+    <iVisible>1</iVisible>
+    <cCreateBy>DEMO</cCreateBy>
+    <dCreateDate>2011-11-17 11:49:21</dCreateDate>
+    <dModifyDate>2011-11-17 11:49:21</dModifyDate>
+    <IsExportPoint>False</IsExportPoint>
+    <tPropertys>
+    </tPropertys>
+    <cformID>
+    </cformID>
+    <BEKEY>自定义报表</BEKEY>
+    <iUserDefine>1</iUserDefine>
+    <mDefaultTemplate>
+    </mDefaultTemplate>
+    <mIndividuation>
+    </mIndividuation>
+  </UBF_MD_ASRPT_Category>
+</UBF_MD_ASRPT_Categorys>
