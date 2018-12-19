@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>prpo</Name>
+  <MyName>prpo</MyName>
+  <ReportID>b1ab02d8-4173-4f74-8118-516941ff12f6</ReportID>
+  <RuntimNoPagging>false</RuntimNoPagging>
+  <SetPageRows>false</SetPageRows>
+  <RowNumberOnPage>0</RowNumberOnPage>
+  <Language>zh-CN</Language>
+  <Author>刘飞</Author>
+  <Code>Public Function ReturnTest(ShowMode As String) As Integer
+    Dim returnStr As Integer
+        if(ShowMode = "及时")
+            return 1
+        else
+            return 0
+end if
+
+    return ShowMode
+
+End Function</Code>
+  <Designer>用户自定义报表</Designer>
+  <DynamicMatrixTable />
+  <BaseMeasure>Mil</BaseMeasure>
+  <UserMeasure>Inch</UserMeasure>
+  <Width>13870</Width>
+  <PageSet>
+    <CanNotModifiedOnRuntime>false</CanNotModifiedOnRuntime>
+    <Margin>
+      <Left>300</Left>
+      <Right>300</Right>
+      <Top>300</Top>
+      <Bottom>300</Bottom>
+    </Margin>
+    <Height>11690</Height>
+    <Width>8270</Width>
+    <Landscape>false</Landscape>
+    <PaperType>A4</PaperType>
+  </PageSet>
+  <ReportHeader name="ReportHeader">
+    <Height>1400</Height>
+    <Hide>false</Hide>
+    <ReportItems>
+      <TextBoxs>
+        <TextBox name="TextBox_1">
+          <Style>
+            <FormatStyle />
+            <Front />
+            <Alignment />
+            <Background />
+            <Padding />
+            <Font>
+              <Size>14.25</Size>
+              <FontWeight>Bold</FontWeight>
+            </Font>
+            <Border>
+              <Color>White,White,White,White,White</Color>
+              <Width>10,10,10,10,10</Width>
+            </Border>
+          </Style>
+          <Location>
+            <Left>140</Left>
+          </Location>
+          <Width>6000</Width>
+          <Height>580</Height>
+          <Text>=Contexts!OrgName.Value+“---PR转PO及时率报表”</Text>
+          <IsBookMark>false</IsBookMark>
+        </TextBox>
+        <TextBox name="TextBox_88">
+          <Style>
+            <FormatStyle />
+            <Front />
+            <Alignment />
+            <Background />
+            <Padding />
+            <Font>
+              <Size>11.25</Size>
+            </Font>
+            <Border>
+              <Color>White,White,White,White,White</Color>
+            </Border>
+          </Style>
+          <Location>
+            <Top>600</Top>
+            <Left>140</Left>
+          </Location>
+          <Width>4150</Width>
+          <Height>350</Height>
+          <Text>="请购日期区间范围："+Parameters!StartDT.Value
+</Text>
+          <IsBookMark>false</IsBookMark>
+        </TextBox>
+        <TextBox name="TextBox_89">
+          <Style>
+            <FormatStyle />
+            <Front />
+            <Alignment />
+            <Background />
+            <Padding />
+            <Font>
+              <Size>11.25</Size>
+            </Font>
+            <Border>
+              <Color>White,White,White,White,White</Color>
+            </Border>
+          </Style>
+          <Location>
+            <Top>920</Top>
+            <Left>1520</Left>
+          </Location>
+          <Width>2290</Width>
+          <Height>350</Height>
+          <Text>=Parameters!EndDT.Value</Text>
+          <IsBookMark>false</IsBookMark>
+        </TextBox>
+      </TextBoxs>
+      <Cells />
+    </ReportItems>
+    <Style>
+      <Background />
+    </Style>
+    <PrintModel>PrintOnFirstPage</PrintModel>
+  </ReportHeader>
+  <ReportFooter name="ReportFooter">
+    <Hide>false</Hide>
+    <ReportItems>
+      <Cells />
+    </ReportItems>
+    <Style>
+      <Background />
+    </Style>
+    <PrintModel>PrintOnLastPage</PrintModel>
+  </ReportFooter>
+  <ReportBody name="ReportDetail">
+    <Height>1800</Height>
+    <Hide>false</Hide>
+    <ReportItems>
+      <Tables>
+        <Table name="Table_4">
+          <ColumnInfo>
+            <Column>
+              <Width>1000</Width>
+              <Name>docno</Name>
+            </Column>
+            <Column>
+              <Width>1400</Width>
+              <Name>ApprovedOn</Name>
+            </Column>
+            <Column>
+              <Width>1020</Width>
+              <Name>ff</Name>
+            </Column>
+            <Column>
+              <Width>1280</Width>
+              <Name>CreatedOn</Name>
+            </Column>
+            <Column>
+              <Width>800</Width>
+              <Name>ItemInfo_ItemCode</Name>
+            </Column>
+            <Column>
+              <Width>1160</Width>
+              <Name>ItemInfo_ItemName</Name>
+            </Column>
+            <Column>
+              <Width>1280</Width>
+              <Name>ApprovedQtyPU</Name>
+            </Column>
+            <Column>
+              <Width>1320</Width>
+              <Name>PurQtyTU</Name>
+            </Column>
+            <Column>
+              <Width>800</Width>
+              <Name>DescFlexField_PrivateDescSeg23</Name>
+            </Column>
+            <Column>
+              <Width>1000</Width>
+              <Name>MARK</Name>
+            </Column>
+          </ColumnInfo>
+          <Style>
+            <Border />
+            <Font />
+            <Padding />
+            <Background />
+            <WholeBorder />
+          </Style>
+          <Header>
+            <RowInfos>
+              <RowInfo>
+                <Height>250</Height>
+              </RowInfo>
+            </RowInfos>
+            <Rows>
+              <Row>
+                <Height>250</Height>
+                <TableCells>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>0</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_120">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1000</Width>
+                          <Height>250</Height>
+                          <Text>请购单号</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>1</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_121">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1400</Width>
+                          <Height>250</Height>
+                          <Text>审核时间</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>9</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_122">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1000</Width>
+                          <Height>250</Height>
+                          <Text>备注</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>2</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_129">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1020</Width>
+                          <Height>250</Height>
+                          <Text>采购单号</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>3</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_132">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1280</Width>
+                          <Height>250</Height>
+                          <Text>制单时间</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>4</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_135">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>800</Width>
+                          <Height>250</Height>
+                          <Text>料号</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>6</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_138">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1280</Width>
+                          <Height>250</Height>
+                          <Text>请购核准数量</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>5</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_139">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1150</Width>
+                          <Height>250</Height>
+                          <Text>品名</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>7</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_144">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1320</Width>
+                          <Height>250</Height>
+                          <Text>采购数量</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>8</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_147">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment>
+                              <Horizontal>Center</Horizontal>
+                            </Alignment>
+                            <Background>
+                              <Color>Teal</Color>
+                            </Background>
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>800</Width>
+                          <Height>250</Height>
+                          <Text>执行采购员</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                </TableCells>
+              </Row>
+            </Rows>
+          </Header>
+          <Footer>
+            <RowInfos>
+              <RowInfo>
+                <Height>250</Height>
+              </RowInfo>
+            </RowInfos>
+            <Rows>
+              <Row>
+                <Height>250</Height>
+                <TableCells>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>0</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_126">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1000</Width>
+                          <Height>250</Height>
+                          <Text>="及时率："</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>1</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_127">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1400</Width>
+                          <Height>250</Height>
+                          <Text>=CountRows()</Text>
+                          <DataType>Number</DataType>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>9</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_128">
+                          <Style>
+                            <FormatStyle>
+                              <Format>{p,2}</Format>
+                            </FormatStyle>
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1000</Width>
+                          <Height>250</Height>
+                          <Text>=Sum(Code.returnTest(Fields!MARK.Value))/CountRows()</Text>
+                          <DataType>Number</DataType>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>2</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_168">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1020</Width>
+                          <Height>250</Height>
+                          <Text>=CountDistinct("及时")</Text>
+                          <DataType>Number</DataType>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>3</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_169">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1280</Width>
+                          <Height>250</Height>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>4</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_170">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>800</Width>
+                          <Height>250</Height>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>5</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_171">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1150</Width>
+                          <Height>250</Height>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>6</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_172">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1280</Width>
+                          <Height>250</Height>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>7</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_173">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1320</Width>
+                          <Height>250</Height>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>8</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_174">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>800</Width>
+                          <Height>250</Height>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                </TableCells>
+              </Row>
+            </Rows>
+          </Footer>
+          <Detail>
+            <RowInfos>
+              <RowInfo>
+                <Height>250</Height>
+              </RowInfo>
+            </RowInfos>
+            <Rows>
+              <Row>
+                <Height>250</Height>
+                <TableCells>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>0</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_123">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1000</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!docno.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>1</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_124">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1400</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!ApprovedOn.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>9</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_125">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1000</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!MARK.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>2</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_130">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1020</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!ff.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>3</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_133">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1280</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!CreatedOn.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>4</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_136">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>800</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!ItemInfo_ItemCode.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>6</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_140">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1280</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!ApprovedQtyPU.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>5</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_141">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1150</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!ItemInfo_ItemName.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>7</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_145">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>1320</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!PurQtyTU.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                  <TableCell>
+                    <RowID>0</RowID>
+                    <ColumnID>8</ColumnID>
+                    <ReportItems>
+                      <TextBoxs>
+                        <TextBox name="TextBox_148">
+                          <Style>
+                            <FormatStyle />
+                            <Front />
+                            <Alignment />
+                            <Background />
+                            <Padding />
+                            <Font />
+                            <Border />
+                          </Style>
+                          <Location />
+                          <Width>800</Width>
+                          <Height>250</Height>
+                          <Text>=Fields!DescFlexField_PrivateDescSeg23.Value</Text>
+                          <IsBookMark>false</IsBookMark>
+                        </TextBox>
+                      </TextBoxs>
+                    </ReportItems>
+                  </TableCell>
+                </TableCells>
+              </Row>
+            </Rows>
+          </Detail>
+          <HoldTableHead>false</HoldTableHead>
+          <HeaderPrintModel>PrintOnEachPage</HeaderPrintModel>
+          <FooterPrintModel>PrintOnEachPage</FooterPrintModel>
+          <DetailSolidLines>25</DetailSolidLines>
+          <Location>
+            <Top>230</Top>
+            <Left>10</Left>
+          </Location>
+          <DataSetName>prpo</DataSetName>
+          <IsMegerGroup>false</IsMegerGroup>
+        </Table>
+      </Tables>
+      <Cells />
+    </ReportItems>
+    <Style>
+      <Background />
+    </Style>
+    <Container>Table</Container>
+  </ReportBody>
+  <ReportDataSources>
+    <ReportDataSource name="prpo">
+      <ShareDataSource>false</ShareDataSource>
+      <IntegratedSecurity>true</IntegratedSecurity>
+      <ProviderType>UFRPT</ProviderType>
+      <ConnectionString>Data Source=192.168.1.82;Initial Catalog=U9TEST1129;User ID=sa;Password=auctus@168</ConnectionString>
+      <ID>4e192cf4-c80a-4e4f-a1d2-c1ab2d392714</ID>
+    </ReportDataSource>
+  </ReportDataSources>
+  <ReportDataQuerys>
+    <DataQuery name="prpo">
+      <DataSourceName>prpo</DataSourceName>
+      <Fields>
+        <Field name="docno">
+          <FieldName>docno</FieldName>
+          <DefaultLabel>请购单号</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>docno</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ApprovedOn">
+          <FieldName>ApprovedOn</FieldName>
+          <DataType>System.DateTime</DataType>
+          <DefaultLabel>请购审核时间</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>ApprovedOn</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ff">
+          <FieldName>ff</FieldName>
+          <DefaultLabel>采购单号</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>ff</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="CreatedOn">
+          <FieldName>CreatedOn</FieldName>
+          <DataType>System.DateTime</DataType>
+          <DefaultLabel>采购制单时间</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>CreatedOn</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ItemInfo_ItemCode">
+          <FieldName>ItemInfo_ItemCode</FieldName>
+          <DefaultLabel>料号</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>ItemInfo_ItemCode</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ItemInfo_ItemName">
+          <FieldName>ItemInfo_ItemName</FieldName>
+          <DefaultLabel>品名</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>ItemInfo_ItemName</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ApprovedQtyPU">
+          <FieldName>ApprovedQtyPU</FieldName>
+          <DataType>System.Decimal</DataType>
+          <DefaultLabel>请购核准数量</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>ApprovedQtyPU</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="PurQtyTU">
+          <FieldName>PurQtyTU</FieldName>
+          <DataType>System.Decimal</DataType>
+          <DefaultLabel>采购数量</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>PurQtyTU</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="DescFlexField_PrivateDescSeg23">
+          <FieldName>DescFlexField_PrivateDescSeg23</FieldName>
+          <DefaultLabel>执行采购员</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>DescFlexField_PrivateDescSeg23</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="MARK">
+          <FieldName>MARK</FieldName>
+          <DataType>System.Int32</DataType>
+          <DefaultLabel>备注</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <ColumnFixed>true</ColumnFixed>
+          <SubFields />
+          <ReferenceFilterName>MARK</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ApprovedBy">
+          <FieldName>ApprovedBy</FieldName>
+          <DefaultLabel>审核人</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <SubFields />
+          <ReferenceFilterName>ApprovedBy</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ItemInfo_ItemID">
+          <FieldName>ItemInfo_ItemID</FieldName>
+          <DataType>System.Int64</DataType>
+          <DefaultLabel>料号ID</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <SubFields />
+          <ReferenceFilterName>ItemInfo_ItemID</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="CreatedBy">
+          <FieldName>CreatedBy</FieldName>
+          <DefaultLabel>制单人</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <SubFields />
+          <ReferenceFilterName>CreatedBy</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="PRNO">
+          <FieldName>PRNO</FieldName>
+          <DefaultLabel>请购单号</DefaultLabel>
+          <SelectEnable>true</SelectEnable>
+          <SubFields />
+          <ReferenceFilterName>PRNO</ReferenceFilterName>
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+        <Field name="ItemInfo_ItemID1">
+          <FieldName>ItemInfo_ItemID1</FieldName>
+          <DataType>System.Int64</DataType>
+          <DefaultLabel>ItemInfo_ItemID1</DefaultLabel>
+          <SubFields />
+          <BreakColumnByDisplayField>false</BreakColumnByDisplayField>
+        </Field>
+      </Fields>
+      <Command>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>ProcedureName=P_PR_PO_TimelinessRate2;Org=Parameters!Org.Value&amp;StartDT=Parameters!StartDT.Value&amp;EndDT=Parameters!EndDT.Value&amp;DescFlexField_PrivateDescSeg23=Parameters!DescFlexField_PrivateDescSeg23.Value</CommandText>
+        <Identity />
+        <Parameters>
+          <QueryParameter name="@Global_Parameter">
+            <Value>传输全部报表条件...</Value>
+          </QueryParameter>
+        </Parameters>
+      </Command>
+    </DataQuery>
+  </ReportDataQuerys>
+  <Parameters>
+    <FilterDefine>
+      <ID>0</ID>
+      <Name>Org</Name>
+      <Label>组织</Label>
+      <LabelMultiLang />
+      <DataType>Number</DataType>
+      <Reference>
+        <Type>reference</Type>
+        <ReferenceObject>
+          <ReturnValueType />
+          <ReferenceID>19b6ef3c-a0a9-4851-9566-a16e9a5578a7</ReferenceID>
+          <KeyField>ID</KeyField>
+          <ValueField>ID</ValueField>
+          <TextField>Name</TextField>
+          <ReturnValueField />
+          <RefHeight>408</RefHeight>
+          <RefWidth>580</RefWidth>
+          <RefCondCollection />
+          <IsNeedValidate>true</IsNeedValidate>
+          <IsAutoComplete>false</IsAutoComplete>
+        </ReferenceObject>
+        <EnumRestrictList />
+        <EntityClassId>73eb56da-f25a-4636-94e7-61b0cb4b7784</EntityClassId>
+        <IsShowQueryCase>false</IsShowQueryCase>
+      </Reference>
+      <OperatorList />
+      <SubFilters />
+      <Level>basic</Level>
+      <WeakRefEntityFullName />
+      <WeakRefAttribute />
+      <WeakRefEntityAlias />
+      <DescFieldContextValue />
+      <ItemAttribute />
+      <CustomItemAttribute />
+      <Group />
+      <IsRefView>false</IsRefView>
+      <EnumTypeCode />
+      <DefaultOperator>Equal</DefaultOperator>
+      <ValidationResult />
+      <IsUserDefine>false</IsUserDefine>
+    </FilterDefine>
+    <FilterDefine>
+      <ID>1</ID>
+      <Name>StartDT</Name>
+      <Label>起始时间</Label>
+      <LabelMultiLang />
+      <DataType>DateTime</DataType>
+      <Reference>
+        <Type>datetime</Type>
+        <ReferenceObject>
+          <ReturnValueType />
+          <ReferenceID />
+          <KeyField />
+          <ValueField />
+          <TextField />
+          <ReturnValueField />
+          <RefHeight>408</RefHeight>
+          <RefWidth>580</RefWidth>
+          <RefCondCollection />
+          <IsNeedValidate>true</IsNeedValidate>
+          <IsAutoComplete>false</IsAutoComplete>
+        </ReferenceObject>
+        <EnumRestrictList />
+        <IsShowQueryCase>false</IsShowQueryCase>
+      </Reference>
+      <OperatorList />
+      <SubFilters />
+      <Level>basic</Level>
+      <WeakRefEntityFullName />
+      <WeakRefAttribute />
+      <WeakRefEntityAlias />
+      <DescFieldContextValue />
+      <ItemAttribute />
+      <CustomItemAttribute />
+      <Group />
+      <IsRefView>false</IsRefView>
+      <EnumTypeCode />
+      <DefaultOperator>Equal</DefaultOperator>
+      <ValidationResult />
+      <IsUserDefine>false</IsUserDefine>
+    </FilterDefine>
+    <FilterDefine>
+      <ID>2</ID>
+      <Name>EndDT</Name>
+      <Label>结束时间</Label>
+      <LabelMultiLang />
+      <DataType>DateTime</DataType>
+      <Reference>
+        <Type>datetime</Type>
+        <EnumeratorKeyPairs />
+        <EnumRestrictList />
+        <IsShowQueryCase>false</IsShowQueryCase>
+      </Reference>
+      <OperatorList />
+      <SubFilters />
+      <Level>basic</Level>
+      <WeakRefEntityFullName />
+      <WeakRefAttribute />
+      <WeakRefEntityAlias />
+      <DescFieldContextValue />
+      <ItemAttribute />
+      <CustomItemAttribute />
+      <Group />
+      <IsRefView>false</IsRefView>
+      <EnumTypeCode />
+      <DefaultOperator>Equal</DefaultOperator>
+      <ValidationResult />
+      <IsUserDefine>false</IsUserDefine>
+    </FilterDefine>
+    <FilterDefine>
+      <ID>3</ID>
+      <Name>DescFlexField_PrivateDescSeg23</Name>
+      <Label>执行采购员</Label>
+      <LabelMultiLang />
+      <Reference>
+        <Type>reference</Type>
+        <ReferenceObject>
+          <ReturnValueType />
+          <ReferenceID>951dab6b-c12c-4708-a44e-131a43642e6f</ReferenceID>
+          <KeyField>ID</KeyField>
+          <ValueField>Code</ValueField>
+          <TextField>Name</TextField>
+          <ReturnValueField />
+          <RefHeight>408</RefHeight>
+          <RefWidth>580</RefWidth>
+          <RefCondCollection>
+            <RefCondition>
+              <ParameterName>OperatorType</ParameterName>
+              <ParameterValue>0</ParameterValue>
+              <IsFixed>true</IsFixed>
+              <CustomInParams />
+              <IsContext>false</IsContext>
+            </RefCondition>
+            <RefCondition>
+              <ParameterName>MasterOrgID</ParameterName>
+              <ParameterValue />
+              <IsFixed>false</IsFixed>
+              <CustomInParams />
+              <IsContext>false</IsContext>
+            </RefCondition>
+            <RefCondition>
+              <ParameterName>DeptID</ParameterName>
+              <ParameterValue />
+              <IsFixed>false</IsFixed>
+              <CustomInParams />
+              <IsContext>false</IsContext>
+            </RefCondition>
+          </RefCondCollection>
+          <IsNeedValidate>true</IsNeedValidate>
+          <IsAutoComplete>false</IsAutoComplete>
+        </ReferenceObject>
+        <EnumRestrictList />
+        <EntityClassId>198b0f81-207e-4707-8a8c-e0475b7674bd</EntityClassId>
+        <IsShowQueryCase>false</IsShowQueryCase>
+      </Reference>
+      <OperatorList />
+      <SubFilters />
+      <Level>basic</Level>
+      <WeakRefEntityFullName />
+      <WeakRefAttribute />
+      <WeakRefEntityAlias />
+      <DescFieldContextValue />
+      <ItemAttribute />
+      <CustomItemAttribute />
+      <Group />
+      <IsRefView>false</IsRefView>
+      <EnumTypeCode />
+      <DefaultOperator>Equal</DefaultOperator>
+      <ValidationResult />
+      <IsUserDefine>false</IsUserDefine>
+    </FilterDefine>
+  </Parameters>
+  <EmbeddedImages />
+  <CodeModels />
+</Report>
