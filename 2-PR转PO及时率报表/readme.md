@@ -18,7 +18,15 @@
 
 ## 变更说明
     2018/12/10 写出存储过程，可以查找出对应单号的及时与否， 但还未添加 执行采购人员 以及料号进去。
+
     2018/12/11 可以再SQL SERVER 中算出及时率，但是还不清楚如何再 UBF 中进行对应的分组
+
     2018/12/17 更新存储过程为 P_PR_PO_TimelinessRate0.sql 文件所示(LJ) 并利用UBF 制作报表导出文件 见 UBF/P_PR_PO_TimelinessRate0 文件夹
     参考 Cust_SearchSOToMOATRate 加入 及时率
-    2018/12/19 更新存储过程为 P_PR_PO_TimelinessRate2.sql 主要加入了MARK 作为UBF中计算及时率的 计数字段  完成UBF 报表页面 如UBF/prpo 文件下备份文件所示
+
+    2018/12/19 更新存储过程为 P_PR_PO_TimelinessRate2.sql 主要加入了MARK 作为UBF中计算及时率的 计数字段  完成UBF 报表页面 如UBF/prpo 文件下备份文件所示  
+
+
+- 及时率的计算，UBF 中加入嵌入的代码，并对"及时"进行计数 具体如下图所示
+![blockchain](https://raw.githubusercontent.com/mt-yu/material/master/screenshot/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181219173112.png "嵌入代码")
+![blockchain](https://raw.githubusercontent.com/mt-yu/material/master/screenshot/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20181219173204.png "设置及时率到计算公式")
